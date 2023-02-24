@@ -1,0 +1,6 @@
+import { createAction, props } from '@ngrx/store';
+
+import { <%= className %>Response } from '../api-clients/<%= fileName %>.api-client';
+import { <%= propertyName %>Slice } from '../<%= fileName %>.slice';
+
+export const <%= propertyName %>Loaded = createAction(<%= propertyName %>Slice, props<{<%= propertyName %>: <%= className %>Response}>());

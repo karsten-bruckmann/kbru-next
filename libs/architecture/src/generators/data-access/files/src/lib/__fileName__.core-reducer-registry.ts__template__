@@ -1,0 +1,5 @@
+import { coreReducerRegistry } from '@kbru/architecture';
+
+import { <%= className %>State } from './models/<%= fileName %>-state.model';
+
+export const <%= propertyName %>CoreReducerRegistry = coreReducerRegistry<<%= className %>State>()

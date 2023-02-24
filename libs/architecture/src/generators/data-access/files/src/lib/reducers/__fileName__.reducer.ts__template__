@@ -1,0 +1,6 @@
+import { createReducer } from '@ngrx/store';
+
+import { <%= className %>State } from '../models/<%= fileName %>-state.model';
+import { <%= propertyName %>InitialState } from '../<%= fileName %>.initial-state';
+
+export const <%= propertyName %>Reducer = createReducer<<%= className %>State>(<%= propertyName %>InitialState);

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "DataAccess",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "type": "string",
+      "description": "",
+      "x-prompt": "Project Scope?"
+    },
+    "name": {
+      "type": "string",
+      "description": "",
+      "x-prompt": "Slice Name?"
+    },
+    "shared": {
+      "type": "boolean",
+      "description": "",
+      "x-prompt": "Is this shared scope?"
+    }
+  },
+  "required": ["name", "scope", "shared"]
+}

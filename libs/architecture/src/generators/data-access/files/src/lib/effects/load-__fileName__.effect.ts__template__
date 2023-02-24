@@ -1,0 +1,18 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect } from '@ngrx/effects';
+import { map, switchMap } from 'rxjs';
+
+import { <%= propertyName %>Loaded } from '../actions/<%= fileName %>-loaded.action'
+import { <%= className %>ApiClient } from '../api-clients/<%= fileName %>.api-client'
+import { <%= propertyName %>RefreshActionRegistry } from '../<%= fileName %>.refresh-action-registry'
+
+@Injectable()
+export class Load<%= className %>Effect {
+  constructor(private actions$: Actions, private apiClient: <%= className %>ApiClient) {}
+
+  public effect$ = createEffect(() => this.actions$.pipe(
+    <%= propertyName %>RefreshActionRegistry.ofRefreshActions,
+    switchMap(action => this.apiClient.get(action.request)),
+    map(response => <%= propertyName %>Loaded({ <%= propertyName %>: response }))
+  ))
+}

@@ -1,0 +1,5 @@
+import { <%= className %>State } from './models/<%= fileName %>-state.model';
+
+export const <%= propertyName %>InitialState: <%= className %>State = {
+  foo: 'bar',
+}

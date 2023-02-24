@@ -1,0 +1,5 @@
+import { refreshActionRegistry } from '@kbru/architecture';
+
+import { <%= className %>Request } from './api-clients/<%= fileName %>.api-client';
+
+export const <%= propertyName %>RefreshActionRegistry = refreshActionRegistry<{ request: <%= className %>Request}>()

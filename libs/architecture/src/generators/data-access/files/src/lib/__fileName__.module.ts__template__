@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+
+import { <%= className %>State } from './models/<%= fileName %>-state.model';
+import { <%= propertyName %>Reducer } from './reducers/<%= fileName %>.reducer';
+import { <%= propertyName %>CoreReducerRegistry } from './<%= fileName %>.core-reducer-registry';
+import { <%= propertyName %>Slice } from './<%= fileName %>.slice';
+
+@NgModule({
+  imports: [
+    StoreModule.forFeature<<%= className %>State>(
+      <%= propertyName %>Slice,
+      <%= propertyName %>Reducer,
+      {
+        metaReducers: [<%= propertyName %>CoreReducerRegistry.metaReducer]
+      }
+    )
+  ]
+})
+export class <%= className %>Module {}

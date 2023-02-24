@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@kbru/architecture": ["libs/architecture/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -1,0 +1,28 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+export interface <%= className %>Request {
+  id: number;
+}
+
+export interface <%= className %>Response {
+  foo: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class <%= className %>ApiClient {
+  constructor(private http: HttpClient) {}
+
+  public get(request: <%= className %>Request): Observable<<%= className %>Response> {
+    const params = new URLSearchParams(
+      Object.keys(request)
+        .map((key) => ({
+          key,
+          value: request[key].toString(),
+        }))
+        .reduce((p, keyvalue) => ({ ...p, [keyvalue.key]: keyvalue.value }), {})
+    );
+    return this.http.get<<%= className %>Response>(`/<%= fileName %>?${params.toString()}`);
+  }
+}

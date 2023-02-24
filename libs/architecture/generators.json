@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "architecture",
+  "version": "0.0.1",
+  "generators": {
+    "data-access": {
+      "factory": "./src/generators/data-access/generator",
+      "schema": "./src/generators/data-access/schema.json",
+      "description": "data-access generator"
+    }
+  }
+}
