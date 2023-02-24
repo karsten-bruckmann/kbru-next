@@ -1,6 +1,7 @@
-import { MetaReducer, Action } from '@ngrx/store';
+import { MetaReducer } from '@ngrx/store';
 
-export type CoreReducer<T> = (state: T, action: Action) => T;
+import { CoreReducer } from './core-reducer.type';
+
 type ReducerRegistry<T> = {
   add: (reducer: CoreReducer<T>, identifier: string) => void;
   metaReducer: MetaReducer<T>;

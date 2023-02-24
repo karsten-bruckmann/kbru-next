@@ -7,6 +7,11 @@
       "factory": "./src/generators/data-access/generator",
       "schema": "./src/generators/data-access/schema.json",
       "description": "data-access generator"
+    },
+    "core": {
+      "factory": "./src/generators/core/generator",
+      "schema": "./src/generators/core/schema.json",
+      "description": "core generator"
     }
   }
 }

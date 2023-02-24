@@ -24,7 +24,7 @@ function normalizeOptions(
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const scope = names(options.scope).fileName;
-  const type = names('data-access').fileName;
+  const type = names('core').fileName;
   const projectDirectory = `${options.shared ? 'shared/' : ''}${scope}/${type}`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
@@ -63,10 +63,10 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
     name: normalizedOptions.projectName,
     directory: normalizedOptions.projectDirectory,
     flat: true,
-    skipModule: true,
     simpleName: true,
     importPath: normalizedOptions.projectName,
     tags: normalizedOptions.parsedTags.join(','),
+    skipModule: true,
   });
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
