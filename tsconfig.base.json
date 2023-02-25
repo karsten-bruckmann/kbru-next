@@ -15,11 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kbru/architecture": ["libs/architecture/src/index.ts"],
-      "roster-management": [
-        "libs/battle-companion/core/roster-management/src/index.ts"
-      ],
-      "rosters": ["libs/battle-companion/data-access/rosters/src/index.ts"]
+      "@kbru/architecture": ["libs/architecture/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

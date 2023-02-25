@@ -12,6 +12,16 @@
       "factory": "./src/generators/core/generator",
       "schema": "./src/generators/core/schema.json",
       "description": "core generator"
+    },
+    "feature": {
+      "factory": "./src/generators/feature/generator",
+      "schema": "./src/generators/feature/schema.json",
+      "description": "feature generator"
+    },
+    "ui": {
+      "factory": "./src/generators/ui/generator",
+      "schema": "./src/generators/ui/schema.json",
+      "description": "ui generator"
     }
   }
 }
