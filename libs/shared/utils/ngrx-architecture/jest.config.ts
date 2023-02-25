@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'shared-architecture-generators',
+  displayName: 'shared-utils-ngrx-architecture',
   preset: '../../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../../coverage/libs/shared/architecture/generators',
+  coverageDirectory: '../../../../coverage/libs/shared/utils/ngrx-architecture',
 };

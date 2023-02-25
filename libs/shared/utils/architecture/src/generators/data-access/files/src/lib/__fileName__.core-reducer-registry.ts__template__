@@ -1,4 +1,4 @@
-import { coreReducerRegistry } from '@kbru/shared/architecture/generators';
+import { coreReducerRegistry } from '@kbru/shared/utils/ngrx-architecture';
 
 import { <%= className %>State } from './models/<%= fileName %>-state.model';
 

@@ -17,7 +17,9 @@ function normalizeOptions(
   const name = names(options.name).fileName;
   const scope = names(options.scope).fileName;
   const type = names('feature').fileName;
-  const projectDirectory = `${options.shared ? 'shared/' : ''}${scope}/${type}`;
+  const projectDirectory = `${
+    options.shared ? 'shared/' : ''
+  }${scope}/features`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
   const parsedTags = [

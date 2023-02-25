@@ -16,7 +16,7 @@ function normalizeOptions(
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const type = names('util').fileName;
-  const projectDirectory = `shared/${type}`;
+  const projectDirectory = `shared/utils`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
   const parsedTags = [`scope:shared`, `type:${type}`];

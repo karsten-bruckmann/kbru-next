@@ -1,35 +1,35 @@
 {
-  "name": "shared-architecture-generators",
+  "name": "shared-utils-architecture",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/architecture/generators/src",
+  "sourceRoot": "libs/shared/utils/architecture/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared/architecture/generators",
-        "main": "libs/shared/architecture/generators/src/index.ts",
-        "tsConfig": "libs/shared/architecture/generators/tsconfig.lib.json",
+        "outputPath": "dist/libs/shared/utils/architecture",
+        "main": "libs/shared/utils/architecture/src/index.ts",
+        "tsConfig": "libs/shared/utils/architecture/tsconfig.lib.json",
         "assets": [
-          "libs/shared/architecture/generators/*.md",
+          "libs/shared/utils/architecture/*.md",
           {
-            "input": "./libs/shared/architecture/generators/src",
+            "input": "./libs/shared/utils/architecture/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./libs/shared/architecture/generators/src",
+            "input": "./libs/shared/utils/architecture/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./libs/shared/architecture/generators",
+            "input": "./libs/shared/utils/architecture",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./libs/shared/architecture/generators",
+            "input": "./libs/shared/utils/architecture",
             "glob": "executors.json",
             "output": "."
           }
@@ -41,10 +41,10 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/shared/architecture/generators/**/*.ts",
-          "libs/shared/architecture/generators/generators.json",
-          "libs/shared/architecture/generators/executors.json",
-          "libs/shared/architecture/generators/package.json"
+          "libs/shared/utils/architecture/**/*.ts",
+          "libs/shared/utils/architecture/generators.json",
+          "libs/shared/utils/architecture/executors.json",
+          "libs/shared/utils/architecture/package.json"
         ]
       }
     },
@@ -52,7 +52,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/shared/architecture/generators/jest.config.ts",
+        "jestConfig": "libs/shared/utils/architecture/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
