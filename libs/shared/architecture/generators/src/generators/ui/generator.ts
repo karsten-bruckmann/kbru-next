@@ -36,19 +36,25 @@ function normalizeOptions(
 
 export default async function (tree: Tree, options: UiGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  libraryGenerator(tree, {
+  const gen = await libraryGenerator(tree, {
     name: normalizedOptions.projectName,
     directory: normalizedOptions.projectDirectory,
     flat: true,
     standalone: true,
     simpleName: true,
-    importPath: normalizedOptions.projectName,
     style: 'scss',
     tags: normalizedOptions.parsedTags.join(','),
     displayBlock: true,
-    prefix: 'ui-' + normalizedOptions.projectName,
-    selector: 'ui-' + normalizedOptions.projectName,
+    prefix:
+      (normalizedOptions.shared ? '' : normalizedOptions.scope + '-') +
+      'ui-' +
+      normalizedOptions.projectName,
+    selector:
+      (normalizedOptions.shared ? '' : normalizedOptions.scope + '-') +
+      'ui-' +
+      normalizedOptions.projectName,
     skipTests: true,
   });
+  gen();
   await formatFiles(tree);
 }

@@ -1,9 +1,17 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
-import { formatFiles, getWorkspaceLayout, names, Tree } from '@nrwl/devkit';
+import {
+  formatFiles,
+  generateFiles,
+  getWorkspaceLayout,
+  names,
+  offsetFromRoot,
+  Tree,
+} from '@nrwl/devkit';
+import * as path from 'path';
 
-import { FeatureGeneratorSchema } from './schema';
+import { CoreGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends FeatureGeneratorSchema {
+interface NormalizedSchema extends CoreGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -12,11 +20,11 @@ interface NormalizedSchema extends FeatureGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: FeatureGeneratorSchema
+  options: CoreGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const scope = names(options.scope).fileName;
-  const type = names('feature').fileName;
+  const type = names('core').fileName;
   const projectDirectory = `${options.shared ? 'shared/' : ''}${scope}/${type}`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
@@ -34,21 +42,32 @@ function normalizeOptions(
   };
 }
 
-export default async function (tree: Tree, options: FeatureGeneratorSchema) {
+function addFiles(tree: Tree, options: NormalizedSchema) {
+  const templateOptions = {
+    ...options,
+    ...names(options.name),
+    offsetFromRoot: offsetFromRoot(options.projectRoot),
+    template: '',
+  };
+  generateFiles(
+    tree,
+    path.join(__dirname, 'files'),
+    `${options.projectRoot}/${options.projectDirectory}/${options.name}`,
+    templateOptions
+  );
+}
+
+export default async function (tree: Tree, options: CoreGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  libraryGenerator(tree, {
+  const gen = await libraryGenerator(tree, {
     name: normalizedOptions.projectName,
     directory: normalizedOptions.projectDirectory,
     flat: true,
-    standalone: true,
     simpleName: true,
-    importPath: normalizedOptions.projectName,
-    style: 'scss',
     tags: normalizedOptions.parsedTags.join(','),
-    displayBlock: true,
-    prefix: 'feature-' + normalizedOptions.projectName,
-    selector: 'feature-' + normalizedOptions.projectName,
-    skipTests: true,
+    skipModule: true,
   });
+  gen();
+  addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

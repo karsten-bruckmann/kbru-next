@@ -1,4 +1,4 @@
-import { refreshActionRegistry } from '@kbru/architecture';
+import { refreshActionRegistry } from '@kbru/shared/architecture/generators';
 
 import { <%= className %>Request } from './api-clients/<%= fileName %>.api-client';
 

@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kbru/architecture": ["libs/architecture/src/index.ts"]
+      "@kbru/shared/architecture/generators": [
+        "libs/shared/architecture/generators/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

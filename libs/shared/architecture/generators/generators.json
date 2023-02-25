@@ -22,6 +22,11 @@
       "factory": "./src/generators/ui/generator",
       "schema": "./src/generators/ui/schema.json",
       "description": "ui generator"
+    },
+    "util": {
+      "factory": "./src/generators/util/generator",
+      "schema": "./src/generators/util/schema.json",
+      "description": "util generator"
     }
   }
 }
