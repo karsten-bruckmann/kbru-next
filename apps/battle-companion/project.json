@@ -1,6 +1,6 @@
 {
   "name": "battle-companion",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/battle-companion/src",
   "prefix": "kbru",
@@ -16,9 +16,17 @@
         "tsConfig": "apps/battle-companion/tsconfig.app.json",
         "assets": [
           "apps/battle-companion/src/favicon.ico",
-          "apps/battle-companion/src/assets"
+          "apps/battle-companion/src/assets",
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
         ],
-        "styles": ["apps/battle-companion/src/styles.css"],
+        "styles": [
+          "apps/battle-companion/src/styles.scss",
+          "apps/battle-companion/src/theme/variables.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -55,7 +63,8 @@
           "browserTarget": "battle-companion:build:production"
         },
         "development": {
-          "browserTarget": "battle-companion:build:development"
+          "browserTarget": "battle-companion:build:development",
+          "host": "127.0.0.1"
         }
       },
       "defaultConfiguration": "development"

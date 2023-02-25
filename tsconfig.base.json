@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@kbru/battle-companion/features/start-page": [
+        "libs/battle-companion/features/start-page/src/index.ts"
+      ],
       "@kbru/shared/utils/architecture": [
         "libs/shared/utils/architecture/src/index.ts"
       ],
