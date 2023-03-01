@@ -1,0 +1,7 @@
+<input
+  type="file"
+  #file
+  (input)="valueChanged(file.files)"
+  (click)="onTouched()"
+/>
+<ion-button (click)="file.click()"><ng-content></ng-content></ion-button>

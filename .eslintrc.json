@@ -41,11 +41,11 @@
               },
               {
                 "sourceTag": "type:core",
-                "onlyDependOnLibsWithTags": ["type:data-access"]
+                "onlyDependOnLibsWithTags": ["type:data-access", "type:util"]
               },
               {
                 "sourceTag": "type:data-access",
-                "onlyDependOnLibsWithTags": []
+                "onlyDependOnLibsWithTags": ["type:util"]
               }
             ]
           }

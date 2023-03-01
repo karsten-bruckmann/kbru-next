@@ -19,8 +19,12 @@
     "@ngrx/store-devtools": "^15.3.0",
     "@nrwl/nx-plugin": "^15.7.2",
     "@swc/helpers": "~0.4.11",
+    "@zip.js/zip.js": "^2.6.75",
     "rxjs": "~7.8.0",
+    "stream-browserify": "^3.0.0",
+    "timers-browserify": "^2.0.12",
     "tslib": "^2.3.0",
+    "xml2js": "^0.4.23",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -47,6 +51,7 @@
     "@swc/core": "^1.2.173",
     "@types/jest": "28.1.1",
     "@types/node": "16.11.7",
+    "@types/xml2js": "^0.4.11",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint": "~8.15.0",

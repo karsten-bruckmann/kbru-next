@@ -1,0 +1,1 @@
+export const rostersSlice = 'rosters';
