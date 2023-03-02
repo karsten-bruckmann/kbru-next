@@ -57,7 +57,8 @@
             "input": "node_modules/@ionic/angular/css/flex-utils.css"
           }
         ],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": ["xml2js"]
       },
       "configurations": {
         "production": {

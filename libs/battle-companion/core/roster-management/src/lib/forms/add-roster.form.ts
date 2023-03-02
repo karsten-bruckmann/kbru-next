@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { addRosterFormSubmitted } from '../actions/add-roster-form/add-roster-form-submitted.action';
+import { addRosterFormSubmitted } from '../actions/add-roster-form-submitted.action';
 
 export interface RosterForm {
   roszFile: FormControl<File | null>;
