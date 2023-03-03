@@ -15,19 +15,20 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "stream": ["node_modules/stream-browserify"],
-      "timers": ["node_modules/timers-browserify"],
       "@kbru/battle-companion/core/roster-management": [
         "libs/battle-companion/core/roster-management/src/index.ts"
       ],
       "@kbru/battle-companion/data-access/rosters": [
         "libs/battle-companion/data-access/rosters/src/index.ts"
       ],
-      "@kbru/battle-companion/features/roster-list": [
-        "libs/battle-companion/features/roster-list/src/index.ts"
+      "@kbru/battle-companion/features/roster": [
+        "libs/battle-companion/features/roster/src/index.ts"
       ],
       "@kbru/battle-companion/features/start-page": [
         "libs/battle-companion/features/start-page/src/index.ts"
+      ],
+      "@kbru/battle-companion/features/unit": [
+        "libs/battle-companion/features/unit/src/index.ts"
       ],
       "@kbru/shared/ionic/ui/file-input": [
         "libs/shared/ionic/ui/file-input/src/index.ts"
@@ -44,7 +45,10 @@
       "@kbru/shared/utils/ngrx-storage-sync": [
         "libs/shared/utils/ngrx-storage-sync/src/index.ts"
       ],
-      "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"]
+      "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
+      "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
+      "stream": ["node_modules/stream-browserify"],
+      "timers": ["node_modules/timers-browserify"]
     }
   },
   "exclude": ["node_modules", "tmp"]

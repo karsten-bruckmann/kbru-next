@@ -1,1 +1,1 @@
-export * from './lib/start-page.component';
+export * from './lib/start-page.routes';

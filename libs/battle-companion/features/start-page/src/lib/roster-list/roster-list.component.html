@@ -5,4 +5,10 @@
       choose file
     </ui-file-input>
   </ion-item>
+  <ion-item
+    *ngFor="let item of list$ | async"
+    [routerLink]="['roster', item.id]"
+  >
+    {{ item.name }}
+  </ion-item>
 </ion-list>

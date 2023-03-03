@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'battle-companion-features-roster-list',
+  displayName: 'battle-companion-features-unit',
   preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,8 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory:
-    '../../../../coverage/libs/battle-companion/features/roster-list',
+  coverageDirectory: '../../../../coverage/libs/battle-companion/features/unit',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

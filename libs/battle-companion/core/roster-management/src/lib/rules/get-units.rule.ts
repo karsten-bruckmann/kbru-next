@@ -1,6 +1,7 @@
-import { Unit } from '@kbru/battle-companion/data-access/rosters';
+import { uuid } from '@kbru/shared/utils/uuid';
 
 import { BsCategory, BsForce } from '../models/bs-roster.model';
+import { Unit } from '../models/unit.model';
 import { getModels } from './get-models.rule';
 import { getUnitRules } from './get-unit-rules.rule';
 
@@ -20,6 +21,7 @@ export const getUnitsRule = (detachment: BsForce): Unit[] => {
     .map((selection) => {
       const models = getModels(selection);
       return {
+        id: uuid(),
         title: selection.customName || selection.name,
         keywords: selection.categories.sort(primariesFirst).map((c) => c.name),
         models: models,
