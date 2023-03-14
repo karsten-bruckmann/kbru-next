@@ -1,1 +1,60 @@
-<p>unit works!</p>
+<ng-container *ngIf="roster$ | async as roster">
+  <ng-container *ngIf="detachment$ | async as detachment">
+    <ng-container *ngIf="unit$ | async as unit">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button
+              [color]="'light'"
+              [routerLink]="'../../../../'"
+              [routerDirection]="'back'"
+            >
+              <ion-icon name="chevron-back"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>
+            <h1 id="roster-title">
+              {{ roster.title }}
+            </h1>
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-text color="primary">
+          <h2>
+            <!-- <bst-translatable [text]="detachment.title"></bst-translatable> -->
+            {{ detachment.title }}
+          </h2>
+        </ion-text>
+
+        <!-- <bst-unit-card [unit]="unit"></bst-unit-card> -->
+        <battle-companion-unit-details
+          [unit]="unit"
+        ></battle-companion-unit-details>
+
+        <!-- DETACHMENT RULES -->
+        <ion-text color="primary">
+          <h3 class="separated">
+            <!-- <bst-translatable [text]="'Detachment Rules'"></bst-translatable> -->
+            Detachment Rules
+          </h3>
+        </ion-text>
+        <div class="scroller">
+          <table>
+            <tr *ngFor="let rule of detachmentRules$ | async">
+              <td class="wrap">
+                <!-- <bst-translatable [text]="rule.title"></bst-translatable> -->
+                {{ rule.title }}
+              </td>
+              <td class="wrap long">
+                <!-- <bst-translatable [text]="rule.description"></bst-translatable> -->
+                {{ rule.description }}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </ion-content>
+    </ng-container>
+  </ng-container>
+</ng-container>

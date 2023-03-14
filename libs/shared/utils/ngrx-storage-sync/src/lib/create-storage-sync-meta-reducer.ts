@@ -1,7 +1,9 @@
 import { MetaReducer } from '@ngrx/store';
 
+import { MinimalStorage } from './models/minimal-storage.model';
+
 interface AllOptions<T> {
-  storage: Storage;
+  storage: MinimalStorage;
   serialize: (state: T) => string;
   parse: (serialized: string | null) => T | undefined;
 }

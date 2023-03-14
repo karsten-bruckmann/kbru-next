@@ -4,7 +4,7 @@ import { UnitComponent } from './unit.component';
 
 export const UnitRoutes: Route[] = [
   {
-    path: ':id',
+    path: ':roster-id/:detachment-index/:unit-id',
     component: UnitComponent,
   },
 ];
