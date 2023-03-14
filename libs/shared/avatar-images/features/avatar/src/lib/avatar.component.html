@@ -1,0 +1,27 @@
+<div class="existing" *ngIf="data$ | async as data; else form">
+  <img [src]="data" (load)="avatarLoaded.next()" />
+  <ion-icon
+    *ngIf="editable"
+    (click)="delete()"
+    name="close-circle"
+    class="delete"
+    color="medium"
+  ></ion-icon>
+</div>
+<ng-template #form>
+  <ion-button
+    fill="clear"
+    (click)="editable && f.click()"
+    color="light"
+    class="upload"
+  >
+    <ion-icon name="image" class="upload"></ion-icon>
+  </ion-button>
+  <input
+    (change)="save($event)"
+    class="ion-hide"
+    #f
+    type="file"
+    accept="image/*"
+  />
+</ng-template>

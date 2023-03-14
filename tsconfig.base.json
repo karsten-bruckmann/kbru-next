@@ -30,14 +30,29 @@
       "@kbru/battle-companion/features/unit": [
         "libs/battle-companion/features/unit/src/index.ts"
       ],
+      "@kbru/shared/avatar-images/core/image-management": [
+        "libs/shared/avatar-images/core/image-management/src/index.ts"
+      ],
+      "@kbru/shared/avatar-images/features/avatar": [
+        "libs/shared/avatar-images/features/avatar/src/index.ts"
+      ],
       "@kbru/shared/ionic/ui/file-input": [
         "libs/shared/ionic/ui/file-input/src/index.ts"
+      ],
+      "@kbru/shared/translatable/features/translatable": [
+        "libs/shared/translatable/features/translatable/src/index.ts"
+      ],
+      "@kbru/shared/utils/angular-utils": [
+        "libs/shared/utils/angular-utils/src/index.ts"
       ],
       "@kbru/shared/utils/architecture": [
         "libs/shared/utils/architecture/src/index.ts"
       ],
       "@kbru/shared/utils/array-utils": [
         "libs/shared/utils/array-utils/src/index.ts"
+      ],
+      "@kbru/shared/utils/file-utils": [
+        "libs/shared/utils/file-utils/src/index.ts"
       ],
       "@kbru/shared/utils/ngrx-architecture": [
         "libs/shared/utils/ngrx-architecture/src/index.ts"
@@ -47,6 +62,9 @@
       ],
       "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
       "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
+      "avatar-images": [
+        "libs/shared/avatar-images/data-access/avatar-images/src/index.ts"
+      ],
       "stream": ["node_modules/stream-browserify"],
       "timers": ["node_modules/timers-browserify"]
     }

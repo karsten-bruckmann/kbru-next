@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  overflow: hidden;
+  border-radius: 5%;
+  background-color: rgb(var(--ion-color-light-rgb), 0.5);
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.existing {
+  width: 100%;
+  height: 100%;
+}
+
+ion-button.upload,
+ion-icon.upload {
+  width: 100%;
+  height: 100%;
+}
+
+ion-icon.delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0.8;
+}

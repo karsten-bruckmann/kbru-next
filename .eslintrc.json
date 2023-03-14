@@ -36,7 +36,8 @@
                 "onlyDependOnLibsWithTags": [
                   "type:ui",
                   "type:feature",
-                  "type:core"
+                  "type:core",
+                  "type:util"
                 ]
               },
               {

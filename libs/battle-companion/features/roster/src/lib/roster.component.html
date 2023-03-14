@@ -1,14 +1,16 @@
 <ion-header></ion-header>
 <ion-content>
   <ion-list>
-    <ng-container *ngFor="let detachment of (roster$ | async)?.detachments">
+    <ng-container
+      *ngFor="let detachment of (roster$ | async)?.detachments; let i = index"
+    >
       <ion-item-divider>
         {{ detachment.title }}
       </ion-item-divider>
       <ion-item-group>
         <ion-item
           *ngFor="let unit of detachment.units"
-          [routerLink]="['..', 'unit', unit.id]"
+          [routerLink]="['..', 'unit', id$ | async, i, unit.id]"
         >
           {{ unit.title }}
         </ion-item>
