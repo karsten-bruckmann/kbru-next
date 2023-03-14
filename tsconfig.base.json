@@ -36,11 +36,11 @@
       "@kbru/shared/avatar-images/features/avatar": [
         "libs/shared/avatar-images/features/avatar/src/index.ts"
       ],
-      "@kbru/shared/ionic/ui/avatar": [
-        "libs/shared/ionic/ui/avatar/src/index.ts"
-      ],
       "@kbru/shared/ionic/ui/file-input": [
         "libs/shared/ionic/ui/file-input/src/index.ts"
+      ],
+      "@kbru/shared/translatable/features/translatable": [
+        "libs/shared/translatable/features/translatable/src/index.ts"
       ],
       "@kbru/shared/utils/angular-utils": [
         "libs/shared/utils/angular-utils/src/index.ts"

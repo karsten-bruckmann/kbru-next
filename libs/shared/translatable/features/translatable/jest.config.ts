@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'shared-ionic-ui-avatar',
+  displayName: 'shared-translatable-features-translatable',
   preset: '../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +9,8 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../../../coverage/libs/shared/ionic/ui/avatar',
+  coverageDirectory:
+    '../../../../../coverage/libs/shared/translatable/features/translatable',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

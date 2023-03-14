@@ -6,8 +6,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { Unit, Weapon } from '@kbru/battle-companion/core/roster-management';
 import { AvatarComponent } from '@kbru/shared/avatar-images/features/avatar';
+import { TranslatableComponent } from '@kbru/shared/translatable/features/translatable';
 import { first, Subject } from 'rxjs';
 
 import { CleanEmptyPipe } from '../pipes/clean-empty.pipe';
@@ -15,7 +17,13 @@ import { CleanEmptyPipe } from '../pipes/clean-empty.pipe';
 @Component({
   selector: 'battle-companion-unit-details',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [
+    CommonModule,
+    IonicModule,
+    AvatarComponent,
+    TranslatableComponent,
+    CleanEmptyPipe,
+  ],
   templateUrl: './unit-details.component.html',
   styleUrls: ['./unit-details.component.scss'],
 })

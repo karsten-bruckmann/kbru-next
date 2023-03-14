@@ -1,5 +1,415 @@
-<feature-avatar
-  *ngIf="unit"
-  [name]="unit.title"
-  [editable]="true"
-></feature-avatar>
+<ng-container *ngIf="unit">
+  <ion-item lines="none" class="unit-info">
+    <div>
+      <h3><feature-translatable [text]="unit.title"></feature-translatable></h3>
+      <p class="keywords">
+        <feature-translatable
+          *ngFor="let keyword of unit.keywords"
+          [text]="keyword"
+        ></feature-translatable>
+      </p>
+    </div>
+    <feature-avatar
+      slot="end"
+      [editable]="true"
+      [name]="unit.title"
+    ></feature-avatar>
+  </ion-item>
+
+  <ng-container *ngFor="let model of unit.models">
+    <ion-text color="primary" *ngIf="unit.models.length > 1">
+      <h4>
+        {{ model.amount }} x
+        <feature-translatable [text]="model.title"></feature-translatable>
+      </h4>
+    </ion-text>
+
+    <div class="profile-and-weapons">
+      <!-- PROFILES -->
+      <div class="scroller profile">
+        <table class="aligned">
+          <tr>
+            <th *ngIf="model.profiles.length > 1"></th>
+            <th><feature-translatable [text]="'M'"></feature-translatable></th>
+            <th><feature-translatable [text]="'WS'"></feature-translatable></th>
+            <th><feature-translatable [text]="'BS'"></feature-translatable></th>
+            <th><feature-translatable [text]="'S'"></feature-translatable></th>
+            <th><feature-translatable [text]="'T'"></feature-translatable></th>
+            <th><feature-translatable [text]="'W'"></feature-translatable></th>
+            <th><feature-translatable [text]="'A'"></feature-translatable></th>
+            <th><feature-translatable [text]="'Ld'"></feature-translatable></th>
+            <th><feature-translatable [text]="'Sv'"></feature-translatable></th>
+          </tr>
+          <tr *ngFor="let profile of model.profiles">
+            <td *ngIf="model.profiles.length > 1">
+              <feature-translatable
+                [text]="profile.title"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.movement"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.weaponSkill"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.ballisticSkill"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.strength"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.toughness"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.wounds"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.attacks"
+              ></feature-translatable>
+            </td>
+            <td class="centered">
+              <feature-translatable
+                [text]="profile.leadership"
+              ></feature-translatable>
+            </td>
+            <td>
+              <feature-translatable
+                [text]="profile.save"
+              ></feature-translatable>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- WEAPONS -->
+      <div class="scroller weapons">
+        <table class="aligned">
+          <tr>
+            <th colspan="2">
+              <feature-translatable [text]="'Weapon'"></feature-translatable>
+            </th>
+            <th>
+              <feature-translatable [text]="'Range'"></feature-translatable>
+            </th>
+            <th>
+              <feature-translatable [text]="'Type'"></feature-translatable>
+            </th>
+            <th><feature-translatable [text]="'S'"></feature-translatable></th>
+            <th><feature-translatable [text]="'AP'"></feature-translatable></th>
+            <th><feature-translatable [text]="'D'"></feature-translatable></th>
+          </tr>
+          <ng-container *ngFor="let weapon of model.weapons">
+            <ng-container
+              *ngIf="
+                weapon.abilities.length === 0 && weapon.profiles.length === 1;
+                else multiProfileWeapon
+              "
+            >
+              <tr>
+                <td
+                  [attr.rowspan]="
+                    (weapon.profiles[0].abilities | cleanEmpty) ? 2 : 1
+                  "
+                >
+                  {{ weapon.amount }}
+                </td>
+                <td
+                  [attr.rowspan]="
+                    (weapon.profiles[0].abilities | cleanEmpty) ? 2 : 1
+                  "
+                  class="wrap"
+                >
+                  <feature-translatable
+                    [text]="weapon.title"
+                  ></feature-translatable>
+                </td>
+                <td class="centered">
+                  <feature-translatable
+                    [text]="weapon.profiles[0].range"
+                  ></feature-translatable>
+                </td>
+                <td class="centered">
+                  <feature-translatable
+                    [text]="weapon.profiles[0].type"
+                  ></feature-translatable>
+                </td>
+                <td class="centered">
+                  <feature-translatable
+                    [text]="weapon.profiles[0].strength"
+                  ></feature-translatable>
+                </td>
+                <td class="centered">
+                  <feature-translatable
+                    [text]="weapon.profiles[0].armourPenetration"
+                  ></feature-translatable>
+                </td>
+                <td class="centered">
+                  <feature-translatable
+                    [text]="weapon.profiles[0].damage"
+                  ></feature-translatable>
+                </td>
+              </tr>
+              <tr *ngIf="weapon.profiles[0].abilities | cleanEmpty">
+                <td class="wrap dimmed" colspan="5">
+                  <feature-translatable
+                    [text]="weapon.profiles[0].abilities"
+                  ></feature-translatable>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #multiProfileWeapon>
+              <tr>
+                <td [attr.rowspan]="getMultiProfileWeaponLineAmount(weapon)">
+                  {{ weapon.amount }}
+                </td>
+                <td>
+                  <feature-translatable
+                    [text]="weapon.title"
+                  ></feature-translatable>
+                </td>
+                <td colspan="5" class="wrap">
+                  <feature-translatable
+                    [text]="weapon.abilities.join('\n')"
+                  ></feature-translatable>
+                </td>
+              </tr>
+              <ng-container *ngFor="let profile of weapon.profiles">
+                <tr class="sub-profile">
+                  <td
+                    [attr.rowspan]="(profile.abilities | cleanEmpty) ? 2 : 1"
+                    class="sub-profile-title"
+                  >
+                    <feature-translatable
+                      [text]="profile.title"
+                    ></feature-translatable>
+                  </td>
+                  <td class="centered">
+                    <feature-translatable
+                      [text]="profile.range"
+                    ></feature-translatable>
+                  </td>
+                  <td class="centered">
+                    <feature-translatable
+                      [text]="profile.type"
+                    ></feature-translatable>
+                  </td>
+                  <td class="centered">
+                    <feature-translatable
+                      [text]="profile.strength"
+                    ></feature-translatable>
+                  </td>
+                  <td class="centered">
+                    <feature-translatable
+                      [text]="profile.armourPenetration"
+                    ></feature-translatable>
+                  </td>
+                  <td class="centered">
+                    <feature-translatable
+                      [text]="profile.damage"
+                    ></feature-translatable>
+                  </td>
+                </tr>
+                <tr *ngIf="profile.abilities | cleanEmpty">
+                  <td class="wrap dimmed" colspan="5">
+                    <feature-translatable
+                      [text]="profile.abilities"
+                    ></feature-translatable>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-template>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+
+    <!-- PSYCHIC POWERS -->
+    <div class="scroller spychic-powers" *ngIf="model.psychicPowers.length > 0">
+      <table class="aligned">
+        <tr>
+          <th>
+            <feature-translatable
+              [text]="'Psychic Power'"
+            ></feature-translatable>
+          </th>
+          <th>
+            <feature-translatable [text]="'Range'"></feature-translatable>
+          </th>
+          <th>
+            <feature-translatable [text]="'Warp Charge'"></feature-translatable>
+          </th>
+          <th>
+            <feature-translatable [text]="'Description'"></feature-translatable>
+          </th>
+        </tr>
+        <ng-container *ngFor="let power of model.psychicPowers">
+          <tr *ngIf="power.profiles.length === 1; else multiProfilePower">
+            <td class="wrap">
+              <feature-translatable [text]="power.title"></feature-translatable>
+            </td>
+            <td>
+              <feature-translatable
+                [text]="power.profiles[0].range"
+              ></feature-translatable>
+            </td>
+            <td>
+              <feature-translatable
+                [text]="power.profiles[0].warpCharge"
+              ></feature-translatable>
+            </td>
+            <td class="wrap long">
+              <feature-translatable
+                [text]="power.profiles[0].description"
+              ></feature-translatable>
+            </td>
+          </tr>
+          <ng-template #multiProfilePower>
+            <tr>
+              <td colspan="4">
+                <feature-translatable
+                  [text]="power.title"
+                ></feature-translatable>
+              </td>
+            </tr>
+            <tr *ngFor="let profile of power.profiles" class="sub-profile">
+              <td></td>
+              <td>
+                <feature-translatable
+                  [text]="profile.title"
+                ></feature-translatable>
+              </td>
+              <td>
+                <feature-translatable
+                  [text]="profile.range"
+                ></feature-translatable>
+              </td>
+              <td>
+                <feature-translatable
+                  [text]="profile.warpCharge"
+                ></feature-translatable>
+              </td>
+              <td>
+                <feature-translatable
+                  [text]="profile.description"
+                ></feature-translatable>
+              </td>
+            </tr>
+          </ng-template>
+        </ng-container>
+      </table>
+    </div>
+
+    <!-- PRAYERS -->
+    <div class="scroller prayers" *ngIf="model.prayers.length > 0">
+      <table class="aligned">
+        <tr>
+          <th>
+            <feature-translatable [text]="'Prayer'"></feature-translatable>
+          </th>
+          <th>
+            <feature-translatable [text]="'Effect'"></feature-translatable>
+          </th>
+        </tr>
+        <ng-container *ngFor="let prayer of model.prayers">
+          <tr *ngIf="prayer.profiles.length === 1; else multiProfilePrayer">
+            <td class="wrap">
+              <feature-translatable
+                [text]="prayer.title"
+              ></feature-translatable>
+            </td>
+            <td class="wrap">
+              <feature-translatable
+                [text]="prayer.profiles[0].effect"
+              ></feature-translatable>
+            </td>
+          </tr>
+          <ng-template #multiProfilePrayer>
+            <tr>
+              <td colspan="2">
+                <feature-translatable
+                  [text]="prayer.title"
+                ></feature-translatable>
+              </td>
+            </tr>
+            <tr *ngFor="let profile of prayer.profiles" class="sub-profile">
+              <td></td>
+              <td>
+                <feature-translatable
+                  [text]="profile.title"
+                ></feature-translatable>
+              </td>
+              <td>
+                <feature-translatable
+                  [text]="profile.effect"
+                ></feature-translatable>
+              </td>
+            </tr>
+          </ng-template>
+        </ng-container>
+      </table>
+    </div>
+
+    <!-- MUTATIONS -->
+    <div class="scroller mutations" *ngIf="model.mutations.length > 0">
+      <table class="aligned">
+        <tr>
+          <th>
+            <feature-translatable [text]="'Mutation'"></feature-translatable>
+          </th>
+          <th>
+            <feature-translatable [text]="'Effect'"></feature-translatable>
+          </th>
+        </tr>
+        <ng-container *ngFor="let mutation of model.mutations">
+          <tr>
+            <td class="wrap">
+              <feature-translatable
+                [text]="mutation.title"
+              ></feature-translatable>
+            </td>
+            <td class="wrap">
+              <feature-translatable
+                [text]="mutation.effect"
+              ></feature-translatable>
+            </td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </ng-container>
+
+  <!-- UNIT RULES -->
+  <div class="scroller rules">
+    <ion-text color="primary">
+      <h3 class="separated">
+        <feature-translatable [text]="'Rules'"></feature-translatable>
+      </h3>
+    </ion-text>
+    <table>
+      <tr *ngFor="let rule of unit.rules">
+        <td class="wrap">
+          <feature-translatable [text]="rule.title"></feature-translatable>
+        </td>
+        <td class="wrap long">
+          <feature-translatable
+            [text]="rule.description"
+          ></feature-translatable>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-container>
