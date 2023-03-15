@@ -2,5 +2,5 @@ export {
   avatarImageAdded,
   avatarImageRemoved,
   avatarImageSelector,
-} from 'avatar-images';
+} from '@kbru/shared/avatar-images/data-access/avatar-images';
 export * from './lib/image-management.module';
