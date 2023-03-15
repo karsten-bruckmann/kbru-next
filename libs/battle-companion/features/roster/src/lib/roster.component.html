@@ -12,6 +12,7 @@
           *ngFor="let unit of detachment.units"
           [routerLink]="['..', 'unit', id$ | async, i, unit.id]"
         >
+          <feature-avatar slot="start" [name]="unit.title"></feature-avatar>
           {{ unit.title }}
         </ion-item>
       </ion-item-group>

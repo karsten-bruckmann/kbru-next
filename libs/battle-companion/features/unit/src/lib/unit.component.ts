@@ -8,7 +8,6 @@ import {
   rosterSelector,
   unitSelector,
 } from '@kbru/battle-companion/core/roster-management';
-import { ImageManagementModule } from '@kbru/shared/avatar-images/core/image-management';
 import { routeParam, routeParams } from '@kbru/shared/utils/angular-utils';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, switchMap } from 'rxjs';
@@ -23,7 +22,6 @@ import { UnitDetailsComponent } from './unit-details/unit-details.component';
     IonicModule,
     RouterLinkWithHref,
     RosterManagementModule,
-    ImageManagementModule,
     UnitDetailsComponent,
   ],
   templateUrl: './unit.component.html',

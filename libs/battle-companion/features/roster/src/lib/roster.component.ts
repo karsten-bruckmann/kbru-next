@@ -6,6 +6,7 @@ import {
   RosterManagementModule,
   rosterSelector,
 } from '@kbru/battle-companion/core/roster-management';
+import { AvatarComponent } from '@kbru/shared/avatar-images/features/avatar';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'rxjs';
 
@@ -17,6 +18,7 @@ import { map, switchMap } from 'rxjs';
     IonicModule,
     RosterManagementModule,
     RouterLinkWithHref,
+    AvatarComponent,
   ],
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss'],

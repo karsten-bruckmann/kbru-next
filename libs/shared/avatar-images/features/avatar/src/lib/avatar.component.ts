@@ -5,6 +5,7 @@ import {
   avatarImageAdded,
   avatarImageRemoved,
   avatarImageSelector,
+  ImageManagementModule,
 } from '@kbru/shared/avatar-images/core/image-management';
 import { Store } from '@ngrx/store';
 import {
@@ -19,7 +20,7 @@ import {
 @Component({
   selector: 'feature-avatar',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, ImageManagementModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
 })
