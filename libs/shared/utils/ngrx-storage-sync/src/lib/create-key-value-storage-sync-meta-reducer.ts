@@ -25,7 +25,7 @@ export const createKeyValueStorageSyncMetaReducer =
     };
 
     let currentState = { ...state };
-    if (currentState === undefined) {
+    if (state === undefined) {
       currentState = {};
       for (let i = 0; i < allOptions.storage.length; i++) {
         const key = allOptions.storage.key(i);

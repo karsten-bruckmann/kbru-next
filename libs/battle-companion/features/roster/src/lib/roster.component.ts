@@ -7,6 +7,7 @@ import {
   rosterSelector,
 } from '@kbru/battle-companion/core/roster-management';
 import { AvatarComponent } from '@kbru/shared/avatar-images/features/avatar';
+import { TranslatableComponent } from '@kbru/shared/translatable/features/translatable';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'rxjs';
 
@@ -19,6 +20,7 @@ import { map, switchMap } from 'rxjs';
     RosterManagementModule,
     RouterLinkWithHref,
     AvatarComponent,
+    TranslatableComponent,
   ],
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss'],

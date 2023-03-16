@@ -13,7 +13,7 @@
           [routerLink]="['..', 'unit', id$ | async, i, unit.id]"
         >
           <feature-avatar slot="start" [name]="unit.title"></feature-avatar>
-          {{ unit.title }}
+          <feature-translatable [text]="unit.title"></feature-translatable>
         </ion-item>
       </ion-item-group>
     </ng-container>
