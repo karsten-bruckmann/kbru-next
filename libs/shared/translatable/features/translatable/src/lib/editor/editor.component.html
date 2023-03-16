@@ -1,0 +1,4 @@
+<pre>{{ this.text$ | async }}</pre>
+<textarea #t (keyup)="translation = t.value">{{
+  this.translation$ | async
+}}</textarea>

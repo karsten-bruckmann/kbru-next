@@ -42,6 +42,12 @@
       "@kbru/shared/ionic/ui/file-input": [
         "libs/shared/ionic/ui/file-input/src/index.ts"
       ],
+      "@kbru/shared/translatable/core/translation-management": [
+        "libs/shared/translatable/core/translation-management/src/index.ts"
+      ],
+      "@kbru/shared/translatable/data-access/translations": [
+        "libs/shared/translatable/data-access/translations/src/index.ts"
+      ],
       "@kbru/shared/translatable/features/translatable": [
         "libs/shared/translatable/features/translatable/src/index.ts"
       ],

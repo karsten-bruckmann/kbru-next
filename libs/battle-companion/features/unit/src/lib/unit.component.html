@@ -23,12 +23,12 @@
       <ion-content>
         <ion-text color="primary">
           <h2>
-            <!-- <bst-translatable [text]="detachment.title"></bst-translatable> -->
-            {{ detachment.title }}
+            <feature-translatable
+              [text]="detachment.title"
+            ></feature-translatable>
           </h2>
         </ion-text>
 
-        <!-- <bst-unit-card [unit]="unit"></bst-unit-card> -->
         <battle-companion-unit-details
           [unit]="unit"
         ></battle-companion-unit-details>
@@ -36,20 +36,23 @@
         <!-- DETACHMENT RULES -->
         <ion-text color="primary">
           <h3 class="separated">
-            <!-- <bst-translatable [text]="'Detachment Rules'"></bst-translatable> -->
-            Detachment Rules
+            <feature-translatable
+              [text]="'Detachment Rules'"
+            ></feature-translatable>
           </h3>
         </ion-text>
         <div class="scroller">
           <table>
             <tr *ngFor="let rule of detachmentRules$ | async">
               <td class="wrap">
-                <!-- <bst-translatable [text]="rule.title"></bst-translatable> -->
-                {{ rule.title }}
+                <feature-translatable
+                  [text]="rule.title"
+                ></feature-translatable>
               </td>
               <td class="wrap long">
-                <!-- <bst-translatable [text]="rule.description"></bst-translatable> -->
-                {{ rule.description }}
+                <feature-translatable
+                  [text]="rule.description"
+                ></feature-translatable>
               </td>
             </tr>
           </table>
