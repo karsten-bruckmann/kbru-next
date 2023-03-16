@@ -1,28 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FileInputComponent } from '@kbru/shared/ionic/ui/file-input';
-import { translationsImported } from '@kbru/shared/translatable/core/translation-management';
+import {
+  TranslationManagementModule,
+  translationsImported,
+} from '@kbru/shared/translatable/core/translation-management';
 import { Store } from '@ngrx/store';
 
-import { FooterComponent } from './footer/footer.component';
-import { RosterListComponent } from './roster-list/roster-list.component';
-
 @Component({
-  selector: 'battle-companion-start-page',
+  selector: 'battle-companion-start-page-footer',
   standalone: true,
   imports: [
     CommonModule,
     IonicModule,
-    RosterListComponent,
+    ReactiveFormsModule,
+    TranslationManagementModule,
     FileInputComponent,
-    FooterComponent,
   ],
-  templateUrl: './start-page.component.html',
-  styleUrls: ['./start-page.component.scss'],
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss'],
 })
-export class StartPageComponent {
+export class FooterComponent {
   constructor(private store$: Store) {}
 
   protected fileControl = new FormControl<File | null>(null);

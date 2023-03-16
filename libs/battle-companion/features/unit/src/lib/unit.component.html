@@ -5,9 +5,8 @@
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-button
-              [color]="'light'"
-              [routerLink]="'../../../../'"
-              [routerDirection]="'back'"
+              [routerLink]="['/roster', roster.id]"
+              routerDirection="back"
             >
               <ion-icon name="chevron-back"></ion-icon>
             </ion-button>

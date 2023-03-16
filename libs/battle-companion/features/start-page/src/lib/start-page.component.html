@@ -3,14 +3,9 @@
     <ion-title>Battle Companion</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
   <battle-companion-start-page-roster-list></battle-companion-start-page-roster-list>
-  <ion-footer>
-    <ui-file-input
-      [formControl]="fileControl"
-      #t
-      (change)="importTranslations(t.value)"
-      >Import translations</ui-file-input
-    >
-  </ion-footer>
 </ion-content>
+
+<battle-companion-start-page-footer></battle-companion-start-page-footer>
