@@ -21,7 +21,8 @@
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
             "output": "./svg"
-          }
+          },
+          "apps/battle-companion/src/manifest.webmanifest"
         ],
         "styles": [
           "apps/battle-companion/src/styles.scss",
@@ -58,7 +59,9 @@
           }
         ],
         "scripts": [],
-        "allowedCommonJsDependencies": ["xml2js"]
+        "allowedCommonJsDependencies": ["xml2js"],
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/battle-companion/ngsw-config.json"
       },
       "configurations": {
         "production": {
