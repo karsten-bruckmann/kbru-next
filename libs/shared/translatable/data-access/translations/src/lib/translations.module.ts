@@ -14,10 +14,10 @@ import { translationsSlice } from './translations.slice';
       translationsReducer,
       {
         metaReducers: [
-          translationsCoreReducerRegistry.metaReducer,
           createKeyValueStorageSyncMetaReducer('translations-v2-de', {
             storage: localStorage,
           }),
+          translationsCoreReducerRegistry.metaReducer,
         ],
       }
     ),

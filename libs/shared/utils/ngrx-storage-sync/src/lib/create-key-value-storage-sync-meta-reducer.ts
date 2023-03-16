@@ -24,7 +24,7 @@ export const createKeyValueStorageSyncMetaReducer =
       ...options,
     };
 
-    let currentState = state;
+    let currentState = { ...state };
     if (currentState === undefined) {
       currentState = {};
       for (let i = 0; i < allOptions.storage.length; i++) {
@@ -46,6 +46,13 @@ export const createKeyValueStorageSyncMetaReducer =
     Object.keys(nextState).forEach((key) => {
       allOptions.storage.setItem(`${storageKeyPrefix}-${key}`, nextState[key]);
     });
+
+    if (state !== undefined) {
+      const removedKeys = Object.keys(state).filter((key) => !nextState[key]);
+      removedKeys.forEach((key) => {
+        allOptions.storage.removeItem(`${storageKeyPrefix}-${key}`);
+      });
+    }
 
     return nextState;
   };

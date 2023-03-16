@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { IonicModule, ModalController } from '@ionic/angular';
 import {
   translationChanged,
   translationSelector,
@@ -10,12 +11,15 @@ import { BehaviorSubject, switchMap } from 'rxjs';
 @Component({
   selector: 'feature-translatable-editor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IonicModule],
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent {
-  constructor(private store$: Store) {}
+  constructor(
+    private store$: Store,
+    private modalController: ModalController
+  ) {}
 
   @Input() public set text(text: string) {
     this.text$.next(text);
@@ -31,5 +35,10 @@ export class EditorComponent {
     this.store$.dispatch(
       translationChanged({ text: this.text$.value, translation })
     );
+    this.close();
+  }
+
+  protected close(): void {
+    this.modalController.dismiss();
   }
 }

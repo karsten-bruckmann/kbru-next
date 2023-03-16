@@ -1,4 +1,8 @@
-<pre>{{ this.text$ | async }}</pre>
-<textarea #t (keyup)="translation = t.value">{{
-  this.translation$ | async
-}}</textarea>
+<p>{{ this.text$ | async }}</p>
+<textarea #t>{{ this.translation$ | async }}</textarea>
+<ion-toolbar>
+  <ion-buttons>
+    <ion-button (click)="close()">abbrechen</ion-button>
+    <ion-button (click)="translation = t.value">speichern</ion-button>
+  </ion-buttons>
+</ion-toolbar>
