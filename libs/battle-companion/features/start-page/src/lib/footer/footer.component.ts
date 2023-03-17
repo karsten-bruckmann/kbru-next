@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { FileInputComponent } from '@kbru/shared/ui/ionic/file-input';
+import { FileInputComponent } from '@kbru/shared/ui/ionic-file-input';
 import {
   TranslationManagementModule,
   translationsImported,

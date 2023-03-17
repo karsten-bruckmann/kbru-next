@@ -48,8 +48,8 @@
       "@kbru/shared/features/translatable": [
         "libs/shared/features/translatable/src/index.ts"
       ],
-      "@kbru/shared/ui/ionic/file-input": [
-        "libs/shared/ui/ionic/file-input/src/index.ts"
+      "@kbru/shared/ui/ionic-file-input": [
+        "libs/shared/ui/ionic-file-input/src/index.ts"
       ],
       "@kbru/shared/utils/angular-utils": [
         "libs/shared/utils/angular-utils/src/index.ts"
