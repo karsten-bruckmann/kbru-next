@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { toBase64 } from '@kbru/shared/utils/file-utils';
+import { scaleImage } from '@kbru/shared/utils/file-utils';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from, map, switchMap } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class ConvertAvatarImageEffect {
     this.actions$.pipe(
       ofType(avatarImageAdded),
       switchMap((action) =>
-        from(toBase64(action.image)).pipe(
+        from(scaleImage(action.image, 500, 'max')).pipe(
           map((base64) => avatarImageConverted({ base64, name: action.name }))
         )
       )
