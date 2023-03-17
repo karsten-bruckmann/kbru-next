@@ -5,29 +5,27 @@
         <ion-icon name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ (roster$ | async)?.title }}</ion-title>
+    <ion-title
+      ><h1>{{ (roster$ | async)?.title }}</h1></ion-title
+    >
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list>
-    <ng-container
-      *ngFor="let detachment of (roster$ | async)?.detachments; let i = index"
-    >
-      <ion-item-divider>
-        {{ detachment.title }}
-      </ion-item-divider>
-      <ion-item-group>
-        <ion-item
-          *ngFor="let unit of detachment.units"
-          [routerLink]="['..', 'unit', id$ | async, i, unit.id]"
-        >
-          <feature-avatar slot="start" [name]="unit.title"></feature-avatar>
-          <feature-translatable
-            [text]="unit.title"
-            [translateOnClick]="false"
-          ></feature-translatable>
-        </ion-item>
-      </ion-item-group>
-    </ng-container>
-  </ion-list>
+  <ng-container
+    *ngFor="let detachment of (roster$ | async)?.detachments; let i = index"
+  >
+    <h2>{{ detachment.title }}</h2>
+    <ion-list>
+      <ion-item
+        *ngFor="let unit of detachment.units"
+        [routerLink]="['..', 'unit', id$ | async, i, unit.id]"
+      >
+        <feature-avatar slot="start" [name]="unit.title"></feature-avatar>
+        <feature-translatable
+          [text]="unit.title"
+          [translateOnClick]="false"
+        ></feature-translatable>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 </ion-content>

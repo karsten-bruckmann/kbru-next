@@ -2,7 +2,6 @@
   display: block;
 }
 
-h3,
 h4,
 h5 {
   overflow: hidden;
@@ -12,19 +11,11 @@ h5 {
   margin: 0;
 }
 
-h2,
-h3,
 h4 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 10px;
-}
-
-h2 {
-  background: var(--ion-color-secondary);
-  color: var(--ion-color-secondary-contrast);
-  text-align: center;
 }
 
 table {
@@ -94,10 +85,13 @@ feature-avatar {
   margin: 0;
 
   feature-translatable {
-    &:not(:last-child)::after {
-      content: ',';
-      padding-right: 5px;
-    }
+    display: inline-block;
+    white-space: nowrap;
+    border: 1px dashed var(--ion-color-medium);
+    margin: 2px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background: var(--ion-color-light);
   }
 }
 

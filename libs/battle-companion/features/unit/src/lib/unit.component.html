@@ -21,13 +21,11 @@
       </ion-header>
 
       <ion-content>
-        <ion-text color="primary">
-          <h2>
-            <feature-translatable
-              [text]="detachment.title"
-            ></feature-translatable>
-          </h2>
-        </ion-text>
+        <h2>
+          <feature-translatable
+            [text]="detachment.title"
+          ></feature-translatable>
+        </h2>
 
         <battle-companion-unit-details
           [unit]="unit"
@@ -43,18 +41,22 @@
         </ion-text>
         <div class="scroller">
           <table>
-            <tr *ngFor="let rule of detachmentRules$ | async">
-              <td class="wrap">
-                <feature-translatable
-                  [text]="rule.title"
-                ></feature-translatable>
-              </td>
-              <td class="wrap long">
-                <feature-translatable
-                  [text]="rule.description"
-                ></feature-translatable>
-              </td>
-            </tr>
+            <ng-container *ngFor="let rule of detachmentRules$ | async">
+              <tr>
+                <th class="wrap">
+                  <feature-translatable
+                    [text]="rule.title"
+                  ></feature-translatable>
+                </th>
+              </tr>
+              <tr>
+                <td class="wrap long">
+                  <feature-translatable
+                    [text]="rule.description"
+                  ></feature-translatable>
+                </td>
+              </tr>
+            </ng-container>
           </table>
         </div>
       </ion-content>

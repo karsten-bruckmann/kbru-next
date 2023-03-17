@@ -1,3 +1,24 @@
 :host {
   display: inline;
+
+  &::ng-deep {
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      list-style-type: none;
+      padding-left: 8px;
+      position: relative;
+      &::before {
+        content: '-';
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+}
+
+span {
+  white-space: pre-wrap;
 }

@@ -1,10 +1,10 @@
 <ng-container *ngIf="unit">
+  <h3><feature-translatable [text]="unit.title"></feature-translatable></h3>
   <ion-item lines="none" class="unit-info">
     <div>
-      <h3><feature-translatable [text]="unit.title"></feature-translatable></h3>
       <p class="keywords">
         <feature-translatable
-          *ngFor="let keyword of unit.keywords"
+          *ngFor="let keyword of unit.keywords; let i = index"
           [text]="keyword"
         ></feature-translatable>
       </p>
@@ -400,16 +400,20 @@
       </h3>
     </ion-text>
     <table>
-      <tr *ngFor="let rule of unit.rules">
-        <td class="wrap">
-          <feature-translatable [text]="rule.title"></feature-translatable>
-        </td>
-        <td class="wrap long">
-          <feature-translatable
-            [text]="rule.description"
-          ></feature-translatable>
-        </td>
-      </tr>
+      <ng-container *ngFor="let rule of unit.rules">
+        <tr>
+          <th>
+            <feature-translatable [text]="rule.title"></feature-translatable>
+          </th>
+        </tr>
+        <tr>
+          <td class="wrap long">
+            <feature-translatable
+              [text]="rule.description"
+            ></feature-translatable>
+          </td>
+        </tr>
+      </ng-container>
     </table>
   </div>
 </ng-container>

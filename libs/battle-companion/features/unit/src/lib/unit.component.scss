@@ -47,3 +47,10 @@ th {
   background: var(--ion-color-light);
   color: var(--ion-color-primary);
 }
+
+th {
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-tertiary-contrast);
+  font-weight: bold;
+  font-family: var(--theme-font);
+}

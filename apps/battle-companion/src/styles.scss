@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+h1,
+h2,
+h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px 10px !important;
+  margin: 0 !important;
+  text-align: center;
+}
+
+h1 {
+  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+}
+
+h2 {
+  background: var(--ion-color-secondary);
+  color: var(--ion-color-secondary-contrast);
+}
+
+h3 {
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-tertiary-contrast);
+}
+
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  ion-button {
+    --color: var(--ion-color-primary-contrast);
+  }
+}
