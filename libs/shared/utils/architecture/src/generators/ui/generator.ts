@@ -15,15 +15,10 @@ function normalizeOptions(
   options: UiGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
-  const scope = names(options.scope).fileName;
-  const type = names('ui').fileName;
-  const projectDirectory = `${options.shared ? 'shared/' : ''}${scope}/${type}`;
+  const projectDirectory = `shared/ui`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
-  const parsedTags = [
-    `scope:${options.shared ? 'shared' : scope}`,
-    `type:${type}`,
-  ];
+  const parsedTags = ['scope:shared', 'type:ui'];
 
   return {
     ...options,
@@ -45,14 +40,8 @@ export default async function (tree: Tree, options: UiGeneratorSchema) {
     style: 'scss',
     tags: normalizedOptions.parsedTags.join(','),
     displayBlock: true,
-    prefix:
-      (normalizedOptions.shared ? '' : normalizedOptions.scope + '-') +
-      'ui-' +
-      normalizedOptions.projectName,
-    selector:
-      (normalizedOptions.shared ? '' : normalizedOptions.scope + '-') +
-      'ui-' +
-      normalizedOptions.projectName,
+    prefix: 'ui-' + normalizedOptions.projectName,
+    selector: 'ui-' + normalizedOptions.projectName,
     skipTests: true,
   });
   gen();

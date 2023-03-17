@@ -5,21 +5,11 @@
   "title": "",
   "type": "object",
   "properties": {
-    "scope": {
-      "type": "string",
-      "description": "",
-      "x-prompt": "Project Scope?"
-    },
     "name": {
       "type": "string",
       "description": "",
       "x-prompt": "Module name?"
-    },
-    "shared": {
-      "type": "boolean",
-      "description": "",
-      "x-prompt": "Is this shared scope?"
     }
   },
-  "required": ["name", "scope", "shared"]
+  "required": ["name"]
 }
