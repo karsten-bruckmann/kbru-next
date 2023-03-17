@@ -25,13 +25,10 @@ function normalizeOptions(
   const name = names(options.name).fileName;
   const scope = names(options.scope).fileName;
   const type = names('core').fileName;
-  const projectDirectory = `${options.shared ? 'shared/' : ''}${scope}/${type}`;
+  const projectDirectory = `${scope}/${type}`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
-  const parsedTags = [
-    `scope:${options.shared ? 'shared' : scope}`,
-    `type:${type}`,
-  ];
+  const parsedTags = [`scope:${scope}`, `type:${type}`];
 
   return {
     ...options,
