@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IDBPDatabase, openDB } from 'idb';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { firstValueFrom, from, map, Observable, switchMap } from 'rxjs';
 
 import { avatarImagesSlice } from '../avatar-images.slice';
 
@@ -27,6 +27,19 @@ export class AvatarImagesApiClient {
           )
         );
       })
+    );
+  }
+
+  public async set(data: Record<string, string>): Promise<void> {
+    const db = await this.db;
+    const current = await firstValueFrom(this.get());
+    await Promise.all(
+      Object.keys(data).map((key) => db.put(avatarImagesSlice, data[key], key))
+    );
+    await Promise.all(
+      Object.keys(current)
+        .filter((key) => !data[key])
+        .map((key) => db.delete(avatarImagesSlice, key))
     );
   }
 
