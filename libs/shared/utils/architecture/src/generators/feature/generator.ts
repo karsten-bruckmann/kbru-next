@@ -17,15 +17,10 @@ function normalizeOptions(
   const name = names(options.name).fileName;
   const scope = names(options.scope).fileName;
   const type = names('feature').fileName;
-  const projectDirectory = `${
-    options.shared ? 'shared/' : ''
-  }${scope}/features`;
+  const projectDirectory = `${scope}/features`;
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}`;
-  const parsedTags = [
-    `scope:${options.shared ? 'shared' : scope}`,
-    `type:${type}`,
-  ];
+  const parsedTags = [`scope:${scope}`, `type:${type}`];
 
   return {
     ...options,
@@ -48,11 +43,15 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     tags: normalizedOptions.parsedTags.join(','),
     displayBlock: true,
     prefix:
-      (normalizedOptions.shared ? 'feature' : normalizedOptions.scope) +
+      (normalizedOptions.scope === 'shared'
+        ? 'kbru'
+        : normalizedOptions.scope) +
       '-' +
       normalizedOptions.projectName,
     selector:
-      (normalizedOptions.shared ? 'feature' : normalizedOptions.scope) +
+      (normalizedOptions.scope === 'shared'
+        ? 'kbru'
+        : normalizedOptions.scope) +
       '-' +
       normalizedOptions.projectName,
     skipTests: true,

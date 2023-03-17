@@ -8,18 +8,14 @@
     "scope": {
       "type": "string",
       "description": "",
-      "x-prompt": "Project Scope?"
+      "x-prompt": "Project Scope?",
+      "default": "shared"
     },
     "name": {
       "type": "string",
       "description": "",
       "x-prompt": "Feature Name?"
-    },
-    "shared": {
-      "type": "boolean",
-      "description": "",
-      "x-prompt": "Is this shared scope?"
     }
   },
-  "required": ["name", "scope", "shared"]
+  "required": ["name", "scope"]
 }
