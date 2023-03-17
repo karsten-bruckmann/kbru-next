@@ -6,8 +6,8 @@ import {
   RosterManagementModule,
   rosterSelector,
 } from '@kbru/battle-companion/core/roster-management';
-import { AvatarComponent } from '@kbru/shared/avatar-images/features/avatar';
-import { TranslatableComponent } from '@kbru/shared/translatable/features/translatable';
+import { AvatarComponent } from '@kbru/shared/features/avatar';
+import { TranslatableComponent } from '@kbru/shared/features/translatable';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'rxjs';
 

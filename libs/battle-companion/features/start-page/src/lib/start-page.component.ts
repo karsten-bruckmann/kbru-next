@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { FileInputComponent } from '@kbru/shared/ionic/ui/file-input';
-import { translationsImported } from '@kbru/shared/translatable/core/translation-management';
+import { FileInputComponent } from '@kbru/shared/ui/ionic/file-input';
+import { translationsImported } from '@kbru/shared/core/translation-management';
 import { Store } from '@ngrx/store';
 
 import { FooterComponent } from './footer/footer.component';

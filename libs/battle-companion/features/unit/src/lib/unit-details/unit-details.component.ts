@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Unit, Weapon } from '@kbru/battle-companion/core/roster-management';
-import { AvatarComponent } from '@kbru/shared/avatar-images/features/avatar';
-import { TranslatableComponent } from '@kbru/shared/translatable/features/translatable';
+import { AvatarComponent } from '@kbru/shared/features/avatar';
+import { TranslatableComponent } from '@kbru/shared/features/translatable';
 import { first, Subject } from 'rxjs';
 
 import { CleanEmptyPipe } from '../pipes/clean-empty.pipe';

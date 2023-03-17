@@ -9,7 +9,7 @@ import {
   rosterListSelector,
   RosterManagementModule,
 } from '@kbru/battle-companion/core/roster-management';
-import { FileInputComponent } from '@kbru/shared/ionic/ui/file-input';
+import { FileInputComponent } from '@kbru/shared/ui/ionic/file-input';
 import { Store } from '@ngrx/store';
 
 @Component({

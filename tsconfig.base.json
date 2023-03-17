@@ -30,26 +30,26 @@
       "@kbru/battle-companion/features/unit": [
         "libs/battle-companion/features/unit/src/index.ts"
       ],
-      "@kbru/shared/avatar-images/core/image-management": [
-        "libs/shared/avatar-images/core/image-management/src/index.ts"
+      "@kbru/shared/core/avatar-management": [
+        "libs/shared/core/avatar-management/src/index.ts"
       ],
-      "@kbru/shared/avatar-images/data-access/avatar-images": [
-        "libs/shared/avatar-images/data-access/avatar-images/src/index.ts"
+      "@kbru/shared/core/translation-management": [
+        "libs/shared/core/translation-management/src/index.ts"
       ],
-      "@kbru/shared/avatar-images/features/avatar": [
-        "libs/shared/avatar-images/features/avatar/src/index.ts"
+      "@kbru/shared/data-access/avatar-images": [
+        "libs/shared/data-access/avatar-images/src/index.ts"
       ],
-      "@kbru/shared/ionic/ui/file-input": [
-        "libs/shared/ionic/ui/file-input/src/index.ts"
+      "@kbru/shared/data-access/translations": [
+        "libs/shared/data-access/translations/src/index.ts"
       ],
-      "@kbru/shared/translatable/core/translation-management": [
-        "libs/shared/translatable/core/translation-management/src/index.ts"
+      "@kbru/shared/features/avatar": [
+        "libs/shared/features/avatar/src/index.ts"
       ],
-      "@kbru/shared/translatable/data-access/translations": [
-        "libs/shared/translatable/data-access/translations/src/index.ts"
+      "@kbru/shared/features/translatable": [
+        "libs/shared/features/translatable/src/index.ts"
       ],
-      "@kbru/shared/translatable/features/translatable": [
-        "libs/shared/translatable/features/translatable/src/index.ts"
+      "@kbru/shared/ui/ionic/file-input": [
+        "libs/shared/ui/ionic/file-input/src/index.ts"
       ],
       "@kbru/shared/utils/angular-utils": [
         "libs/shared/utils/angular-utils/src/index.ts"

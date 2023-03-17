@@ -8,7 +8,7 @@ import {
   rosterSelector,
   unitSelector,
 } from '@kbru/battle-companion/core/roster-management';
-import { TranslatableComponent } from '@kbru/shared/translatable/features/translatable';
+import { TranslatableComponent } from '@kbru/shared/features/translatable';
 import { routeParam, routeParams } from '@kbru/shared/utils/angular-utils';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, switchMap } from 'rxjs';
