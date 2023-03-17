@@ -1,8 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { avatarImagesSlice } from '../avatar-images.slice';
-
 export const avatarImageAdded = createAction(
-  `${avatarImagesSlice}/added`,
+  `image-management/added`,
   props<{ image: File; name: string }>()
 );
