@@ -5,10 +5,16 @@
       choose file
     </ui-file-input>
   </ion-item>
-  <ion-item
-    *ngFor="let item of list$ | async"
-    [routerLink]="['roster', item.id]"
-  >
-    {{ item.name }}
-  </ion-item>
+
+  <ion-item-sliding *ngFor="let item of list$ | async">
+    <ion-item [routerLink]="['roster', item.id]">
+      {{ item.name }}
+    </ion-item>
+
+    <ion-item-options>
+      <ion-item-option color="danger" (click)="deleteRoster(item.id)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
 </ion-list>

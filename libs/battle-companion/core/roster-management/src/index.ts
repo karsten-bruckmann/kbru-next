@@ -1,4 +1,5 @@
 export { Weapon } from '@kbru/battle-companion/data-access/rosters';
+export * from './lib/actions/roster-deleted.action';
 export * from './lib/forms/add-roster.form';
 export * from './lib/models/unit.model';
 export * from './lib/roster-management.module';

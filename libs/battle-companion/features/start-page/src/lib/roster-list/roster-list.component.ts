@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
   AddRosterForm,
+  rosterDeleted,
   rosterListSelector,
   RosterManagementModule,
 } from '@kbru/battle-companion/core/roster-management';
@@ -34,5 +35,9 @@ export class RosterListComponent {
 
   public submit(): void {
     this.addRosterForm.submit(this.form);
+  }
+
+  protected deleteRoster(id: string): void {
+    this.store$.dispatch(rosterDeleted({ id }));
   }
 }
