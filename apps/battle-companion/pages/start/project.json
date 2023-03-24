@@ -17,7 +17,8 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/battle-companion/pages/start/src/favicon.ico",
-          "apps/battle-companion/pages/start/src/assets"
+          "apps/battle-companion/pages/start/src/assets",
+          "apps/battle-companion/pages/start/netlify.toml"
         ],
         "styles": ["apps/battle-companion/pages/start/src/styles.scss"],
         "scripts": [],
