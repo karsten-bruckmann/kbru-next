@@ -1,0 +1,122 @@
+{
+  "name": "battle-companion-pages-start",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/battle-companion/pages/start/src",
+  "prefix": "kbru",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/battle-companion/pages/start",
+        "index": "apps/battle-companion/pages/start/src/index.html",
+        "main": "apps/battle-companion/pages/start/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/battle-companion/pages/start/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/battle-companion/pages/start/src/favicon.ico",
+          "apps/battle-companion/pages/start/src/assets"
+        ],
+        "styles": ["apps/battle-companion/pages/start/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/battle-companion/pages/start/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/battle-companion/pages/start/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "battle-companion-pages-start:build:production"
+        },
+        "development": {
+          "browserTarget": "battle-companion-pages-start:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "battle-companion-pages-start:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/battle-companion/pages/start/**/*.ts",
+          "apps/battle-companion/pages/start/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/battle-companion/pages/start/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nrwl/angular:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "battle-companion-pages-start:build",
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "battle-companion-pages-start:build:development"
+        },
+        "production": {
+          "buildTarget": "battle-companion-pages-start:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

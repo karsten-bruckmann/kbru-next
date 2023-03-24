@@ -1,10 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'battle-companion',
-  preset: '../../jest.preset.js',
+  displayName: 'battle-companion-app',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {},
-  coverageDirectory: '../../coverage/apps/battle-companion',
+  coverageDirectory: '../../../coverage/apps/battle-companion/app',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

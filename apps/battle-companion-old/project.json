@@ -1,32 +1,32 @@
 {
-  "name": "battle-companion",
+  "name": "battle-companion-old",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/battle-companion/src",
+  "sourceRoot": "apps/battle-companion-old/src",
   "prefix": "kbru",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/battle-companion",
-        "index": "apps/battle-companion/src/index.html",
-        "main": "apps/battle-companion/src/main.ts",
+        "outputPath": "dist/apps/battle-companion-old",
+        "index": "apps/battle-companion-old/src/index.html",
+        "main": "apps/battle-companion-old/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/battle-companion/tsconfig.app.json",
+        "tsConfig": "apps/battle-companion-old/tsconfig.app.json",
         "assets": [
-          "apps/battle-companion/src/favicon.ico",
-          "apps/battle-companion/src/assets",
+          "apps/battle-companion-old/src/favicon.ico",
+          "apps/battle-companion-old/src/assets",
           {
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
             "output": "./svg"
           },
-          "apps/battle-companion/src/manifest.webmanifest"
+          "apps/battle-companion-old/src/manifest.webmanifest"
         ],
         "styles": [
-          "apps/battle-companion/src/styles.scss",
-          "apps/battle-companion/src/theme/variables.scss",
+          "apps/battle-companion-old/src/styles.scss",
+          "apps/battle-companion-old/src/theme/variables.scss",
           {
             "input": "node_modules/@ionic/angular/css/core.css"
           },
@@ -61,7 +61,7 @@
         "scripts": [],
         "allowedCommonJsDependencies": ["xml2js"],
         "serviceWorker": true,
-        "ngswConfigPath": "apps/battle-companion/ngsw-config.json"
+        "ngswConfigPath": "apps/battle-companion-old/ngsw-config.json"
       },
       "configurations": {
         "production": {
@@ -94,10 +94,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "battle-companion:build:production"
+          "browserTarget": "battle-companion-old:build:production"
         },
         "development": {
-          "browserTarget": "battle-companion:build:development",
+          "browserTarget": "battle-companion-old:build:development",
           "host": "127.0.0.1"
         }
       },
@@ -106,7 +106,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "battle-companion:build"
+        "browserTarget": "battle-companion-old:build"
       }
     },
     "lint": {
@@ -114,8 +114,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "apps/battle-companion/**/*.ts",
-          "apps/battle-companion/**/*.html"
+          "apps/battle-companion-old/**/*.ts",
+          "apps/battle-companion-old/**/*.html"
         ]
       }
     },
@@ -123,7 +123,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/battle-companion/jest.config.ts",
+        "jestConfig": "apps/battle-companion-old/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
