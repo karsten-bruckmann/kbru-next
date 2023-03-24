@@ -5,7 +5,7 @@ module.exports = withModuleFederation({
   remotes: [
     [
       'battle-companion-pages-start',
-      'battle-companion-pages-start.netlify.app',
+      'https://battle-companion-pages-start.netlify.app',
     ],
   ],
 });
