@@ -71,7 +71,6 @@
       ],
       "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
       "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
-      "@kbru/test": ["libs/test/src/index.ts"],
       "stream": ["node_modules/stream-browserify"],
       "timers": ["node_modules/timers-browserify"]
     }
