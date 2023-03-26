@@ -1,6 +1,11 @@
 import { Component, OnInit, Optional } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import {
+  getMessaging,
+  getToken,
+  MessagePayload,
+  onMessage,
+} from 'firebase/messaging';
 import { filter } from 'rxjs';
 
 @Component({
@@ -9,6 +14,10 @@ import { filter } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  protected token?: string;
+  protected error?: unknown;
+  protected messagePayload?: MessagePayload;
+
   constructor(@Optional() updates?: SwUpdate) {
     updates?.versionUpdates
       .pipe(
@@ -29,18 +38,16 @@ export class AppComponent implements OnInit {
     })
       .then((currentToken) => {
         if (currentToken) {
-          alert(currentToken);
+          this.token = currentToken;
         } else {
-          console.log(
-            'No registration token available. Request permission to generate one.'
-          );
+          this.token = undefined;
         }
       })
       .catch((err) => {
-        console.error('An error occurred while retrieving token. ', err);
+        this.error = err;
       });
     onMessage(messaging, (payload) => {
-      alert(JSON.stringify(payload));
+      this.messagePayload = payload;
     });
   }
 }

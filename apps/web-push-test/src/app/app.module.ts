@@ -4,7 +4,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { initializeApp } from 'firebase/app';
 
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 
 initializeApp({
   apiKey: 'AIzaSyCyG3OxnaeEcOICj45xeQELH7PNBF6Yjtw',
@@ -16,7 +15,7 @@ initializeApp({
 });
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
