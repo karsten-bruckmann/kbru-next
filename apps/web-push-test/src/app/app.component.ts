@@ -30,8 +30,9 @@ export class AppComponent implements OnInit {
       });
   }
 
-  public ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
     const messaging = getMessaging();
+    await Notification.requestPermission();
     getToken(messaging, {
       vapidKey:
         'BBWfj0eWNkhU0At_zun0udQRshWjipxjqlGp7aOdjR19P1mbAze1wbNHWII5KY5xwwN4w-6qj7tKqx0wt5RzulM',
