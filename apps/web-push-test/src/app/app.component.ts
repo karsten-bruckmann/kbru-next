@@ -30,7 +30,14 @@ export class AppComponent implements OnInit {
       });
   }
 
-  public async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      this.messagePayload = payload;
+    });
+  }
+
+  public async requestPermission(): Promise<void> {
     const messaging = getMessaging();
     const permission = await Notification.requestPermission();
     console.log(permission);
@@ -48,9 +55,5 @@ export class AppComponent implements OnInit {
     } catch (err) {
       this.error = err;
     }
-
-    onMessage(messaging, (payload) => {
-      this.messagePayload = payload;
-    });
   }
 }

@@ -1,3 +1,7 @@
+<button (click)="requestPermission()" *ngIf="!token">Request permission</button>
+<p>TOKEN</p>
 <pre>{{ token | json }}</pre>
+<p>ERROR</p>
 <pre>{{ error | json }}</pre>
+<p>MESSAGE PAYLOAD</p>
 <pre>{{ messagePayload | json }}</pre>
