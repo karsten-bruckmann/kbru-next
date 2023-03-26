@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
     if (Notification.permission === 'granted') {
       this.token = await this.getToken();
     }
+
     onMessage(this.messaging, (payload) => {
       this.messagePayload = payload;
     });
