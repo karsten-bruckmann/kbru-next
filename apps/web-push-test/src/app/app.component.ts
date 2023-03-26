@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   protected error?: unknown;
   protected messagePayload?: MessagePayload;
 
+  private messaging = getMessaging();
+
   constructor(@Optional() updates?: SwUpdate) {
     updates?.versionUpdates
       .pipe(
@@ -30,30 +32,35 @@ export class AppComponent implements OnInit {
       });
   }
 
-  public ngOnInit(): void {
-    const messaging = getMessaging();
-    onMessage(messaging, (payload) => {
+  public async ngOnInit(): Promise<void> {
+    if (Notification.permission === 'granted') {
+      this.token = await this.getToken();
+    }
+    onMessage(this.messaging, (payload) => {
       this.messagePayload = payload;
     });
   }
 
   public async requestPermission(): Promise<void> {
-    const messaging = getMessaging();
     const permission = await Notification.requestPermission();
     console.log(permission);
     try {
-      const currentToken = await getToken(messaging, {
-        vapidKey:
-          'BBWfj0eWNkhU0At_zun0udQRshWjipxjqlGp7aOdjR19P1mbAze1wbNHWII5KY5xwwN4w-6qj7tKqx0wt5RzulM',
-      });
-
-      if (currentToken) {
-        this.token = currentToken;
-      } else {
-        this.token = undefined;
-      }
+      this.token = await this.getToken();
     } catch (err) {
       this.error = err;
+    }
+  }
+
+  public async getToken(): Promise<string> {
+    const currentToken = await getToken(this.messaging, {
+      vapidKey:
+        'BBWfj0eWNkhU0At_zun0udQRshWjipxjqlGp7aOdjR19P1mbAze1wbNHWII5KY5xwwN4w-6qj7tKqx0wt5RzulM',
+    });
+
+    if (currentToken) {
+      return currentToken;
+    } else {
+      throw new Error('Undefined token');
     }
   }
 }
