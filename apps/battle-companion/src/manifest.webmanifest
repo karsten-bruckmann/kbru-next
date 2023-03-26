@@ -6,7 +6,6 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
-  "gcm_sender_id": "707796446240",
   "icons": [
     {
       "src": "/assets/icons/windows11/SmallTile.scale-100.png",

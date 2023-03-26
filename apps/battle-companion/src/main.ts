@@ -9,21 +9,9 @@ import { IonicModule } from '@ionic/angular';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { initializeApp } from 'firebase/app';
 
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyCyG3OxnaeEcOICj45xeQELH7PNBF6Yjtw',
-  authDomain: 'kbru-apps.firebaseapp.com',
-  projectId: 'kbru-apps',
-  storageBucket: 'kbru-apps.appspot.com',
-  messagingSenderId: '707796446240',
-  appId: '1:707796446240:web:e3d0ad27e7ad12e2ba6045',
-};
-
-const app = initializeApp(firebaseConfig);
 
 bootstrapApplication(AppComponent, {
   providers: [
