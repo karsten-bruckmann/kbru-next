@@ -6,14 +6,12 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: 'from firebase config',
-  authDomain: 'from firebase config',
-  databaseURL: 'from firebase config',
-  projectId: 'from firebase config',
-  storageBucket: 'from firebase config',
-  messagingSenderId: 'from firebase config',
-  appId: 'from firebase config',
-  measurementId: 'from firebase config',
+  apiKey: 'AIzaSyCyG3OxnaeEcOICj45xeQELH7PNBF6Yjtw',
+  authDomain: 'kbru-apps.firebaseapp.com',
+  projectId: 'kbru-apps',
+  storageBucket: 'kbru-apps.appspot.com',
+  messagingSenderId: '707796446240',
+  appId: '1:707796446240:web:c83da61ef5957468ba6045',
 });
 
 const messaging = firebase.messaging();
