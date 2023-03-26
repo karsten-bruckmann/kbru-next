@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'kbru-root',
@@ -7,6 +9,18 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  constructor(@Optional() updates?: SwUpdate) {
+    updates?.versionUpdates
+      .pipe(
+        filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
+      )
+      .subscribe(() => {
+        if (confirm('Neue App-Version verfügbar. Jetzt neu laden?')) {
+          updates.activateUpdate().then(() => document.location.reload());
+        }
+      });
+  }
+
   public ngOnInit(): void {
     const messaging = getMessaging();
     getToken(messaging, {
