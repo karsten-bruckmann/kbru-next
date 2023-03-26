@@ -1,7 +1,7 @@
 {
   "name": "Battle Companion",
   "short_name": "Battle Companion",
-  "theme_color": "#4caab3",
+  "theme_color": "#3d0000",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "./",
