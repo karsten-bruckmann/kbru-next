@@ -32,21 +32,23 @@ export class AppComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     const messaging = getMessaging();
-    await Notification.requestPermission();
-    getToken(messaging, {
-      vapidKey:
-        'BBWfj0eWNkhU0At_zun0udQRshWjipxjqlGp7aOdjR19P1mbAze1wbNHWII5KY5xwwN4w-6qj7tKqx0wt5RzulM',
-    })
-      .then((currentToken) => {
-        if (currentToken) {
-          this.token = currentToken;
-        } else {
-          this.token = undefined;
-        }
-      })
-      .catch((err) => {
-        this.error = err;
+    const permission = await Notification.requestPermission();
+    console.log(permission);
+    try {
+      const currentToken = await getToken(messaging, {
+        vapidKey:
+          'BBWfj0eWNkhU0At_zun0udQRshWjipxjqlGp7aOdjR19P1mbAze1wbNHWII5KY5xwwN4w-6qj7tKqx0wt5RzulM',
       });
+
+      if (currentToken) {
+        this.token = currentToken;
+      } else {
+        this.token = undefined;
+      }
+    } catch (err) {
+      this.error = err;
+    }
+
     onMessage(messaging, (payload) => {
       this.messagePayload = payload;
     });
