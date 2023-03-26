@@ -1,45 +1,24 @@
 :root {
-  --ion-color-primary: #4caab3;
-  --ion-color-primary-rgb: 76, 170, 179;
-  --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0, 0, 0;
-  --ion-color-primary-shade: #43969e;
-  --ion-color-primary-tint: #5eb3bb;
+  --ion-color-primary: #3d0000;
+  --ion-color-primary-rgb: 61, 0, 0;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #360000;
+  --ion-color-primary-tint: #501a1a;
 
-  --ion-color-secondary: #2a3e45;
-  --ion-color-secondary-rgb: 42, 62, 69;
+  --ion-color-secondary: #682603;
+  --ion-color-secondary-rgb: 104, 38, 3;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #25373d;
-  --ion-color-secondary-tint: #3f5158;
+  --ion-color-secondary-shade: #5c2103;
+  --ion-color-secondary-tint: #773c1c;
 
-  --ion-color-tertiary: #394574;
-  --ion-color-tertiary-rgb: 57, 69, 116;
+  --ion-color-tertiary: #726e6e;
+  --ion-color-tertiary-rgb: 114, 110, 110;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #323d66;
-  --ion-color-tertiary-tint: #4d5882;
-
-  --ion-color-success: #2dd36f;
-  --ion-color-success-rgb: 45, 211, 111;
-  --ion-color-success-contrast: #000000;
-  --ion-color-success-contrast-rgb: 0, 0, 0;
-  --ion-color-success-shade: #28ba62;
-  --ion-color-success-tint: #42d77d;
-
-  --ion-color-warning: #ffc409;
-  --ion-color-warning-rgb: 255, 196, 9;
-  --ion-color-warning-contrast: #000000;
-  --ion-color-warning-contrast-rgb: 0, 0, 0;
-  --ion-color-warning-shade: #e0ac08;
-  --ion-color-warning-tint: #ffca22;
-
-  --ion-color-danger: #eb445a;
-  --ion-color-danger-rgb: 235, 68, 90;
-  --ion-color-danger-contrast: #ffffff;
-  --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #cf3c4f;
-  --ion-color-danger-tint: #ed576b;
+  --ion-color-tertiary-shade: #646161;
+  --ion-color-tertiary-tint: #807d7d;
 
   --ion-color-medium: #92949c;
   --ion-color-medium-rgb: 146, 148, 156;
