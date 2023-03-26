@@ -7,26 +7,21 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/web-push-test",
         "index": "apps/web-push-test/src/index.html",
         "main": "apps/web-push-test/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/web-push-test/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/web-push-test/src/favicon.ico",
           "apps/web-push-test/src/assets",
-          "apps/web-push-test/src/manifest.webmanifest"
+          "apps/web-push-test/src/manifest.webmanifest",
+          "apps/web-push-test/src/firebase-messaging-sw.js"
         ],
-        "styles": [
-          "apps/web-push-test/src/styles.scss"
-        ],
+        "styles": ["apps/web-push-test/src/styles.scss"],
         "scripts": [],
         "serviceWorker": true,
         "ngswConfigPath": "apps/web-push-test/ngsw-config.json"
@@ -78,9 +73,7 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "apps/web-push-test/**/*.ts",
@@ -90,9 +83,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/web-push-test/jest.config.ts",
         "passWithNoTests": true
