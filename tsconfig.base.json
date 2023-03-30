@@ -60,6 +60,9 @@
       "@kbru/shared/utils/array-utils": [
         "libs/shared/utils/array-utils/src/index.ts"
       ],
+      "@kbru/shared/utils/effect-aware-forms": [
+        "libs/shared/utils/effect-aware-forms/src/index.ts"
+      ],
       "@kbru/shared/utils/file-utils": [
         "libs/shared/utils/file-utils/src/index.ts"
       ],
@@ -71,6 +74,15 @@
       ],
       "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
       "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
+      "@kbru/skat-list/core/group-management": [
+        "libs/skat-list/core/group-management/src/index.ts"
+      ],
+      "@kbru/skat-list/data-access/groups": [
+        "libs/skat-list/data-access/groups/src/index.ts"
+      ],
+      "@kbru/skat-list/data-access/players": [
+        "libs/skat-list/data-access/players/src/index.ts"
+      ],
       "@kbru/skat-list/features/start-page": [
         "libs/skat-list/features/start-page/src/index.ts"
       ],

@@ -1,0 +1,4 @@
+<ion-content *ngIf="form$ | async as form" [formGroup]="form">
+  <ion-input formControlName="groupName"></ion-input>
+  <ion-button (click)="submit(form)"></ion-button>
+</ion-content>
