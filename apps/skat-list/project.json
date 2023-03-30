@@ -96,7 +96,8 @@
           "browserTarget": "skat-list:build:production"
         },
         "development": {
-          "browserTarget": "skat-list:build:development"
+          "browserTarget": "skat-list:build:development",
+          "host": "127.0.0.1"
         }
       },
       "defaultConfiguration": "development"
