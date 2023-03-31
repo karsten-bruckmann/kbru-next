@@ -51,6 +51,9 @@
       "@kbru/shared/ui/ionic-file-input": [
         "libs/shared/ui/ionic-file-input/src/index.ts"
       ],
+      "@kbru/shared/ui/ionic-list-input": [
+        "libs/shared/ui/ionic-list-input/src/index.ts"
+      ],
       "@kbru/shared/utils/angular-utils": [
         "libs/shared/utils/angular-utils/src/index.ts"
       ],
@@ -80,11 +83,17 @@
       "@kbru/skat-list/core/group-management": [
         "libs/skat-list/core/group-management/src/index.ts"
       ],
+      "@kbru/skat-list/core/skat-list-management": [
+        "libs/skat-list/core/skat-list-management/src/index.ts"
+      ],
       "@kbru/skat-list/data-access/groups": [
         "libs/skat-list/data-access/groups/src/index.ts"
       ],
       "@kbru/skat-list/data-access/players": [
         "libs/skat-list/data-access/players/src/index.ts"
+      ],
+      "@kbru/skat-list/data-access/skat-lists": [
+        "libs/skat-list/data-access/skat-lists/src/index.ts"
       ],
       "@kbru/skat-list/features/group-page": [
         "libs/skat-list/features/group-page/src/index.ts"

@@ -1,0 +1,16 @@
+<ion-list *ngIf="form$ | async as form" [formGroup]="form">
+  <ui-ionic-list-input
+    formControlName="playerIds"
+    [allowedValues]="['a', 'b', 'c', 'd', 'e', 'f', 'g']"
+    [getLabel]="getPlaceholder"
+    [getItemLabel]="getPlayerName"
+    [length]="
+      !form.value.playerIds || form.value.playerIds.length < 3
+        ? 3
+        : form.value.playerIds.length === 3
+        ? 4
+        : 5
+    "
+  ></ui-ionic-list-input>
+  <pre>{{ form.value.playerIds | json }}</pre>
+</ion-list>

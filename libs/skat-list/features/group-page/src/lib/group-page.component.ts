@@ -8,13 +8,23 @@ import {
   GroupManagementModule,
   groupSelector,
 } from '@kbru/skat-list/core/group-management';
+import { SkatListManagementModule } from '@kbru/skat-list/core/skat-list-management';
 import { Store } from '@ngrx/store';
 import { filter, firstValueFrom, map, shareReplay, switchMap, tap } from 'rxjs';
+
+import { AddListFormComponent } from './add-list-form/add-list-form.component';
 
 @Component({
   selector: 'skat-list-group-page',
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule, GroupManagementModule],
+  imports: [
+    CommonModule,
+    IonicModule,
+    RouterModule,
+    GroupManagementModule,
+    SkatListManagementModule,
+    AddListFormComponent,
+  ],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],
 })
@@ -27,6 +37,7 @@ export class GroupPageComponent {
   ) {}
 
   protected popoverMenuOpen = false;
+  protected addListModalOpen = false;
 
   protected group$ = this.activatedRoute.paramMap.pipe(
     tap(console.log),
