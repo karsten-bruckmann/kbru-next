@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import {
   addFormSubmittedAction,
   GroupForm,
@@ -19,14 +19,23 @@ import { Store } from '@ngrx/store';
 export class AddGroupFormComponent {
   constructor(
     private store$: Store,
-    private groupFormService: GroupFormService,
-    private modalController: ModalController
+    private groupFormService: GroupFormService
   ) {}
+
+  @Output()
+  public added = new EventEmitter<void>();
+
+  @Output()
+  public canceled = new EventEmitter<void>();
 
   protected form$ = this.groupFormService.addForm$;
 
   public submit(form: GroupForm): void {
     this.store$.dispatch(addFormSubmittedAction({ value: form.value }));
-    this.modalController.dismiss();
+    this.added.next();
+  }
+
+  public cancel(): void {
+    this.canceled.next();
   }
 }

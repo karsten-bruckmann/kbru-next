@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { GroupManagementModule } from '@kbru/skat-list/core/group-management';
 
 import { AddGroupFormComponent } from './add-group-form/add-group-form.component';
@@ -14,17 +14,17 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
     IonicModule,
     GroupManagementModule,
     GroupsListComponent,
+    AddGroupFormComponent,
   ],
   templateUrl: './start-page.component.html',
   styleUrls: ['./start-page.component.scss'],
 })
 export class StartPageComponent {
-  constructor(private modalController: ModalController) {}
-
-  protected async addGroup(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: AddGroupFormComponent,
-    });
-    await modal.present();
+  protected addGroupModalOpen = false;
+  protected closeAddGroupModal(): void {
+    this.addGroupModalOpen = false;
+  }
+  protected openAddGroupModal(): void {
+    this.addGroupModalOpen = true;
   }
 }

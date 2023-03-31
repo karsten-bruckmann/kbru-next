@@ -25,7 +25,7 @@
           }
         ],
         "styles": [
-          "apps/skat-list/src/styles.css",
+          "apps/skat-list/src/styles.scss",
           "apps/skat-list/src/theme/variables.scss",
           {
             "input": "node_modules/@ionic/angular/css/core.css"
