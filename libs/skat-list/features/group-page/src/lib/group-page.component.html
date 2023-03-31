@@ -1,1 +1,31 @@
-<p>group-page works!</p>
+<ng-container *ngIf="group$ | async as group">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button [routerLink]="['/']" routerDirection="back">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{ group.name }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="popoverMenuOpen = true" id="menuButton">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+        <ion-popover [isOpen]="popoverMenuOpen" trigger="menuButton">
+          <ng-template>
+            <ion-list>
+              <ion-button
+                fill="clear"
+                color="danger"
+                (click)="popoverMenuOpen = false; deleteGroup()"
+              >
+                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                Gruppe Löschen
+              </ion-button>
+            </ion-list>
+          </ng-template>
+        </ion-popover>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+</ng-container>

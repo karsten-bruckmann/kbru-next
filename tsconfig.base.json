@@ -72,6 +72,9 @@
       "@kbru/shared/utils/ngrx-storage-sync": [
         "libs/shared/utils/ngrx-storage-sync/src/index.ts"
       ],
+      "@kbru/shared/utils/rxjs-utils": [
+        "libs/shared/utils/rxjs-utils/src/index.ts"
+      ],
       "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
       "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
       "@kbru/skat-list/core/group-management": [

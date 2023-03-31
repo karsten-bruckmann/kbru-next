@@ -3,13 +3,6 @@
   [routerLink]="['/', 'group', group.id]"
 >
   <ion-card-header>
-    <ion-toolbar>
-      <ion-title>{{ group.name }}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button color="danger" (click)="delete(group.id, group.name)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
+    <ion-title>{{ group.name }}</ion-title>
   </ion-card-header>
 </ion-card>
