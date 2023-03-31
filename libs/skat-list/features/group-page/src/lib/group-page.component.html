@@ -32,7 +32,7 @@
   <ion-content>
     <ion-list inset>
       <ion-item-group>
-        <ion-item-divider>
+        <ion-item-divider color="primary">
           <ion-label>Offene Spiele</ion-label>
         </ion-item-divider>
         <ion-item color="light">
@@ -52,13 +52,52 @@
 
     <ion-list inset>
       <ion-item-group>
-        <ion-item-divider>
+        <ion-item-divider color="primary">
           <ion-label>Spieler</ion-label>
         </ion-item-divider>
         <ion-item color="light">
-          <ion-label>Karsten</ion-label>
+          <ion-avatar slot="start">
+            <img
+              alt="Silhouette of a person's head"
+              src="https://ionicframework.com/docs/img/demos/avatar.svg"
+            />
+          </ion-avatar>
+          <ion-label>Item Avatar</ion-label>
+        </ion-item>
+        <ion-item color="light">
+          <ion-avatar slot="start">
+            <img
+              alt="Silhouette of a person's head"
+              src="https://ionicframework.com/docs/img/demos/avatar.svg"
+            />
+          </ion-avatar>
+          <ion-label>Item Avatar</ion-label>
+        </ion-item>
+        <ion-item color="light">
+          <ion-avatar slot="start">
+            <img
+              alt="Silhouette of a person's head"
+              src="https://ionicframework.com/docs/img/demos/avatar.svg"
+            />
+          </ion-avatar>
+          <ion-label>Item Avatar</ion-label>
+        </ion-item>
+        <ion-item color="light">
+          <ion-avatar slot="start">
+            <img
+              alt="Silhouette of a person's head"
+              src="https://ionicframework.com/docs/img/demos/avatar.svg"
+            />
+          </ion-avatar>
+          <ion-label>Item Avatar</ion-label>
         </ion-item>
       </ion-item-group>
     </ion-list>
   </ion-content>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ng-container>
