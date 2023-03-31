@@ -83,6 +83,9 @@
       "@kbru/skat-list/data-access/players": [
         "libs/skat-list/data-access/players/src/index.ts"
       ],
+      "@kbru/skat-list/features/group-page": [
+        "libs/skat-list/features/group-page/src/index.ts"
+      ],
       "@kbru/skat-list/features/start-page": [
         "libs/skat-list/features/start-page/src/index.ts"
       ],

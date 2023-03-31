@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import {
   groupDeletedAction,
@@ -11,7 +12,7 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'skat-list-start-page-groups-list',
   standalone: true,
-  imports: [CommonModule, IonicModule, GroupManagementModule],
+  imports: [CommonModule, IonicModule, GroupManagementModule, RouterModule],
   templateUrl: './groups-list.component.html',
   styleUrls: ['./groups-list.component.scss'],
 })
