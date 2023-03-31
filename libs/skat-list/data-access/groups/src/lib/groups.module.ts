@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { createStorageSyncMetaReducer } from '@kbru/shared/utils/ngrx-storage-sync';
 import { StoreModule } from '@ngrx/store';
 
 import { groupsCoreReducerRegistry } from './groups.core-reducer-registry';
@@ -9,7 +10,10 @@ import { groupsReducer } from './reducers/groups.reducer';
 @NgModule({
   imports: [
     StoreModule.forFeature<GroupsState>(groupsSlice, groupsReducer, {
-      metaReducers: [groupsCoreReducerRegistry.metaReducer],
+      metaReducers: [
+        createStorageSyncMetaReducer(groupsSlice, { storage: localStorage }),
+        groupsCoreReducerRegistry.metaReducer,
+      ],
     }),
   ],
 })
