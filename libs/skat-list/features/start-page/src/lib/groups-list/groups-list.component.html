@@ -1,8 +1,14 @@
-<ion-card
-  *ngFor="let group of list$ | async"
-  [routerLink]="['/', 'group', group.id]"
->
-  <ion-card-header>
-    <ion-title>{{ group.name }}</ion-title>
-  </ion-card-header>
-</ion-card>
+<ion-list inset>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Gruppen</ion-label>
+    </ion-item-divider>
+    <ion-item
+      *ngFor="let group of list$ | async"
+      [routerLink]="['/', 'group', group.id]"
+      color="light"
+    >
+      {{ group.name }}
+    </ion-item>
+  </ion-item-group>
+</ion-list>
