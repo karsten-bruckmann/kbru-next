@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import {
+  groupDeletedAction,
   GroupManagementModule,
   groupsListSelector,
 } from '@kbru/skat-list/core/group-management';
@@ -15,7 +16,35 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./groups-list.component.scss'],
 })
 export class GroupsListComponent {
-  constructor(private store$: Store) {}
+  constructor(
+    private store$: Store,
+    private alertController: AlertController
+  ) {}
 
   protected list$ = this.store$.select(groupsListSelector);
+
+  protected async delete(id: string, name: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header: `${name} löschen?`,
+      subHeader: 'Möchtest du die Gruppe löschen?',
+      message: 'Das kann nicht rückgängig gemacht werden!',
+      buttons: [
+        {
+          text: 'Nein',
+          role: 'cancel',
+          handler: () => {
+            return;
+          },
+        },
+        {
+          text: 'Ja',
+          role: 'confirm',
+          handler: () => {
+            this.store$.dispatch(groupDeletedAction({ id }));
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
 }
