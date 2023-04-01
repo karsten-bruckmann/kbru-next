@@ -91,6 +91,18 @@
       <ion-label>Hirsch</ion-label>
       <ion-toggle formControlName="hirsch"></ion-toggle>
     </ion-item>
+    <ion-item color="light" *ngIf="form.controls.ramsch">
+      <ion-label>Ramsch statt Einpassen</ion-label>
+      <ion-toggle formControlName="ramsch"></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.schiebeRamsch">
+      <ion-label>Schiebe-Ramsch</ion-label>
+      <ion-toggle formControlName="schiebeRamsch"></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.jungfrau">
+      <ion-label>Jungfrau verdoppelt</ion-label>
+      <ion-toggle formControlName="jungfrau"></ion-toggle>
+    </ion-item>
   </ion-list>
 
   <ion-list>
