@@ -1,5 +1,8 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
+import { AutoBockKontraLostFormControl } from './form-controls/auto-bock-kontra-lost.form-control';
+import { AutoBockKontraReFormControl } from './form-controls/auto-bock-kontra-re.form-control';
+import { BockSetsFormControl } from './form-controls/bock-sets.form-control';
 import { CalculationTypeFormControl } from './form-controls/calculation-type.form-control';
 import { CentPerPointFormControl } from './form-controls/cent-per-point.form-control';
 import { HirschFormControl } from './form-controls/hirsch.form-control';
@@ -26,5 +29,9 @@ export class SkatListForm extends FormGroup<{
   ramsch: RamschFormControl;
   schiebeRamsch: SchiebeRamschFormControl;
   jungfrau: JungfrauFormControl;
+  bockSets: BockSetsFormControl;
+  ramschSets: RamschFormControl;
+  autoBockKontraRe: AutoBockKontraReFormControl;
+  autoBockKontraLost: AutoBockKontraLostFormControl;
   thresholdAnnouncementWithoutHand: ThresholdAnnouncementWithoutHandControl;
 }> {}

@@ -107,6 +107,28 @@
       <ion-label>Jungfrau verdoppelt</ion-label>
       <ion-toggle formControlName="jungfrau"></ion-toggle>
     </ion-item>
+    <ion-item color="light" *ngIf="form.controls.bockSets">
+      <ion-label>Bock-Runden</ion-label>
+      <ion-toggle formControlName="bockSets"></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.ramschSets">
+      <ion-label>+ Ramsch-Runden</ion-label>
+      <ion-toggle formControlName="ramschSets"></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.autoBockKontraRe">
+      <ion-label
+        >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
+        Kontra+Re</ion-label
+      >
+      <ion-toggle formControlName="autoBockKontraRe"></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.autoBockKontraLost">
+      <ion-label
+        >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
+        verlorenes Kontra</ion-label
+      >
+      <ion-toggle formControlName="autoBockKontraLost"></ion-toggle>
+    </ion-item>
   </ion-list>
 
   <ion-list>

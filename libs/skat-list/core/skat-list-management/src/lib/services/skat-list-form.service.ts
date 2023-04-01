@@ -4,17 +4,24 @@ import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { autoBockKontraLostFormEffect } from '../form-effects/auto-bock-kontra-lost.form-effect';
+import { autoBockKontraReFormEffect } from '../form-effects/auto-bock-kontra-re.form-effect';
+import { bockSetsFormEffect } from '../form-effects/bock-sets.form-effect';
 import { calculationTypesFormEffect } from '../form-effects/calculation-types.form-effect';
 import { centPerPointFormEffect } from '../form-effects/cent-per-point.form-effect';
 import { hirschFormEffect } from '../form-effects/hirsch.form-effect';
 import { jungfrauFormEffect } from '../form-effects/jungfrau.form-effect';
 import { kontraReFormEffect } from '../form-effects/kontra-re.form-effect';
 import { maxSetsFormEffect } from '../form-effects/max-sets.form-effect';
+import { ramschSetsFormEffect } from '../form-effects/ramsch-sets.form-effect';
 import { saechsischeSpitzeFormEffect } from '../form-effects/saechsische-spitze.form-effect';
 import { schiebeRamschFormEffect } from '../form-effects/schiebe-ramsch.form-effect';
 import { spitzenFormEffect } from '../form-effects/spitzen.form-effect';
 import { thresholdAnnouncementWithoutHandFormEffect } from '../form-effects/threshold-announcement-without-hand.form-effect';
 import { updateAvailablePlayersFormEffect } from '../form-effects/update-available-players.form-effect';
+import { AutoBockKontraLostFormControl } from '../models/form-controls/auto-bock-kontra-lost.form-control';
+import { AutoBockKontraReFormControl } from '../models/form-controls/auto-bock-kontra-re.form-control';
+import { BockSetsFormControl } from '../models/form-controls/bock-sets.form-control';
 import { CalculationTypeFormControl } from '../models/form-controls/calculation-type.form-control';
 import { CentPerPointFormControl } from '../models/form-controls/cent-per-point.form-control';
 import { HirschFormControl } from '../models/form-controls/hirsch.form-control';
@@ -22,18 +29,23 @@ import { JungfrauFormControl } from '../models/form-controls/jungfrau.form-contr
 import { KontraReFormControl } from '../models/form-controls/kontra-re.form-control';
 import { MaxSetsFormControl } from '../models/form-controls/max-sets.form-control';
 import { PlayerIdsFormControl } from '../models/form-controls/player-ids.form-control';
+import { RamschSetsFormControl } from '../models/form-controls/ramsch-sets.form-control';
 import { RamschFormControl } from '../models/form-controls/ramsch.form-control';
 import { SaechsischeSpitzeFormControl } from '../models/form-controls/saechsische-spitze.form-control';
 import { SchiebeRamschFormControl } from '../models/form-controls/schiebe-ramsch.form-control';
 import { SpitzenFormControl } from '../models/form-controls/spitzen.form-control';
 import { ThresholdAnnouncementWithoutHandControl } from '../models/form-controls/threshold-announcement-without-hand.form-control';
 import { SkatListForm } from '../models/skat-list-form.model';
+import { autoBockKontraLostValidatorFunction } from '../validator-functions/auto-bock-kontra-lost.validator-function';
+import { autoBockKontraReValidatorFunction } from '../validator-functions/auto-bock-kontra-re.validator-function';
+import { bockSetsValidatorFunction } from '../validator-functions/bock-sets.validator-function';
 import { calculationTypeValidatorFunction } from '../validator-functions/calculation-type.validator-function';
 import { centPerPointValidatorFunction } from '../validator-functions/cent-per-point.validator-function';
 import { hirschValidatorFunction } from '../validator-functions/hirsch.validator-function';
 import { jungfrauValidatorFunction } from '../validator-functions/jungfrau.validator-function';
 import { kontraReValidatorFunction } from '../validator-functions/kontra-re.validator-function';
 import { maxSetsValidatorFunction } from '../validator-functions/max-sets.validator-function';
+import { ramschSetsValidatorFunction } from '../validator-functions/ramsch-sets.validator-function';
 import { ramschValidatorFunction } from '../validator-functions/ramsch.validator-function';
 import { saechsischeSpitzeValidatorFunction } from '../validator-functions/saechsische-spitze.validator-function';
 import { schiebeRamschValidatorFunction } from '../validator-functions/schiebe-ramsch.validator-function';
@@ -71,6 +83,19 @@ export class SkatListFormService {
           schiebeRamschValidatorFunction
         ),
         jungfrau: new JungfrauFormControl(null, jungfrauValidatorFunction),
+        bockSets: new BockSetsFormControl(null, bockSetsValidatorFunction),
+        ramschSets: new RamschSetsFormControl(
+          null,
+          ramschSetsValidatorFunction
+        ),
+        autoBockKontraRe: new AutoBockKontraReFormControl(
+          null,
+          autoBockKontraReValidatorFunction
+        ),
+        autoBockKontraLost: new AutoBockKontraLostFormControl(
+          null,
+          autoBockKontraLostValidatorFunction
+        ),
         thresholdAnnouncementWithoutHand:
           new ThresholdAnnouncementWithoutHandControl(
             null,
@@ -89,6 +114,10 @@ export class SkatListFormService {
         schiebeRamschFormEffect(),
         schiebeRamschFormEffect(),
         jungfrauFormEffect(),
+        bockSetsFormEffect(),
+        ramschSetsFormEffect(),
+        autoBockKontraReFormEffect(),
+        autoBockKontraLostFormEffect(),
         thresholdAnnouncementWithoutHandFormEffect(),
       ]
     );
