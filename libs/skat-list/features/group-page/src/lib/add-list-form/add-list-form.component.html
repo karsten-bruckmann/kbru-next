@@ -1,9 +1,9 @@
 <ion-list *ngIf="form$ | async as form" [formGroup]="form">
   <ui-ionic-list-input
     formControlName="playerIds"
-    [allowedValues]="['a', 'b', 'c', 'd', 'e', 'f', 'g']"
+    [allowedValues]="form.controls.playerIds.possibleValues"
     [getLabel]="getPlayerLabel"
-    [getItemLabel]="getPlayerName"
+    [getItemLabel]="form.controls.playerIds.getPlayerName"
     [getItemPlaceholder]="getPlayerPlaceholder"
     [addItem]="getAddPlayerCallback()"
     [length]="

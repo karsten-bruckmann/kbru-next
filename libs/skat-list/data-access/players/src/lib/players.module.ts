@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { createStorageSyncMetaReducer } from '@kbru/shared/utils/ngrx-storage-sync';
 import { StoreModule } from '@ngrx/store';
 
 import { PlayersState } from './models/players-state.model';
@@ -9,7 +10,10 @@ import { playersReducer } from './reducers/players.reducer';
 @NgModule({
   imports: [
     StoreModule.forFeature<PlayersState>(playersSlice, playersReducer, {
-      metaReducers: [playersCoreReducerRegistry.metaReducer],
+      metaReducers: [
+        createStorageSyncMetaReducer(playersSlice, { storage: localStorage }),
+        playersCoreReducerRegistry.metaReducer,
+      ],
     }),
   ],
 })

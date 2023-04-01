@@ -1,6 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export class SkatListForm extends FormGroup<{
+  groupId: FormControl<string | null>;
   playerIds: PlayerIdsControl;
   calculationType: CalculationTypeControl;
 }> {
@@ -11,7 +12,8 @@ export class SkatListForm extends FormGroup<{
 }
 
 export class PlayerIdsControl extends FormControl<string[] | null> {
-  public possibleValues: string[] | null = null;
+  public possibleValues: string[] = [];
+  public getPlayerName: (id: string) => string = () => '';
 }
 export class CalculationTypeControl extends FormControl<
   'seger-fabian' | 'bierlachs' | null
