@@ -17,8 +17,14 @@
     }}</ion-select-option>
   </ion-select>
 </ion-item>
-<ion-item *ngIf="addItem as callback" [color]="color">
-  <ion-button slot="end" (click)="callback()">
-    <ion-icon name="add-outline"></ion-icon>
+<ion-item [color]="color" class="add-item">
+  <ion-button
+    expand="full"
+    fill="clear"
+    (click)="callback()"
+    *ngIf="addItem as callback"
+    color="primary"
+  >
+    <ion-icon name="add"></ion-icon>
   </ion-button>
 </ion-item>
