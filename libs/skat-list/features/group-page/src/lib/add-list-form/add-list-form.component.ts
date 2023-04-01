@@ -42,6 +42,8 @@ export class AddListFormComponent {
     private activatedRoute: ActivatedRoute
   ) {}
 
+  public open = false;
+
   protected form$ = this.activatedRoute.paramMap.pipe(
     map((paramMap) => paramMap.get('groupId')),
     filter((groupId): groupId is string => !!groupId),
@@ -55,10 +57,6 @@ export class AddListFormComponent {
   }
   protected openAddPlayerModal(): void {
     this.addPlayerModalOpen = true;
-  }
-
-  public getPlayerName(id: string): string {
-    return id.toUpperCase();
   }
 
   public getPlayerLabel(index: number): string {

@@ -63,25 +63,13 @@
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button (click)="addListModalOpen = true">
+    <ion-fab-button (click)="addListForm.open = true">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-modal [isOpen]="addListModalOpen">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>Liste erstellen</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="addListModalOpen = false">
-              <ion-icon name="close"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <skat-list-group-page-add-list-form></skat-list-group-page-add-list-form>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+  <skat-list-group-page-add-list-form
+    #addListForm
+    (submitted)="addListModalOpen = false"
+    (canceled)="addListModalOpen = false"
+  ></skat-list-group-page-add-list-form>
 </ng-container>

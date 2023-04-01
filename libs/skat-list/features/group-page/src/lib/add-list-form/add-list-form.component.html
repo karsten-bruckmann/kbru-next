@@ -1,142 +1,157 @@
-<ng-container *ngIf="form$ | async as form" [formGroup]="form">
-  <ion-list inset *ngIf="form.controls.playerIds">
-    <ion-item-divider color="primary">
-      <ion-label>Spieler</ion-label>
-    </ion-item-divider>
-    <ui-ionic-list-input
-      formControlName="playerIds"
-      [allowedValues]="form.controls.playerIds.possibleValues"
-      [getLabel]="getPlayerLabel"
-      [getItemLabel]="form.controls.playerIds.getPlayerName"
-      [getItemPlaceholder]="getPlayerPlaceholder"
-      [addItem]="getAddPlayerCallback()"
-      [length]="
-        !form.value.playerIds || form.value.playerIds.length < 3
-          ? 3
-          : form.value.playerIds.length === 3
-          ? 4
-          : 5
-      "
-      color="light"
-    ></ui-ionic-list-input>
-    <ion-modal class="dialogue" [isOpen]="addPlayerModalOpen">
-      <ng-template>
-        <skat-list-group-page-add-player-form
-          (added)="addPlayerModalOpen = false"
-          (canceled)="addPlayerModalOpen = false"
-        ></skat-list-group-page-add-player-form>
-      </ng-template>
-    </ion-modal>
-  </ion-list>
+<ion-modal [isOpen]="open">
+  <ng-template>
+    <ng-container *ngIf="form$ | async as form" [formGroup]="form">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Liste erstellen</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="open = false">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list inset *ngIf="form.controls.playerIds">
+          <ion-item-divider color="primary">
+            <ion-label>Spieler</ion-label>
+          </ion-item-divider>
+          <ui-ionic-list-input
+            formControlName="playerIds"
+            [allowedValues]="form.controls.playerIds.possibleValues"
+            [getLabel]="getPlayerLabel"
+            [getItemLabel]="form.controls.playerIds.getPlayerName"
+            [getItemPlaceholder]="getPlayerPlaceholder"
+            [addItem]="getAddPlayerCallback()"
+            [length]="
+              !form.value.playerIds || form.value.playerIds.length < 3
+                ? 3
+                : form.value.playerIds.length === 3
+                ? 4
+                : 5
+            "
+            color="light"
+          ></ui-ionic-list-input>
+          <ion-modal class="dialogue" [isOpen]="addPlayerModalOpen">
+            <ng-template>
+              <skat-list-group-page-add-player-form
+                (added)="addPlayerModalOpen = false"
+                (canceled)="addPlayerModalOpen = false"
+              ></skat-list-group-page-add-player-form>
+            </ng-template>
+          </ion-modal>
+        </ion-list>
 
-  <ion-list inset>
-    <ion-item-divider color="primary">
-      <ion-label>Optionen</ion-label>
-    </ion-item-divider>
-    <ion-item color="light" *ngIf="form.controls.calculationType">
-      <ion-label>Berechnung</ion-label>
-      <ion-select interface="popover" formControlName="calculationType">
-        <ion-select-option
-          *ngFor="let value of form.controls.calculationType.possibleValues"
-          [value]="value"
-        >
-          {{ value | calculationType }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.maxSets">
-      <ion-label>Runden</ion-label>
-      <ion-select interface="popover" formControlName="maxSets">
-        <ion-select-option
-          *ngFor="let value of form.controls.maxSets.possibleValues"
-          [value]="value"
-          >{{ value | maxSets }}</ion-select-option
-        >
-      </ion-select>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.centPerPoint">
-      <ion-label>Auszahlung</ion-label>
-      <ion-select interface="popover" formControlName="centPerPoint">
-        <ion-select-option
-          *ngFor="let value of form.controls.centPerPoint.possibleValues"
-          [value]="value"
-          >{{ value | centPerPoint }}</ion-select-option
-        >
-      </ion-select>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.spitzen">
-      <ion-label>Spitzen</ion-label>
-      <ion-select interface="popover" formControlName="spitzen">
-        <ion-select-option
-          *ngFor="let value of form.controls.spitzen.possibleValues"
-          [value]="value"
-          >{{ value | spitzen }}</ion-select-option
-        >
-      </ion-select>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.saechsischeSpitze">
-      <ion-label>Sächsische Spitze</ion-label>
-      <ion-toggle formControlName="saechsischeSpitze"></ion-toggle>
-    </ion-item>
-    <ion-item
-      color="light"
-      *ngIf="form.controls.thresholdAnnouncementWithoutHand"
-    >
-      <ion-label>Ansagen ohne Hand</ion-label>
-      <ion-toggle
-        formControlName="thresholdAnnouncementWithoutHand"
-      ></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.kontraRe">
-      <ion-label>Kontra & Re</ion-label>
-      <ion-toggle formControlName="kontraRe"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.hirsch">
-      <ion-label>Hirsch</ion-label>
-      <ion-toggle formControlName="hirsch"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.ramsch">
-      <ion-label>Ramsch statt Einpassen</ion-label>
-      <ion-toggle formControlName="ramsch"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.schiebeRamsch">
-      <ion-label>Schiebe-Ramsch</ion-label>
-      <ion-toggle formControlName="schiebeRamsch"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.jungfrau">
-      <ion-label>Jungfrau verdoppelt</ion-label>
-      <ion-toggle formControlName="jungfrau"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.bockSets">
-      <ion-label>Bock-Runden</ion-label>
-      <ion-toggle formControlName="bockSets"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.ramschSets">
-      <ion-label>+ Ramsch-Runden</ion-label>
-      <ion-toggle formControlName="ramschSets"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.autoBockKontraRe">
-      <ion-label
-        >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
-        Kontra+Re</ion-label
-      >
-      <ion-toggle formControlName="autoBockKontraRe"></ion-toggle>
-    </ion-item>
-    <ion-item color="light" *ngIf="form.controls.autoBockKontraLost">
-      <ion-label
-        >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
-        verlorenes Kontra</ion-label
-      >
-      <ion-toggle formControlName="autoBockKontraLost"></ion-toggle>
-    </ion-item>
-  </ion-list>
+        <ion-list inset>
+          <ion-item-divider color="primary">
+            <ion-label>Optionen</ion-label>
+          </ion-item-divider>
+          <ion-item color="light" *ngIf="form.controls.calculationType">
+            <ion-label>Berechnung</ion-label>
+            <ion-select interface="popover" formControlName="calculationType">
+              <ion-select-option
+                *ngFor="
+                  let value of form.controls.calculationType.possibleValues
+                "
+                [value]="value"
+              >
+                {{ value | calculationType }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.maxSets">
+            <ion-label>Runden</ion-label>
+            <ion-select interface="popover" formControlName="maxSets">
+              <ion-select-option
+                *ngFor="let value of form.controls.maxSets.possibleValues"
+                [value]="value"
+                >{{ value | maxSets }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.centPerPoint">
+            <ion-label>Auszahlung</ion-label>
+            <ion-select interface="popover" formControlName="centPerPoint">
+              <ion-select-option
+                *ngFor="let value of form.controls.centPerPoint.possibleValues"
+                [value]="value"
+                >{{ value | centPerPoint }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.spitzen">
+            <ion-label>Spitzen</ion-label>
+            <ion-select interface="popover" formControlName="spitzen">
+              <ion-select-option
+                *ngFor="let value of form.controls.spitzen.possibleValues"
+                [value]="value"
+                >{{ value | spitzen }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.saechsischeSpitze">
+            <ion-label>Sächsische Spitze</ion-label>
+            <ion-toggle formControlName="saechsischeSpitze"></ion-toggle>
+          </ion-item>
+          <ion-item
+            color="light"
+            *ngIf="form.controls.thresholdAnnouncementWithoutHand"
+          >
+            <ion-label>Ansagen ohne Hand</ion-label>
+            <ion-toggle
+              formControlName="thresholdAnnouncementWithoutHand"
+            ></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.kontraRe">
+            <ion-label>Kontra & Re</ion-label>
+            <ion-toggle formControlName="kontraRe"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.hirsch">
+            <ion-label>Hirsch</ion-label>
+            <ion-toggle formControlName="hirsch"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.ramsch">
+            <ion-label>Ramsch statt Einpassen</ion-label>
+            <ion-toggle formControlName="ramsch"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.schiebeRamsch">
+            <ion-label>Schiebe-Ramsch</ion-label>
+            <ion-toggle formControlName="schiebeRamsch"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.jungfrau">
+            <ion-label>Jungfrau verdoppelt</ion-label>
+            <ion-toggle formControlName="jungfrau"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.bockSets">
+            <ion-label>Bock-Runden</ion-label>
+            <ion-toggle formControlName="bockSets"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.ramschSets">
+            <ion-label>+ Ramsch-Runden</ion-label>
+            <ion-toggle formControlName="ramschSets"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.autoBockKontraRe">
+            <ion-label
+              >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
+              Kontra+Re</ion-label
+            >
+            <ion-toggle formControlName="autoBockKontraRe"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" *ngIf="form.controls.autoBockKontraLost">
+            <ion-label
+              >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
+              verlorenes Kontra</ion-label
+            >
+            <ion-toggle formControlName="autoBockKontraLost"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-content>
 
-  <ion-list>
-    <ion-item color="light">
-      <pre>{{ form.value | json }}</pre>
-    </ion-item>
-    <ion-item color="light">
-      <pre>{{ form.controls.calculationType.errors | json }}</pre>
-    </ion-item>
-  </ion-list>
-</ng-container>
+      <ion-footer>
+        <ion-list inset>
+          <ion-button expand="block">Liste erstellen</ion-button>
+        </ion-list>
+      </ion-footer>
+    </ng-container>
+  </ng-template>
+</ion-modal>
