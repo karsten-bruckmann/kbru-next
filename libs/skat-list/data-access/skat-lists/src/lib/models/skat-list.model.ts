@@ -9,6 +9,7 @@ export interface SkatList {
   rules: {
     calculationType: 'seger-fabian' | 'bierlachs';
     spitzen: 4 | 11;
+    maxSets?: 1 | 3;
   };
   status: SkatListStatus;
 }

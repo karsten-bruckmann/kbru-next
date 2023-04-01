@@ -63,6 +63,21 @@
     </ion-radio-group>
   </ion-list>
 
+  <ion-list inset>
+    <ion-item-divider>
+      <ion-label>Runden</ion-label>
+    </ion-item-divider>
+    <ion-radio-group *ngIf="form.controls.maxSets" formControlName="maxSets">
+      <ion-item
+        *ngFor="let value of form.controls.maxSets.possibleValues"
+        color="light"
+      >
+        <ion-label>{{ value || 'offenes Ende' }}</ion-label>
+        <ion-radio slot="end" [value]="value"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
   <ion-list>
     <ion-item color="light">
       <pre>{{ form.value | json }}</pre>
