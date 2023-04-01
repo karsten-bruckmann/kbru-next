@@ -10,7 +10,7 @@ import {
 } from '@kbru/skat-list/core/group-management';
 import { SkatListManagementModule } from '@kbru/skat-list/core/skat-list-management';
 import { Store } from '@ngrx/store';
-import { filter, firstValueFrom, map, shareReplay, switchMap, tap } from 'rxjs';
+import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
 
 import { AddListFormComponent } from './add-list-form/add-list-form.component';
 
@@ -40,7 +40,6 @@ export class GroupPageComponent {
   protected addListModalOpen = false;
 
   protected group$ = this.activatedRoute.paramMap.pipe(
-    tap(console.log),
     map((paramMap) => paramMap.get('groupId')),
     filter((groupId): groupId is string => !!groupId),
     switchMap((groupId) => this.store$.select(groupSelector(groupId))),

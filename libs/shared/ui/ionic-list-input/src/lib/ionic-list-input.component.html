@@ -6,8 +6,16 @@
     (ionChange)="setItem(i, item.value)"
     [value]="this.value[i]"
   >
+    <ion-select-option *ngIf="getItemPlaceholder(i) !== null" [value]="null">{{
+      getItemPlaceholder(i)
+    }}</ion-select-option>
     <ion-select-option *ngFor="let value of allowedValues" [value]="value">{{
       getItemLabel(value)
     }}</ion-select-option>
   </ion-select>
+</ion-item>
+<ion-item *ngIf="addItem as callback">
+  <ion-button slot="end" (click)="callback()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-button>
 </ion-item>

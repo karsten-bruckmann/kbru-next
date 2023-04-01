@@ -2,8 +2,10 @@
   <ui-ionic-list-input
     formControlName="playerIds"
     [allowedValues]="['a', 'b', 'c', 'd', 'e', 'f', 'g']"
-    [getLabel]="getPlaceholder"
+    [getLabel]="getPlayerLabel"
     [getItemLabel]="getPlayerName"
+    [getItemPlaceholder]="getPlayerPlaceholder"
+    [addItem]="getAddPlayerCallback()"
     [length]="
       !form.value.playerIds || form.value.playerIds.length < 3
         ? 3
@@ -12,5 +14,12 @@
         : 5
     "
   ></ui-ionic-list-input>
-  <pre>{{ form.value.playerIds | json }}</pre>
+  <ion-modal class="dialogue" [isOpen]="addPlayerModalOpen">
+    <ng-template>
+      <skat-list-group-page-add-player-form
+        (added)="addPlayerModalOpen = false"
+        (canceled)="addPlayerModalOpen = false"
+      ></skat-list-group-page-add-player-form>
+    </ng-template>
+  </ion-modal>
 </ion-list>

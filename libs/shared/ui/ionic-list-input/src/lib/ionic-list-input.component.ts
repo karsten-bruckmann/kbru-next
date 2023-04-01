@@ -29,7 +29,10 @@ export class IonicListInputComponent<T = string>
   protected value: (T | null)[] = [];
   protected allowedItemValues: T[][] = [];
 
+  @Input() public addItem?: () => void;
   @Input() public getLabel: (index: number) => string = () => 'Bitte wählen';
+  @Input() public getItemPlaceholder: (index: number) => string | null = () =>
+    null;
   @Input() public getItemLabel: (value: T) => string = (value) => `${value}`;
 
   public onChange: (value: unknown) => void = () => {

@@ -1,0 +1,43 @@
+<ng-container *ngIf="form$ | async as form" [formGroup]="form">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Spieler hinzufügen</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)="cancel()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="success" (click)="submit(form)">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list [formGroup]="form">
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input formControlName="playerName" autofocus></ion-input>
+        <ng-container *ngIf="form.controls.playerName.touched">
+          <ion-note
+            *ngIf="
+              form.controls.playerName.hasError('required') ||
+              form.controls.playerName.hasError('type')
+            "
+            slot="error"
+            >Bitte Namen eingeben</ion-note
+          >
+          <ion-note
+            *ngIf="form.controls.playerName.hasError('length')"
+            slot="error"
+            >5-50 Zeichen sind erlaubt</ion-note
+          >
+          <ion-note
+            *ngIf="form.controls.playerName.hasError('characters')"
+            slot="error"
+            >Der Name enthält ungültige Zeichen</ion-note
+          >
+        </ng-container>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ng-container>

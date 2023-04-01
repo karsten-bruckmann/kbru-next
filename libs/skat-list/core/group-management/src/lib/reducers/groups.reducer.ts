@@ -1,24 +1,41 @@
 import { createCoreReducer } from '@kbru/shared/utils/ngrx-architecture';
 import { GroupsState } from '@kbru/skat-list/data-access/groups';
 import { on } from '@ngrx/store';
-import { v4 as uuid } from 'uuid';
 
-import { addFormSubmittedAction } from '../actions/add-form-submitted.action';
+import { addGroupFormSubmittedAction } from '../actions/add-group-form-submitted.action';
+import { addPlayerFormSubmittedAction } from '../actions/add-player-form-submitted.action';
 import { groupDeletedAction } from '../actions/group-deleted.action';
 
 export const groupsReducer = createCoreReducer<GroupsState>(
-  on(
-    addFormSubmittedAction,
-    (state, action): GroupsState => ({
+  on(addGroupFormSubmittedAction, (state, action): GroupsState => {
+    if (!action.value.groupId) {
+      throw new Error('no id set');
+    }
+    return {
       ...state,
-      [uuid()]: {
+      [action.value.groupId]: {
         name: action.value.groupName || '',
+        playerIds: [],
       },
-    })
-  ),
+    };
+  }),
   on(groupDeletedAction, (state, action): GroupsState => {
     const next = { ...state };
     delete next[action.id];
+    return next;
+  }),
+  on(addPlayerFormSubmittedAction, (state, action): GroupsState => {
+    const next = { ...state };
+    const playerId = action.value.playerId;
+    if (!action.value.groupIds || !playerId) {
+      return next;
+    }
+    action.value.groupIds.forEach((groupId) => {
+      next[groupId] = {
+        ...next[groupId],
+        playerIds: [...next[groupId].playerIds, playerId],
+      };
+    });
     return next;
   })
 );

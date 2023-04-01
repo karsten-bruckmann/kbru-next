@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {
-  addFormSubmittedAction,
+  addGroupFormSubmittedAction,
   GroupForm,
   GroupFormService,
 } from '@kbru/skat-list/core/group-management';
@@ -31,7 +31,7 @@ export class AddGroupFormComponent {
   protected form$ = this.groupFormService.addForm$;
 
   public submit(form: GroupForm): void {
-    this.store$.dispatch(addFormSubmittedAction({ value: form.value }));
+    this.store$.dispatch(addGroupFormSubmittedAction({ value: form.value }));
     this.added.next();
   }
 
