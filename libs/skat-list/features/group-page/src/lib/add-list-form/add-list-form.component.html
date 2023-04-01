@@ -1,25 +1,74 @@
-<ion-list *ngIf="form$ | async as form" [formGroup]="form">
-  <ui-ionic-list-input
-    formControlName="playerIds"
-    [allowedValues]="form.controls.playerIds.possibleValues"
-    [getLabel]="getPlayerLabel"
-    [getItemLabel]="form.controls.playerIds.getPlayerName"
-    [getItemPlaceholder]="getPlayerPlaceholder"
-    [addItem]="getAddPlayerCallback()"
-    [length]="
-      !form.value.playerIds || form.value.playerIds.length < 3
-        ? 3
-        : form.value.playerIds.length === 3
-        ? 4
-        : 5
-    "
-  ></ui-ionic-list-input>
-  <ion-modal class="dialogue" [isOpen]="addPlayerModalOpen">
-    <ng-template>
-      <skat-list-group-page-add-player-form
-        (added)="addPlayerModalOpen = false"
-        (canceled)="addPlayerModalOpen = false"
-      ></skat-list-group-page-add-player-form>
-    </ng-template>
-  </ion-modal>
-</ion-list>
+<ng-container *ngIf="form$ | async as form" [formGroup]="form">
+  <ion-list inset>
+    <ion-item-divider>
+      <ion-label>Spieler</ion-label>
+    </ion-item-divider>
+    <ui-ionic-list-input
+      *ngIf="form.controls.playerIds"
+      formControlName="playerIds"
+      [allowedValues]="form.controls.playerIds.possibleValues"
+      [getLabel]="getPlayerLabel"
+      [getItemLabel]="form.controls.playerIds.getPlayerName"
+      [getItemPlaceholder]="getPlayerPlaceholder"
+      [addItem]="getAddPlayerCallback()"
+      [length]="
+        !form.value.playerIds || form.value.playerIds.length < 3
+          ? 3
+          : form.value.playerIds.length === 3
+          ? 4
+          : 5
+      "
+      color="light"
+    ></ui-ionic-list-input>
+    <ion-modal class="dialogue" [isOpen]="addPlayerModalOpen">
+      <ng-template>
+        <skat-list-group-page-add-player-form
+          (added)="addPlayerModalOpen = false"
+          (canceled)="addPlayerModalOpen = false"
+        ></skat-list-group-page-add-player-form>
+      </ng-template>
+    </ion-modal>
+  </ion-list>
+
+  <ion-list inset>
+    <ion-item-divider>
+      <ion-label>Berechnung</ion-label>
+    </ion-item-divider>
+    <ion-radio-group
+      *ngIf="form.controls.calculationType"
+      formControlName="calculationType"
+    >
+      <ion-item
+        *ngFor="let value of form.controls.calculationType.possibleValues"
+        color="light"
+      >
+        <ion-label>{{ value | calculationType }}</ion-label>
+        <ion-radio slot="end" [value]="value"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list inset>
+    <ion-item-divider>
+      <ion-label>Spitzen</ion-label>
+    </ion-item-divider>
+    <ion-radio-group *ngIf="form.controls.spitzen" formControlName="spitzen">
+      <ion-item
+        *ngFor="let value of form.controls.spitzen.possibleValues"
+        color="light"
+      >
+        <ion-label>{{ value }}</ion-label>
+        <ion-radio slot="end" [value]="value"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-item color="light">
+      <pre>{{ form.value | json }}</pre>
+    </ion-item>
+    <ion-item color="light">
+      <pre>{{ form.controls.calculationType.errors | json }}</pre>
+    </ion-item>
+  </ion-list>
+</ng-container>

@@ -54,6 +54,9 @@
       "@kbru/shared/ui/ionic-list-input": [
         "libs/shared/ui/ionic-list-input/src/index.ts"
       ],
+      "@kbru/shared/ui/skat-naming": [
+        "libs/shared/ui/skat-naming/src/index.ts"
+      ],
       "@kbru/shared/utils/angular-utils": [
         "libs/shared/utils/angular-utils/src/index.ts"
       ],

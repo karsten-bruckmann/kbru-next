@@ -25,6 +25,7 @@ export class IonicListInputComponent<T = string>
   @Input() public disabled = false;
   @Input() public length = 2;
   @Input() public allowedValues: T[] = [];
+  @Input() public color = 'light';
 
   protected value: (T | null)[] = [];
   protected allowedItemValues: T[][] = [];

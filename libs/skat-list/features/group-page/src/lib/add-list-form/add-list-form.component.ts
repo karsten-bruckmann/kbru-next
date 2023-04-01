@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
+import { CalculationTypePipe } from '@kbru/shared/ui/skat-naming';
 import {
   SkatListFormService,
   SkatListManagementModule,
@@ -22,6 +23,7 @@ import { AddPlayerFormComponent } from '../add-player-form/add-player-form.compo
     AddPlayerFormComponent,
     ReactiveFormsModule,
     SkatListManagementModule,
+    CalculationTypePipe,
   ],
   templateUrl: './add-list-form.component.html',
   styleUrls: ['./add-list-form.component.scss'],

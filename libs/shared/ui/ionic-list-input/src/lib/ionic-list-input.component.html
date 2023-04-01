@@ -1,4 +1,7 @@
-<ion-item *ngFor="let allowedValues of allowedItemValues; let i = index">
+<ion-item
+  *ngFor="let allowedValues of allowedItemValues; let i = index"
+  [color]="color"
+>
   <ion-label>{{ getLabel(i) }}</ion-label>
   <ion-select
     #item
@@ -14,7 +17,7 @@
     }}</ion-select-option>
   </ion-select>
 </ion-item>
-<ion-item *ngIf="addItem as callback">
+<ion-item *ngIf="addItem as callback" [color]="color">
   <ion-button slot="end" (click)="callback()">
     <ion-icon name="add-outline"></ion-icon>
   </ion-button>
