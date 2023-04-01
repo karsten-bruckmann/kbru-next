@@ -44,16 +44,6 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item color="light" *ngIf="form.controls.spitzen">
-      <ion-label>Spitzen</ion-label>
-      <ion-select interface="popover" formControlName="spitzen">
-        <ion-select-option
-          *ngFor="let value of form.controls.spitzen.possibleValues"
-          [value]="value"
-          >{{ value | spitzen }}</ion-select-option
-        >
-      </ion-select>
-    </ion-item>
     <ion-item color="light" *ngIf="form.controls.maxSets">
       <ion-label>Runden</ion-label>
       <ion-select interface="popover" formControlName="maxSets">
@@ -73,6 +63,20 @@
           >{{ value | centPerPoint }}</ion-select-option
         >
       </ion-select>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.spitzen">
+      <ion-label>Spitzen</ion-label>
+      <ion-select interface="popover" formControlName="spitzen">
+        <ion-select-option
+          *ngFor="let value of form.controls.spitzen.possibleValues"
+          [value]="value"
+          >{{ value | spitzen }}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.saechsischeSpitze">
+      <ion-label>Sächsische Spitze</ion-label>
+      <ion-toggle formControlName="saechsischeSpitze"></ion-toggle>
     </ion-item>
     <ion-item
       color="light"

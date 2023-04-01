@@ -10,6 +10,7 @@ import { hirschFormEffect } from '../form-effects/hirsch.form-effect';
 import { jungfrauFormEffect } from '../form-effects/jungfrau.form-effect';
 import { kontraReFormEffect } from '../form-effects/kontra-re.form-effect';
 import { maxSetsFormEffect } from '../form-effects/max-sets.form-effect';
+import { saechsischeSpitzeFormEffect } from '../form-effects/saechsische-spitze.form-effect';
 import { schiebeRamschFormEffect } from '../form-effects/schiebe-ramsch.form-effect';
 import { spitzenFormEffect } from '../form-effects/spitzen.form-effect';
 import { thresholdAnnouncementWithoutHandFormEffect } from '../form-effects/threshold-announcement-without-hand.form-effect';
@@ -22,6 +23,7 @@ import { KontraReFormControl } from '../models/form-controls/kontra-re.form-cont
 import { MaxSetsFormControl } from '../models/form-controls/max-sets.form-control';
 import { PlayerIdsFormControl } from '../models/form-controls/player-ids.form-control';
 import { RamschFormControl } from '../models/form-controls/ramsch.form-control';
+import { SaechsischeSpitzeFormControl } from '../models/form-controls/saechsische-spitze.form-control';
 import { SchiebeRamschFormControl } from '../models/form-controls/schiebe-ramsch.form-control';
 import { SpitzenFormControl } from '../models/form-controls/spitzen.form-control';
 import { ThresholdAnnouncementWithoutHandControl } from '../models/form-controls/threshold-announcement-without-hand.form-control';
@@ -33,6 +35,7 @@ import { jungfrauValidatorFunction } from '../validator-functions/jungfrau.valid
 import { kontraReValidatorFunction } from '../validator-functions/kontra-re.validator-function';
 import { maxSetsValidatorFunction } from '../validator-functions/max-sets.validator-function';
 import { ramschValidatorFunction } from '../validator-functions/ramsch.validator-function';
+import { saechsischeSpitzeValidatorFunction } from '../validator-functions/saechsische-spitze.validator-function';
 import { schiebeRamschValidatorFunction } from '../validator-functions/schiebe-ramsch.validator-function';
 import { spitzenValidatorFunction } from '../validator-functions/spitzen.validator-function';
 import { thresholdAnnouncementWithoutHandValidatorFunction } from '../validator-functions/threshold-announcement-without-hand.validator-function';
@@ -51,6 +54,10 @@ export class SkatListFormService {
           calculationTypeValidatorFunction
         ),
         spitzen: new SpitzenFormControl(null, spitzenValidatorFunction),
+        saechsischeSpitze: new SaechsischeSpitzeFormControl(
+          null,
+          saechsischeSpitzeValidatorFunction
+        ),
         maxSets: new MaxSetsFormControl(null, maxSetsValidatorFunction),
         centPerPoint: new CentPerPointFormControl(
           null,
@@ -74,6 +81,7 @@ export class SkatListFormService {
         updateAvailablePlayersFormEffect(this.store$),
         calculationTypesFormEffect(),
         spitzenFormEffect(),
+        saechsischeSpitzeFormEffect(),
         maxSetsFormEffect(),
         centPerPointFormEffect(),
         kontraReFormEffect(),

@@ -8,6 +8,7 @@ import { KontraReFormControl } from './form-controls/kontra-re.form-control';
 import { MaxSetsFormControl } from './form-controls/max-sets.form-control';
 import { PlayerIdsFormControl } from './form-controls/player-ids.form-control';
 import { RamschFormControl } from './form-controls/ramsch.form-control';
+import { SaechsischeSpitzeFormControl } from './form-controls/saechsische-spitze.form-control';
 import { SchiebeRamschFormControl } from './form-controls/schiebe-ramsch.form-control';
 import { SpitzenFormControl } from './form-controls/spitzen.form-control';
 import { ThresholdAnnouncementWithoutHandControl } from './form-controls/threshold-announcement-without-hand.form-control';
@@ -17,6 +18,7 @@ export class SkatListForm extends FormGroup<{
   playerIds: PlayerIdsFormControl;
   calculationType: CalculationTypeFormControl;
   spitzen: SpitzenFormControl;
+  saechsischeSpitze: SaechsischeSpitzeFormControl;
   maxSets: MaxSetsFormControl;
   centPerPoint: CentPerPointFormControl;
   kontraRe: KontraReFormControl;
