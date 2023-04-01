@@ -1,6 +1,6 @@
 <ng-container *ngIf="form$ | async as form" [formGroup]="form">
   <ion-list inset *ngIf="form.controls.playerIds">
-    <ion-item-divider>
+    <ion-item-divider color="primary">
       <ion-label>Spieler</ion-label>
     </ion-item-divider>
     <ui-ionic-list-input
@@ -30,6 +30,9 @@
   </ion-list>
 
   <ion-list inset>
+    <ion-item-divider color="primary">
+      <ion-label>Optionen</ion-label>
+    </ion-item-divider>
     <ion-item color="light" *ngIf="form.controls.calculationType">
       <ion-label>Berechnung</ion-label>
       <ion-select interface="popover" formControlName="calculationType">
@@ -70,6 +73,23 @@
           >{{ value | centPerPoint }}</ion-select-option
         >
       </ion-select>
+    </ion-item>
+    <ion-item
+      color="light"
+      *ngIf="form.controls.thresholdAnnouncementWithoutHand"
+    >
+      <ion-label>Ansagen ohne Hand</ion-label>
+      <ion-toggle
+        formControlName="thresholdAnnouncementWithoutHand"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.kontraRe">
+      <ion-label>Kontra & Re</ion-label>
+      <ion-toggle formControlName="kontraRe"></ion-toggle>
+    </ion-item>
+    <ion-item color="light" *ngIf="form.controls.hirsch">
+      <ion-label>Hirsch</ion-label>
+      <ion-toggle formControlName="hirsch"></ion-toggle>
     </ion-item>
   </ion-list>
 

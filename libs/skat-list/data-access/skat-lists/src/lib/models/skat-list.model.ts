@@ -11,6 +11,9 @@ export interface SkatList {
     spitzen: 4 | 11;
     maxSets: null | 1 | 3;
     centPerPoint: 0 | 1 | 0.5 | 0.25 | 0.1;
+    thresholdAnnouncementWithoutHand: boolean;
+    kontraRe: boolean;
+    hirsch?: boolean;
   };
   status: SkatListStatus;
 }
