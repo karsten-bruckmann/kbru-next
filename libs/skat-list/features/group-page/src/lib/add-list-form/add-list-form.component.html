@@ -1,10 +1,9 @@
 <ng-container *ngIf="form$ | async as form" [formGroup]="form">
-  <ion-list inset>
+  <ion-list inset *ngIf="form.controls.playerIds">
     <ion-item-divider>
       <ion-label>Spieler</ion-label>
     </ion-item-divider>
     <ui-ionic-list-input
-      *ngIf="form.controls.playerIds"
       formControlName="playerIds"
       [allowedValues]="form.controls.playerIds.possibleValues"
       [getLabel]="getPlayerLabel"
@@ -30,14 +29,11 @@
     </ion-modal>
   </ion-list>
 
-  <ion-list inset>
+  <ion-list inset *ngIf="form.controls.calculationType">
     <ion-item-divider>
       <ion-label>Berechnung</ion-label>
     </ion-item-divider>
-    <ion-radio-group
-      *ngIf="form.controls.calculationType"
-      formControlName="calculationType"
-    >
+    <ion-radio-group formControlName="calculationType">
       <ion-item
         *ngFor="let value of form.controls.calculationType.possibleValues"
         color="light"
@@ -48,31 +44,49 @@
     </ion-radio-group>
   </ion-list>
 
-  <ion-list inset>
+  <ion-list inset *ngIf="form.controls.spitzen">
     <ion-item-divider>
       <ion-label>Spitzen</ion-label>
     </ion-item-divider>
-    <ion-radio-group *ngIf="form.controls.spitzen" formControlName="spitzen">
+    <ion-radio-group formControlName="spitzen">
       <ion-item
         *ngFor="let value of form.controls.spitzen.possibleValues"
         color="light"
       >
-        <ion-label>{{ value }}</ion-label>
+        <ion-label>{{ value | spitzen }}</ion-label>
         <ion-radio slot="end" [value]="value"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
 
-  <ion-list inset>
+  <ion-list inset *ngIf="form.controls.maxSets">
     <ion-item-divider>
       <ion-label>Runden</ion-label>
     </ion-item-divider>
-    <ion-radio-group *ngIf="form.controls.maxSets" formControlName="maxSets">
+    <ion-radio-group formControlName="maxSets">
       <ion-item
-        *ngFor="let value of form.controls.maxSets.possibleValues"
         color="light"
+        *ngFor="let value of form.controls.maxSets.possibleValues"
       >
-        <ion-label>{{ value || 'offenes Ende' }}</ion-label>
+        <ion-label>{{ value | maxSets }}</ion-label>
+        <ion-radio slot="end" [value]="value"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list inset *ngIf="form.controls.centPerPoint">
+    <ion-item-divider>
+      <ion-label>Auszahlung</ion-label>
+    </ion-item-divider>
+    <ion-radio-group
+      *ngIf="form.controls.centPerPoint"
+      formControlName="centPerPoint"
+    >
+      <ion-item
+        color="light"
+        *ngFor="let value of form.controls.centPerPoint.possibleValues"
+      >
+        <ion-label>{{ value | centPerPoint }}</ion-label>
         <ion-radio slot="end" [value]="value"></ion-radio>
       </ion-item>
     </ion-radio-group>

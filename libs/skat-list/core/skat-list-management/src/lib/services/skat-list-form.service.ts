@@ -5,15 +5,18 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { calculationTypesFormEffect } from '../form-effects/calculation-types.form-effect';
+import { centPerPointFormEffect } from '../form-effects/cent-per-point.form-effect';
 import { maxSetsFormEffect } from '../form-effects/max-sets.form-effect';
 import { spitzenFormEffect } from '../form-effects/spitzen.form-effect';
 import { updateAvailablePlayersFormEffect } from '../form-effects/update-available-players.form-effect';
 import { CalculationTypeFormControl } from '../models/form-controls/calculation-type.form-control';
+import { CentPerPointFormControl } from '../models/form-controls/cent-per-point.form-control';
 import { MaxSetsFormControl } from '../models/form-controls/max-sets.form-control';
 import { PlayerIdsFormControl } from '../models/form-controls/player-ids.form-control';
 import { SpitzenFormControl } from '../models/form-controls/spitzen.form-control';
 import { SkatListForm } from '../models/skat-list-form.model';
 import { calculationTypeValidatorFunction } from '../validator-functions/calculation-type.validator-function';
+import { centPerPointValidatorFunction } from '../validator-functions/cent-per-point.validator-function';
 import { maxSetsValidatorFunction } from '../validator-functions/max-sets.validator-function';
 import { spitzenValidatorFunction } from '../validator-functions/spitzen.validator-function';
 
@@ -32,12 +35,17 @@ export class SkatListFormService {
         ),
         spitzen: new SpitzenFormControl(null, spitzenValidatorFunction),
         maxSets: new MaxSetsFormControl(null, maxSetsValidatorFunction),
+        centPerPoint: new CentPerPointFormControl(
+          null,
+          centPerPointValidatorFunction
+        ),
       }),
       [
         updateAvailablePlayersFormEffect(this.store$),
         calculationTypesFormEffect(),
         spitzenFormEffect(),
         maxSetsFormEffect(),
+        centPerPointFormEffect(),
       ]
     );
   }
