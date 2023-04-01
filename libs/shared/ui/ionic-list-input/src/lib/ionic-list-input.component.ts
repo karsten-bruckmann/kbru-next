@@ -53,7 +53,7 @@ export class IonicListInputComponent<T = string>
       if (!this.value[i]) {
         this.value[i] = null;
       }
-      this.allowedItemValues[i] = this.multiple
+      const allowedItemValues = this.multiple
         ? [...this.allowedValues]
         : this.allowedValues.filter(
             (value) =>
@@ -62,6 +62,19 @@ export class IonicListInputComponent<T = string>
                 .flat()
                 .includes(value as any)
           );
+      if (!this.allowedItemValues[i]) {
+        this.allowedItemValues[i] = [];
+      }
+      allowedItemValues.forEach((value, key) => {
+        this.allowedItemValues[i][key] = value;
+      });
+      for (
+        let ii = this.allowedItemValues[i].length;
+        ii > allowedItemValues.length;
+        ii--
+      ) {
+        this.allowedItemValues[i].pop();
+      }
     }
   }
 
@@ -82,7 +95,7 @@ export class IonicListInputComponent<T = string>
   }
 
   public setItem(index: number, value: any) {
-    const next = [...this.value];
+    const next = this.value;
     next[index] = value;
     this.writeValue(next);
     this.onChange(
