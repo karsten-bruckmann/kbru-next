@@ -1,17 +1,22 @@
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
-import { map, startWith } from 'rxjs';
+import { combineLatest, map, startWith } from 'rxjs';
 
 import { SkatListForm } from '../models/skat-list-form.model';
 
 export const hirschFormEffect = (): FormEffect<SkatListForm> => (form) => {
-  return form.controls.kontraRe.valueChanges.pipe(
-    startWith(form.controls.kontraRe.value),
-    map((kontraRe) => {
-      if (kontraRe && form.controls.hirsch.disabled) {
+  return combineLatest([
+    form.controls.kontra.valueChanges.pipe(
+      startWith(form.controls.kontra.value)
+    ),
+    form.controls.re.valueChanges.pipe(startWith(form.controls.re.value)),
+    form.controls.bock.valueChanges.pipe(startWith(form.controls.bock.value)),
+  ]).pipe(
+    map(([kontra, re, bock]) => {
+      if ((kontra || re || bock) && form.controls.hirsch.disabled) {
         form.controls.hirsch.enable();
         form.controls.hirsch.setValue(true);
       }
-      if (!kontraRe && form.controls.hirsch.enabled) {
+      if ((!kontra || !re || !bock) && form.controls.hirsch.enabled) {
         form.controls.hirsch.disable();
         form.controls.hirsch.setValue(false);
       }

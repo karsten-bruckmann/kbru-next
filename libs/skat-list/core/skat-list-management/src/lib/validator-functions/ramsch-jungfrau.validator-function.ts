@@ -1,6 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 
-export const jungfrauValidatorFunction: ValidatorFn = (control) => {
+export const ramschJungfrauValidatorFunction: ValidatorFn = (control) => {
   if (typeof control.value !== 'boolean') {
     return { required: true };
   }

@@ -3,7 +3,7 @@ import { EMPTY } from 'rxjs';
 
 import { SkatListForm } from '../models/skat-list-form.model';
 
-export const kontraReFormEffect = (): FormEffect<SkatListForm> => (form) => {
-  form.controls.kontraRe.setValue(false);
+export const kontraFormEffect = (): FormEffect<SkatListForm> => (form) => {
+  form.controls.kontra.setValue(false);
   return EMPTY;
 };

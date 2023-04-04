@@ -1,6 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 
-export const kontraReValidatorFunction: ValidatorFn = (control) => {
+export const ramschSetsSchiebenValidatorFunction: ValidatorFn = (control) => {
   if (typeof control.value !== 'boolean') {
     return { required: true };
   }
