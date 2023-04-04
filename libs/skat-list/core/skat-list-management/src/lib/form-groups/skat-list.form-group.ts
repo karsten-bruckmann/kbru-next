@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
 
 import {
