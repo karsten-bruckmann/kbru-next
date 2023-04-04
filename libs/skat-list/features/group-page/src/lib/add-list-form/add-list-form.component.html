@@ -249,7 +249,25 @@
 
       <ion-footer>
         <ion-list inset>
-          <ion-button expand="block">Liste erstellen</ion-button>
+          <ion-button expand="block" [disabled]="form.invalid"
+            >Liste erstellen</ion-button
+          >
+          <ion-accordion-group>
+            <ion-accordion>
+              <ion-item slot="header">
+                <ion-label>debug</ion-label>
+              </ion-item>
+              <ion-item slot="content">
+                <pre>{{ form.skatList | json }}</pre>
+              </ion-item>
+              <ion-item slot="content">
+                <pre>{{ form.errors | json }}</pre>
+              </ion-item>
+              <ion-item slot="content">
+                <pre>{{ fieldErrors(form) | json }}</pre>
+              </ion-item>
+            </ion-accordion>
+          </ion-accordion-group>
         </ion-list>
       </ion-footer>
     </ng-container>

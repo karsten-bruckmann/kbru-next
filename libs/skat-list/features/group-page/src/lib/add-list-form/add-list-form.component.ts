@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
@@ -81,5 +81,14 @@ export class AddListFormComponent {
 
   public getAddPlayerCallback() {
     return () => (this.addPlayerModalOpen = true);
+  }
+
+  protected fieldErrors(form: FormGroup): any {
+    return Object.keys(form.controls).reduce((errors, name) => {
+      if (form.controls[name].errors === null) {
+        return errors;
+      }
+      return { ...errors, [name]: form.controls[name].errors };
+    }, {});
   }
 }
