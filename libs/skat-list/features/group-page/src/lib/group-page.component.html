@@ -35,17 +35,11 @@
         <ion-item-divider color="primary">
           <ion-label>Offene Spiele</ion-label>
         </ion-item-divider>
-        <ion-item color="light">
-          <ion-label>Romanow</ion-label>
-          <ion-note slot="end" outline>heute</ion-note>
-        </ion-item>
-        <ion-item color="light">
-          <ion-label>Skat</ion-label>
-          <ion-note slot="end" outline>gestern</ion-note>
-        </ion-item>
-        <ion-item color="light">
-          <ion-label>Skat</ion-label>
-          <ion-note slot="end" outline>31.03.2023</ion-note>
+        <ion-item color="light" *ngFor="let list of lists$ | async">
+          <ion-label>{{ list.summary | calculationType }}</ion-label>
+          <ion-note slot="end" outline>{{
+            list.lastUpdate | relativeDate
+          }}</ion-note>
         </ion-item>
       </ion-item-group>
     </ion-list>

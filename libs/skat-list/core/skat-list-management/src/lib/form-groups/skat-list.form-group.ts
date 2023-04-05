@@ -1,5 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
+import { formatISO } from 'date-fns';
 
 import {
   AutoBockKontraLostFormControl,
@@ -52,6 +53,7 @@ export class SkatListFormGroup extends FormGroup<{
     }
 
     return {
+      created: formatISO(new Date()),
       gameIds: [],
       playerIds: this.value.playerIds || [],
       rules: {

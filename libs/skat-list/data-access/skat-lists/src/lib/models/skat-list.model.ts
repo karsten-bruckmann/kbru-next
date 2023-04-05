@@ -1,6 +1,7 @@
 import { SkatListStatus } from './skat-list-status.model';
 
 export interface SkatList {
+  created: string;
   playerIds: string[];
   gameIds: string[];
   rules: {

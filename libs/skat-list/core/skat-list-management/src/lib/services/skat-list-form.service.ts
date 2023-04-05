@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
+import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 
+import { skatListFormSubmittedAction } from '../actions/skat-list-form-submitted.action';
 import {
   AutoBockKontraLostFormControl,
   AutoBockKontraReFormControl,
@@ -31,6 +34,29 @@ import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 @Injectable({ providedIn: 'root' })
 export class SkatListFormService {
   constructor(private store$: Store) {}
+
+  public submit(form: SkatListFormGroup): void {
+    if (!form.valid) {
+      throw new Error('invalid form');
+    }
+
+    if (!form.value.groupId) {
+      throw new Error('no group id');
+    }
+
+    const skatList: SkatList | null = form.skatList;
+    if (!skatList) {
+      throw new Error('error getting list value');
+    }
+
+    this.store$.dispatch(
+      skatListFormSubmittedAction({
+        skatList,
+        uuid: uuid(),
+        groupId: form.value.groupId,
+      })
+    );
+  }
 
   public getForm$(groupId: string): Observable<SkatListFormGroup> {
     return createEffectAwareForm(

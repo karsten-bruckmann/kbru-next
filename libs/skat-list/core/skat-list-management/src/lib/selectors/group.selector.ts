@@ -9,6 +9,7 @@ export const groupSelector = (groupId: string) =>
       ? {
           id: groupId,
           playerIds: groups[groupId].playerIds,
+          listIds: groups[groupId].listIds,
         }
       : null
   );

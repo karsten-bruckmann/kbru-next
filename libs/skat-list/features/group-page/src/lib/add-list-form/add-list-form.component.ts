@@ -11,6 +11,7 @@ import {
   SpitzenPipe,
 } from '@kbru/shared/ui/skat-naming';
 import {
+  SkatListFormGroup,
   SkatListFormService,
   SkatListManagementModule,
 } from '@kbru/skat-list/core/skat-list-management';
@@ -57,6 +58,11 @@ export class AddListFormComponent {
   }
   protected openAddPlayerModal(): void {
     this.addPlayerModalOpen = true;
+  }
+
+  protected submit(form: SkatListFormGroup): void {
+    this.skatListFormService.submit(form);
+    this.open = false;
   }
 
   public getPlayerLabel(index: number): string {

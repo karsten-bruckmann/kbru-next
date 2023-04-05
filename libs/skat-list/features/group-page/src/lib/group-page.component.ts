@@ -2,13 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
+import { RelativeDatePipe } from '@kbru/shared/ui/date-pipes';
+import { CalculationTypePipe } from '@kbru/shared/ui/skat-naming';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
   groupDeletedAction,
   GroupManagementModule,
   groupSelector,
 } from '@kbru/skat-list/core/group-management';
-import { SkatListManagementModule } from '@kbru/skat-list/core/skat-list-management';
+import {
+  listsSelector,
+  SkatListManagementModule,
+} from '@kbru/skat-list/core/skat-list-management';
 import { Store } from '@ngrx/store';
 import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
 
@@ -24,6 +29,8 @@ import { AddListFormComponent } from './add-list-form/add-list-form.component';
     GroupManagementModule,
     SkatListManagementModule,
     AddListFormComponent,
+    CalculationTypePipe,
+    RelativeDatePipe,
   ],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],
@@ -43,7 +50,12 @@ export class GroupPageComponent {
     map((paramMap) => paramMap.get('groupId')),
     filter((groupId): groupId is string => !!groupId),
     switchMap((groupId) => this.store$.select(groupSelector(groupId))),
+    filterNullish(),
     shareReplay({ bufferSize: 1, refCount: true })
+  );
+
+  protected lists$ = this.group$.pipe(
+    switchMap((group) => this.store$.select(listsSelector(group.id)))
   );
 
   protected async deleteGroup(): Promise<void> {

@@ -31,7 +31,9 @@ export class AddGroupFormComponent {
   protected form$ = this.groupFormService.addForm$;
 
   public submit(form: GroupForm): void {
-    this.store$.dispatch(addGroupFormSubmittedAction({ value: form.value }));
+    this.store$.dispatch(
+      addGroupFormSubmittedAction({ value: form.value, created: new Date() })
+    );
     this.added.next();
   }
 

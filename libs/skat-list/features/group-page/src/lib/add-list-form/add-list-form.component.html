@@ -249,7 +249,10 @@
 
       <ion-footer>
         <ion-list inset>
-          <ion-button expand="block" [disabled]="form.invalid"
+          <ion-button
+            expand="block"
+            [disabled]="form.invalid"
+            (click)="submit(form)"
             >Liste erstellen</ion-button
           >
           <ion-accordion-group>

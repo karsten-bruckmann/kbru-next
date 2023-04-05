@@ -1,6 +1,7 @@
 import { createCoreReducer } from '@kbru/shared/utils/ngrx-architecture';
 import { GroupsState } from '@kbru/skat-list/data-access/groups';
 import { on } from '@ngrx/store';
+import { formatISO } from 'date-fns';
 
 import { addGroupFormSubmittedAction } from '../actions/add-group-form-submitted.action';
 import { addPlayerFormSubmittedAction } from '../actions/add-player-form-submitted.action';
@@ -16,6 +17,8 @@ export const groupsReducer = createCoreReducer<GroupsState>(
       [action.value.groupId]: {
         name: action.value.groupName || '',
         playerIds: [],
+        listIds: [],
+        created: formatISO(action.created),
       },
     };
   }),

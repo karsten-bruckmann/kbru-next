@@ -48,6 +48,7 @@
       "@kbru/shared/features/translatable": [
         "libs/shared/features/translatable/src/index.ts"
       ],
+      "@kbru/shared/ui/date-pipes": ["libs/shared/ui/date-pipes/src/index.ts"],
       "@kbru/shared/ui/ionic-file-input": [
         "libs/shared/ui/ionic-file-input/src/index.ts"
       ],
