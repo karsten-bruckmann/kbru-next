@@ -13,7 +13,9 @@ export const listsSelector = (groupId: string) =>
       group
         ? group.listIds.map((id) => ({
             id,
-            summary: lists[id].rules.calculationType,
+            summary: lists[id].rules.addOns?.length
+              ? lists[id].rules.addOns.join(',')
+              : lists[id].rules.calculationType,
             lastUpdate: parseISO(lists[id].created),
           }))
         : []

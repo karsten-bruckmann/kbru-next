@@ -46,6 +46,15 @@
           <ion-item-divider color="primary">
             <ion-label>Optionen</ion-label>
           </ion-item-divider>
+          <ion-item color="light" *ngIf="form.controls.addOns">
+            <ion-label>Spezialregeln</ion-label>
+            <ion-select multiple placeholder="keine" formControlName="addOns">
+              <ion-select-option
+                *ngFor="let value of form.controls.addOns.possibleValues"
+                >{{ value }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
           <ion-item color="light" *ngIf="form.controls.calculationType">
             <ion-label>Berechnung</ion-label>
             <ion-select interface="popover" formControlName="calculationType">

@@ -1,7 +1,9 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
+import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
-import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
-import { EMPTY } from 'rxjs';
+import { toVoid } from '@kbru/shared/utils/rxjs-utils';
+import { AddOn, SkatList } from '@kbru/skat-list/data-access/skat-lists';
+import { tap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 
@@ -31,9 +33,21 @@ export class CentPerPointFormControl extends FormControl<
 
   public static formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
-      form.controls.centPerPoint.setValue(0.1);
-      form.controls.centPerPoint.possibleValues = [0, 1, 0.5, 0.25, 0.1];
-      return EMPTY;
+      const control = form.controls.centPerPoint;
+      control.setValue(0.1);
+      return controlValue$(form.controls.addOns).pipe(
+        tap((addOns) => {
+          if (addOns?.includes(AddOn.Romanow)) {
+            control.setValue(0);
+            control.possibleValues = [0];
+            control.disable();
+          } else {
+            control.possibleValues = [0, 1, 0.5, 0.25, 0.1];
+            control.enable();
+          }
+        }),
+        toVoid()
+      );
     };
   }
 }

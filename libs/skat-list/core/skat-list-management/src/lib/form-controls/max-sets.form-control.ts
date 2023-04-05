@@ -1,7 +1,9 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
+import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
-import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
-import { EMPTY } from 'rxjs';
+import { toVoid } from '@kbru/shared/utils/rxjs-utils';
+import { AddOn, SkatList } from '@kbru/skat-list/data-access/skat-lists';
+import { tap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 
@@ -29,9 +31,21 @@ export class MaxSetsFormControl extends FormControl<
 
   public static formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
-      form.controls.maxSets.setValue(3);
-      form.controls.maxSets.possibleValues = [null, 1, 3];
-      return EMPTY;
+      const control = form.controls.maxSets;
+      control.setValue(3);
+      return controlValue$(form.controls.addOns).pipe(
+        tap((addOns) => {
+          if (addOns?.includes(AddOn.Romanow)) {
+            control.setValue(3);
+            control.possibleValues = [3];
+            control.disable();
+          } else {
+            control.possibleValues = [null, 1, 3];
+            control.enable();
+          }
+        }),
+        toVoid()
+      );
     };
   }
 }

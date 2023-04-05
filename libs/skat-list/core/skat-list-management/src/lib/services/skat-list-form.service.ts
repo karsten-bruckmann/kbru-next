@@ -6,29 +6,28 @@ import { Observable } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { skatListFormSubmittedAction } from '../actions/skat-list-form-submitted.action';
-import {
-  AutoBockKontraLostFormControl,
-  AutoBockKontraReFormControl,
-  BockFormControl,
-  BockSetsFormControl,
-  CalculationTypeFormControl,
-  CentPerPointFormControl,
-  HirschFormControl,
-  KontraFormControl,
-  MaxSetsFormControl,
-  PlayerIdsFormControl,
-  RamschFormControl,
-  RamschJungfrauFormControl,
-  RamschSchiebenFormControl,
-  RamschSetsFormControl,
-  RamschSetsJungfrauFormControl,
-  RamschSetsSchiebenFormControl,
-  ReFormControl,
-  SaechsischeSpitzeFormControl,
-  SpitzenFormControl,
-  ThresholdAnnouncementWithoutHandControl,
-} from '../form-controls';
+import { AddOnsFormControl } from '../form-controls/add-ons.form-control';
+import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
+import { AutoBockKontraReFormControl } from '../form-controls/auto-bock-kontra-re.form-control';
+import { BockFormControl } from '../form-controls/bock.form-control';
+import { BockSetsFormControl } from '../form-controls/bock-sets.form-control';
+import { CalculationTypeFormControl } from '../form-controls/calculation-type.form-control';
+import { CentPerPointFormControl } from '../form-controls/cent-per-point.form-control';
 import { GroupIdFormControl } from '../form-controls/group-id.form-control';
+import { HirschFormControl } from '../form-controls/hirsch.form-control';
+import { KontraFormControl } from '../form-controls/kontra.form-control';
+import { MaxSetsFormControl } from '../form-controls/max-sets.form-control';
+import { PlayerIdsFormControl } from '../form-controls/player-ids.form-control';
+import { RamschFormControl } from '../form-controls/ramsch.form-control';
+import { RamschJungfrauFormControl } from '../form-controls/ramsch-jungfrau.form-control';
+import { RamschSchiebenFormControl } from '../form-controls/ramsch-schieben.form-control';
+import { RamschSetsFormControl } from '../form-controls/ramsch-sets.form-control';
+import { RamschSetsJungfrauFormControl } from '../form-controls/ramsch-sets-jungfrau.form-control';
+import { RamschSetsSchiebenFormControl } from '../form-controls/ramsch-sets-schieben.form-control';
+import { ReFormControl } from '../form-controls/re.form-control';
+import { SaechsischeSpitzeFormControl } from '../form-controls/saechsische-spitze.form-control';
+import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
+import { ThresholdAnnouncementWithoutHandControl } from '../form-controls/threshold-announcement-without-hand.form-control';
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 
 @Injectable({ providedIn: 'root' })
@@ -69,6 +68,7 @@ export class SkatListFormService {
             PlayerIdsFormControl.getAsyncValidator(groupId, this.store$),
           ],
         }),
+        addOns: new AddOnsFormControl(null, AddOnsFormControl.validator),
         calculationType: new CalculationTypeFormControl(
           null,
           CalculationTypeFormControl.validator
@@ -125,6 +125,7 @@ export class SkatListFormService {
       }),
       [
         PlayerIdsFormControl.formEffect(this.store$),
+        AddOnsFormControl.formEffect(),
         CalculationTypeFormControl.formEffect(),
         SpitzenFormControl.formEffect(),
         SaechsischeSpitzeFormControl.formEffect(),

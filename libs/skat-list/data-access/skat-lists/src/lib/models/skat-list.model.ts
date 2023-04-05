@@ -1,3 +1,4 @@
+import { AddOn } from './add-on.enum';
 import { SkatListStatus } from './skat-list-status.model';
 
 export interface SkatList {
@@ -5,6 +6,7 @@ export interface SkatList {
   playerIds: string[];
   gameIds: string[];
   rules: {
+    addOns: AddOn[];
     calculationType: 'seger-fabian' | 'bierlachs';
     maxSets: null | number;
     centPerPoint: number;
