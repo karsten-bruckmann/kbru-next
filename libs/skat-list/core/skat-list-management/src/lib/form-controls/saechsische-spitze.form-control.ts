@@ -3,7 +3,7 @@ import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { AddOn } from '@kbru/skat-list/data-access/skat-lists';
-import { EMPTY, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 import { requiredBooleanValidatorFunction } from '../validator-functions/required-boolean.validator-function';

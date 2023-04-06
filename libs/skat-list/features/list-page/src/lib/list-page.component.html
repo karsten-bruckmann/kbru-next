@@ -1,0 +1,15 @@
+<ng-container *ngIf="list$ | async as list">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button [routerLink]="['..']" routerDirection="back">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{ list.description }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <p>list-page works!</p>
+  </ion-content>
+</ng-container>

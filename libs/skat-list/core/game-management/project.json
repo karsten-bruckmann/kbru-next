@@ -1,0 +1,34 @@
+{
+  "name": "skat-list-core-game-management",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/skat-list/core/game-management/src",
+  "prefix": "kbru",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/skat-list/core/game-management/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/skat-list/core/game-management/**/*.ts",
+          "libs/skat-list/core/game-management/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["scope:skat-list", "type:core"]
+}

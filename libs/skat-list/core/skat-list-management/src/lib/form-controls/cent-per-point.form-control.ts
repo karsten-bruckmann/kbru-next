@@ -14,7 +14,7 @@ export class CentPerPointFormControl extends FormControl<
 
   public static get validator(): ValidatorFn {
     return (control) => {
-      if (!control.value) {
+      if (typeof control.value !== 'number') {
         return { required: true };
       }
       if (

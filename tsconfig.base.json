@@ -84,6 +84,9 @@
       ],
       "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
       "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
+      "@kbru/skat-list/core/game-management": [
+        "libs/skat-list/core/game-management/src/index.ts"
+      ],
       "@kbru/skat-list/core/group-management": [
         "libs/skat-list/core/group-management/src/index.ts"
       ],
@@ -96,11 +99,17 @@
       "@kbru/skat-list/data-access/players": [
         "libs/skat-list/data-access/players/src/index.ts"
       ],
+      "@kbru/skat-list/data-access/skat-games": [
+        "libs/skat-list/data-access/skat-games/src/index.ts"
+      ],
       "@kbru/skat-list/data-access/skat-lists": [
         "libs/skat-list/data-access/skat-lists/src/index.ts"
       ],
       "@kbru/skat-list/features/group-page": [
         "libs/skat-list/features/group-page/src/index.ts"
+      ],
+      "@kbru/skat-list/features/list-page": [
+        "libs/skat-list/features/list-page/src/index.ts"
       ],
       "@kbru/skat-list/features/start-page": [
         "libs/skat-list/features/start-page/src/index.ts"

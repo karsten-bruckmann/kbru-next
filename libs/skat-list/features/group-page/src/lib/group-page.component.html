@@ -35,7 +35,11 @@
         <ion-item-divider color="primary">
           <ion-label>Offene Spiele</ion-label>
         </ion-item-divider>
-        <ion-item color="light" *ngFor="let list of lists$ | async">
+        <ion-item
+          color="light"
+          *ngFor="let list of lists$ | async"
+          [routerLink]="[list.id]"
+        >
           <ion-label>{{ list.summary | calculationType }}</ion-label>
           <ion-note slot="end" outline>{{
             list.lastUpdate | relativeDate

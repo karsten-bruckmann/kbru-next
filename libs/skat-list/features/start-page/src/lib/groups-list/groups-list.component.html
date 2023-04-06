@@ -5,7 +5,7 @@
     </ion-item-divider>
     <ion-item
       *ngFor="let group of list$ | async"
-      [routerLink]="['/', 'group', group.id]"
+      [routerLink]="[group.id]"
       color="light"
     >
       {{ group.name }}

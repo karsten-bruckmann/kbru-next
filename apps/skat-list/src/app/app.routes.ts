@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { groupPageRoutes } from '@kbru/skat-list/features/group-page';
+import { listPageRoutes } from '@kbru/skat-list/features/list-page';
 
 export const appRoutes: Route[] = [
   {
@@ -9,8 +10,6 @@ export const appRoutes: Route[] = [
         (c) => c.StartPageComponent
       ),
   },
-  {
-    path: 'group',
-    children: groupPageRoutes,
-  },
+  ...groupPageRoutes,
+  ...listPageRoutes,
 ];

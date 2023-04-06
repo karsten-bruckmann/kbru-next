@@ -26,6 +26,7 @@ export class AddOnsFormControl extends FormControl<AddOn[] | null> {
 
   public static formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
+      form.controls.addOns.setValue([]);
       form.controls.addOns.possibleValues = [AddOn.Romanow];
       return EMPTY;
     };

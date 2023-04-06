@@ -37,6 +37,6 @@ export class RelativeDatePipe implements PipeTransform {
       return `in ${difference} Tagen`;
     }
 
-    return `vor ${difference} Tagen`;
+    return `vor ${difference * -1} Tagen`;
   }
 }
