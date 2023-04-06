@@ -14,7 +14,9 @@ import { appRoutes } from './app.routes';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      swipeBackEnabled: false,
+    }),
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
