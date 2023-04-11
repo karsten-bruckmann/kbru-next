@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
   AddOnPipe,
@@ -12,13 +12,16 @@ import {
   SpitzenPipe,
 } from '@kbru/shared/ui/skat-naming';
 import {
+  addPlayerFormSubmittedAction,
+  PlayerFormService,
+} from '@kbru/skat-list/core/group-management';
+import {
   SkatListFormGroup,
   SkatListFormService,
   SkatListManagementModule,
 } from '@kbru/skat-list/core/skat-list-management';
-import { filter, map, shareReplay, switchMap } from 'rxjs';
-
-import { AddPlayerFormComponent } from '../add-player-form/add-player-form.component';
+import { Store } from '@ngrx/store';
+import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
 
 @Component({
   selector: 'skat-list-group-page-add-list-form',
@@ -27,7 +30,6 @@ import { AddPlayerFormComponent } from '../add-player-form/add-player-form.compo
     CommonModule,
     IonicModule,
     IonicListInputComponent,
-    AddPlayerFormComponent,
     ReactiveFormsModule,
     SkatListManagementModule,
     CalculationTypePipe,
@@ -42,25 +44,23 @@ import { AddPlayerFormComponent } from '../add-player-form/add-player-form.compo
 export class AddListFormComponent {
   constructor(
     private skatListFormService: SkatListFormService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private playerFormService: PlayerFormService,
+    private alertController: AlertController,
+    private store$: Store
   ) {}
 
   public open = false;
 
-  protected form$ = this.activatedRoute.paramMap.pipe(
+  private groupId$ = this.activatedRoute.paramMap.pipe(
     map((paramMap) => paramMap.get('groupId')),
-    filter((groupId): groupId is string => !!groupId),
+    filter((groupId): groupId is string => !!groupId)
+  );
+
+  protected form$ = this.groupId$.pipe(
     switchMap((groupId) => this.skatListFormService.getForm$(groupId)),
     shareReplay({ bufferSize: 1, refCount: true })
   );
-
-  protected addPlayerModalOpen = false;
-  protected closeAddPlayerModal(): void {
-    this.addPlayerModalOpen = false;
-  }
-  protected openAddPlayerModal(): void {
-    this.addPlayerModalOpen = true;
-  }
 
   protected submit(form: SkatListFormGroup): void {
     this.skatListFormService.submit(form);
@@ -88,9 +88,60 @@ export class AddListFormComponent {
   }
 
   public getAddPlayerCallback() {
-    return () => (this.addPlayerModalOpen = true);
+    return () => {
+      this.addPlayer();
+    };
   }
 
+  protected async addPlayer(): Promise<void> {
+    let alert: HTMLIonAlertElement;
+    const subscription = this.playerFormService
+      .getAddForm$([await firstValueFrom(this.groupId$)])
+      .subscribe(async (form) => {
+        if (alert) {
+          alert.dismiss();
+        }
+        alert = await this.alertController.create({
+          header: 'Neuer Spieler',
+          inputs: [
+            {
+              name: 'playerName',
+              type: 'text',
+              placeholder: 'Name',
+              value: form.controls.playerName.value,
+              handler: (input) => {
+                form.controls.playerName.setValue(input.value);
+              },
+            },
+          ],
+          buttons: [
+            {
+              role: 'cancel',
+              text: 'abbrechen',
+              handler: () => subscription.unsubscribe(),
+            },
+            {
+              text: 'OK',
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              handler: (value: any) => {
+                form.patchValue(value);
+                if (form.valid) {
+                  this.store$.dispatch(
+                    addPlayerFormSubmittedAction({
+                      value: form.value,
+                    })
+                  );
+                }
+                return form.valid;
+              },
+            },
+          ],
+        });
+        alert.present();
+      });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected fieldErrors(form: FormGroup): any {
     return Object.keys(form.controls).reduce((errors, name) => {
       if (form.controls[name].errors === null) {

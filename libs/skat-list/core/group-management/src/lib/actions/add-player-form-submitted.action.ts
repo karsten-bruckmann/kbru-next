@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
+import { PlayerFormGroup } from '../form-groups/player.form-group';
 import { groupManagementName } from '../group-management.name';
-import { PlayerForm } from '../models/player-form.model';
 
 export const addPlayerFormSubmittedAction = createAction(
   `${groupManagementName}/add-player-form-submitted`,
-  props<{ value: PlayerForm['value'] }>()
+  props<{ value: PlayerFormGroup['value'] }>()
 );

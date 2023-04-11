@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
+import { GroupFormGroup } from '../form-groups/group.form-group';
 import { groupManagementName } from '../group-management.name';
-import { GroupForm } from '../models/group-form.model';
 
 export const addGroupFormSubmittedAction = createAction(
   `${groupManagementName}/add-group-form-submitted`,
-  props<{ value: GroupForm['value']; created: Date }>()
+  props<{ value: GroupFormGroup['value']; created: Date }>()
 );

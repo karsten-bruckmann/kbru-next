@@ -32,14 +32,6 @@
             "
             color="light"
           ></ui-ionic-list-input>
-          <ion-modal class="dialogue" [isOpen]="addPlayerModalOpen">
-            <ng-template>
-              <skat-list-group-page-add-player-form
-                (added)="addPlayerModalOpen = false"
-                (canceled)="addPlayerModalOpen = false"
-              ></skat-list-group-page-add-player-form>
-            </ng-template>
-          </ion-modal>
         </ion-list>
 
         <ion-list inset>

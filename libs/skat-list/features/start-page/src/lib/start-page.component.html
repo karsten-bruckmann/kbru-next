@@ -9,16 +9,7 @@
 </ion-content>
 
 <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-  <ion-fab-button (click)="addGroupModalOpen = true">
+  <ion-fab-button (click)="addGroup()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
-<ion-modal class="dialogue" [isOpen]="addGroupModalOpen">
-  <ng-template>
-    <skat-list-start-page-add-group-form
-      (added)="addGroupModalOpen = false"
-      (canceled)="addGroupModalOpen = false"
-    ></skat-list-start-page-add-group-form>
-  </ng-template>
-</ion-modal>

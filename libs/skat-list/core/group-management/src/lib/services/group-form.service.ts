@@ -3,16 +3,16 @@ import { FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
-import { GroupForm } from '../models/group-form.model';
-import { groupNameValidatorFunction } from '../validator-functions/group-name.validator-function';
+import { GroupNameFormControl } from '../form-controls/group-name.form-control';
+import { GroupFormGroup } from '../form-groups/group.form-group';
 
 @Injectable({ providedIn: 'root' })
 export class GroupFormService {
-  public get addForm$(): Observable<GroupForm> {
+  public get addForm$(): Observable<GroupFormGroup> {
     return of(
-      new GroupForm({
+      new GroupFormGroup({
         groupId: new FormControl<string>(uuid(), Validators.required),
-        groupName: new FormControl<string>('', groupNameValidatorFunction),
+        groupName: new GroupNameFormControl('', GroupNameFormControl.validator),
       })
     );
   }

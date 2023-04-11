@@ -3,17 +3,20 @@ import { FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
-import { PlayerForm } from '../models/player-form.model';
-import { playerNameValidatorFunction } from '../validator-functions/player-name.validator-function';
+import { PlayerNameFormControl } from '../form-controls/player-name.form-control';
+import { PlayerFormGroup } from '../form-groups/player.form-group';
 
 @Injectable({ providedIn: 'root' })
 export class PlayerFormService {
-  public getAddForm$(groupIds: string[] = []): Observable<PlayerForm> {
+  public getAddForm$(groupIds: string[] = []): Observable<PlayerFormGroup> {
     return of(
-      new PlayerForm({
+      new PlayerFormGroup({
         groupIds: new FormControl<string[]>(groupIds),
         playerId: new FormControl<string>(uuid(), Validators.required),
-        playerName: new FormControl<string>('', playerNameValidatorFunction),
+        playerName: new PlayerNameFormControl(
+          '',
+          PlayerNameFormControl.validator
+        ),
       })
     );
   }
