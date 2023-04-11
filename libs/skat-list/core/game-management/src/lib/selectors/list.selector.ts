@@ -8,8 +8,8 @@ export const listSelector = (listId: string) =>
     lists[listId]
       ? {
           id: listId,
-          description: lists[listId].rules.addOns.length
-            ? lists[listId].rules.addOns.join(',')
+          description: lists[listId].rules.addOn
+            ? `${lists[listId].rules.addOn}`
             : lists[listId].rules.calculationType,
         }
       : null

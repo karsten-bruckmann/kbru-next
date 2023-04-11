@@ -35,9 +35,9 @@ export class CentPerPointFormControl extends FormControl<
     return (form) => {
       const control = form.controls.centPerPoint;
       control.setValue(0.1);
-      return controlValue$(form.controls.addOns).pipe(
-        tap((addOns) => {
-          if (addOns?.includes(AddOn.Romanow)) {
+      return controlValue$(form.controls.addOn).pipe(
+        tap((addOn) => {
+          if (addOn === AddOn.Romanow) {
             control.setValue(0);
             control.possibleValues = [0];
             control.disable();

@@ -13,8 +13,8 @@ export const listsSelector = (groupId: string) =>
       group
         ? group.listIds.map((id) => ({
             id,
-            summary: lists[id].rules.addOns?.length
-              ? lists[id].rules.addOns.join(',')
+            summary: lists[id].rules.addOn
+              ? `${lists[id].rules.addOn}`
               : lists[id].rules.calculationType,
             lastUpdate: parseISO(lists[id].created),
           }))

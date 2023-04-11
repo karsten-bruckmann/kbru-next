@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
+  AddOnPipe,
   CalculationTypePipe,
   CentPerPointPipe,
   MaxSetsPipe,
@@ -33,6 +34,7 @@ import { AddPlayerFormComponent } from '../add-player-form/add-player-form.compo
     CentPerPointPipe,
     MaxSetsPipe,
     SpitzenPipe,
+    AddOnPipe,
   ],
   templateUrl: './add-list-form.component.html',
   styleUrls: ['./add-list-form.component.scss'],

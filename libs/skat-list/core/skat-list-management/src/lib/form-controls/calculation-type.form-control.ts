@@ -33,9 +33,9 @@ export class CalculationTypeFormControl extends FormControl<
     return (form) => {
       const control = form.controls.calculationType;
       control.setValue('seger-fabian');
-      return controlValue$(form.controls.addOns).pipe(
-        tap((addOns) => {
-          if (addOns?.includes(AddOn.Romanow)) {
+      return controlValue$(form.controls.addOn).pipe(
+        tap((addOn) => {
+          if (addOn === AddOn.Romanow) {
             control.setValue('bierlachs');
             control.possibleValues = ['bierlachs'];
             control.disable();

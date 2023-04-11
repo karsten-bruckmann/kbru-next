@@ -5,7 +5,7 @@ import { EMPTY } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 
-export class AddOnsFormControl extends FormControl<AddOn[] | null> {
+export class AddOnFormControl extends FormControl<AddOn | null> {
   public possibleValues: AddOn[] = [];
 
   public static get validator(): ValidatorFn {
@@ -13,10 +13,7 @@ export class AddOnsFormControl extends FormControl<AddOn[] | null> {
       if (!control.value) {
         return { required: true };
       }
-      if (
-        !Array.isArray(control.value) ||
-        control.value.find((v) => !Object.values(AddOn).includes(v))
-      ) {
+      if (!Object.values(AddOn).includes(control.value)) {
         return { type: true };
       }
 
@@ -26,8 +23,8 @@ export class AddOnsFormControl extends FormControl<AddOn[] | null> {
 
   public static formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
-      form.controls.addOns.setValue([]);
-      form.controls.addOns.possibleValues = [AddOn.Romanow];
+      form.controls.addOn.setValue(AddOn.None);
+      form.controls.addOn.possibleValues = [AddOn.None, AddOn.Romanow];
       return EMPTY;
     };
   }

@@ -2,7 +2,7 @@ import { FormGroup } from '@angular/forms';
 import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
 import { formatISO } from 'date-fns';
 
-import { AddOnsFormControl } from '../form-controls/add-ons.form-control';
+import { AddOnFormControl } from '../form-controls/add-on.form-control';
 import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
 import { AutoBockKontraReFormControl } from '../form-controls/auto-bock-kontra-re.form-control';
 import { BockFormControl } from '../form-controls/bock.form-control';
@@ -26,7 +26,7 @@ import { ThresholdAnnouncementWithoutHandControl } from '../form-controls/thresh
 export class SkatListFormGroup extends FormGroup<{
   groupId: GroupIdFormControl;
   playerIds: PlayerIdsFormControl;
-  addOns: AddOnsFormControl;
+  addOn: AddOnFormControl;
   calculationType: CalculationTypeFormControl;
   spitzen: SpitzenFormControl;
   saechsischeSpitze: SaechsischeSpitzeFormControl;
@@ -57,7 +57,7 @@ export class SkatListFormGroup extends FormGroup<{
       gameIds: [],
       playerIds: this.value.playerIds || [],
       rules: {
-        addOns: this.value.addOns || [],
+        addOn: this.value.addOn || null,
         calculationType: this.value.calculationType || 'seger-fabian',
         maxSets: this.value.maxSets || null,
         centPerPoint: this.value.centPerPoint || 0,

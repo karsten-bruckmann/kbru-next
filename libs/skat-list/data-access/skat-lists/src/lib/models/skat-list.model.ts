@@ -6,7 +6,7 @@ export interface SkatList {
   playerIds: string[];
   gameIds: string[];
   rules: {
-    addOns: AddOn[];
+    addOn: AddOn | null;
     calculationType: 'seger-fabian' | 'bierlachs';
     maxSets: null | number;
     centPerPoint: number;

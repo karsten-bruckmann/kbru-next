@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { skatListFormSubmittedAction } from '../actions/skat-list-form-submitted.action';
-import { AddOnsFormControl } from '../form-controls/add-ons.form-control';
+import { AddOnFormControl } from '../form-controls/add-on.form-control';
 import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
 import { AutoBockKontraReFormControl } from '../form-controls/auto-bock-kontra-re.form-control';
 import { BockFormControl } from '../form-controls/bock.form-control';
@@ -68,7 +68,7 @@ export class SkatListFormService {
             PlayerIdsFormControl.getAsyncValidator(groupId, this.store$),
           ],
         }),
-        addOns: new AddOnsFormControl(null, AddOnsFormControl.validator),
+        addOn: new AddOnFormControl(null, AddOnFormControl.validator),
         calculationType: new CalculationTypeFormControl(
           null,
           CalculationTypeFormControl.validator
@@ -125,7 +125,7 @@ export class SkatListFormService {
       }),
       [
         PlayerIdsFormControl.formEffect(this.store$),
-        AddOnsFormControl.formEffect(),
+        AddOnFormControl.formEffect(),
         CalculationTypeFormControl.formEffect(),
         SpitzenFormControl.formEffect(),
         SaechsischeSpitzeFormControl.formEffect(),

@@ -46,12 +46,13 @@
           <ion-item-divider color="primary">
             <ion-label>Optionen</ion-label>
           </ion-item-divider>
-          <ion-item color="light" *ngIf="form.controls.addOns">
+          <ion-item color="light" *ngIf="form.controls.addOn">
             <ion-label>Spezialregeln</ion-label>
-            <ion-select multiple placeholder="keine" formControlName="addOns">
+            <ion-select interface="popover" formControlName="addOn">
               <ion-select-option
-                *ngFor="let value of form.controls.addOns.possibleValues"
-                >{{ value }}</ion-select-option
+                *ngFor="let value of form.controls.addOn.possibleValues"
+                [value]="value"
+                >{{ value | addOn }}</ion-select-option
               >
             </ion-select>
           </ion-item>

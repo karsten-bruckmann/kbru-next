@@ -17,9 +17,9 @@ export class BockSetsFormControl extends FormControl<boolean | null> {
     return (form) => {
       const control = form.controls.bockSets;
       control.setValue(false);
-      return controlValue$(form.controls.addOns).pipe(
-        tap((addOns) => {
-          if (addOns?.includes(AddOn.Romanow)) {
+      return controlValue$(form.controls.addOn).pipe(
+        tap((addOn) => {
+          if (addOn === AddOn.Romanow) {
             control.setValue(false);
             control.disable();
           } else {
