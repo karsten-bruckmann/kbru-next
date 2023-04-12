@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+[slot='content'] {
+  --inner-padding-start: 15px;
+
+  &.inset {
+    --inner-padding-start: 30px;
+  }
+}
