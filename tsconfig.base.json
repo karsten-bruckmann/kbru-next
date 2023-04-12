@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "strict": true,
     "paths": {
       "@kbru/battle-companion/core/roster-management": [
         "libs/battle-companion/core/roster-management/src/index.ts"

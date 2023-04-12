@@ -1,6 +1,5 @@
-export interface SkatGame {
-  gameType: string;
-  playerIndex?: number;
-  spitzen?: number;
-  nullGame?: 'einfach' | 'hand' | 'ouvert' | 'hand-ouvert';
-}
+import { z } from 'zod';
+
+import { skatGameSchema } from '../schemas/skat-game.schema';
+
+export type SkatGame = z.infer<typeof skatGameSchema>;

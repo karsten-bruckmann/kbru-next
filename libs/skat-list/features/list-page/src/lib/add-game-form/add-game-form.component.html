@@ -28,6 +28,42 @@
               </ion-select>
             </ion-item>
           </ion-list>
+
+          <ion-list inset *ngIf="form.controls.gameType">
+            <ion-item-divider color="primary">
+              <ion-label>Spiel</ion-label>
+            </ion-item-divider>
+            <ion-item color="light" *ngIf="form.controls.gameType">
+              <ion-label>Spiel</ion-label>
+              <ion-select interface="popover" formControlName="gameType">
+                <ion-select-option
+                  *ngFor="let value of form.controls.gameType.possibleValues"
+                  [value]="value"
+                  >{{ value }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+            <ion-item color="light" *ngIf="form.controls.spitzen">
+              <ion-label>Spitzen</ion-label>
+              <ion-select interface="popover" formControlName="spitzen">
+                <ion-select-option
+                  *ngFor="let value of form.controls.spitzen.possibleValues"
+                  [value]="value"
+                  >{{ value }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+            <ion-item color="light" *ngIf="form.controls.nullGame">
+              <ion-label>Null</ion-label>
+              <ion-select interface="popover" formControlName="nullGame">
+                <ion-select-option
+                  *ngFor="let value of form.controls.nullGame.possibleValues"
+                  [value]="value"
+                  >{{ value }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-list>
         </ion-content>
 
         <ion-footer>

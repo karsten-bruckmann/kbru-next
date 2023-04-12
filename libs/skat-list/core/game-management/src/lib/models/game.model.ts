@@ -1,20 +1,7 @@
-import { GameType, NullGameType, StandardGameType } from './game-type.type';
+import { z } from 'zod';
 
-export interface BaseGame {
-  id: string;
-  gameType: GameType;
-}
+import { gameSchema } from '../schemas/game.schema';
 
-export interface StandardGame extends BaseGame {
-  gameType: StandardGameType;
-  playerIndex: number;
-  spitzen: number;
-}
+export type Game = z.infer<typeof gameSchema>;
 
-export interface NullGame extends BaseGame {
-  gameType: NullGameType;
-  playerIndex: number;
-  nullGame: 'einfach' | 'hand' | 'ouvert' | 'hand-ouvert';
-}
-
-export type Game = StandardGame | NullGame;
+export type GameType = Game['gameType'];
