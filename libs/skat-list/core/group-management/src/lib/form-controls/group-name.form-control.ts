@@ -22,7 +22,7 @@ export class GroupNameFormControl extends FormControl<string | null> {
           length: true,
         };
       }
-      if (!control.value.match(/^[0-9a-zA-Z_.-]*$/)) {
+      if (!control.value.match(/^[ 0-9a-zA-Z_.-]*$/)) {
         return {
           characters: true,
         };

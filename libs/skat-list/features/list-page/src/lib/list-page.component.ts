@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
+import { GameManagementModule } from '@kbru/skat-list/core/game-management';
+import { GroupManagementModule } from '@kbru/skat-list/core/group-management';
 import {
-  GameManagementModule,
   listSelector,
-} from '@kbru/skat-list/core/game-management';
-import { SkatListManagementModule } from '@kbru/skat-list/core/skat-list-management';
+  SkatListManagementModule,
+} from '@kbru/skat-list/core/skat-list-management';
 import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs';
 
@@ -20,6 +21,7 @@ import { switchMap } from 'rxjs';
     RouterModule,
     GameManagementModule,
     SkatListManagementModule,
+    GroupManagementModule,
   ],
   templateUrl: './list-page.component.html',
   styleUrls: ['./list-page.component.scss'],

@@ -6,10 +6,10 @@
           <ion-icon name="chevron-back"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title>{{ list.description }}</ion-title>
+      <ion-title>{{ list.summary }}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <p>list-page works!</p>
+    <pre>{{ list$ | async | json }}</pre>
   </ion-content>
 </ng-container>
