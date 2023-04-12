@@ -11,20 +11,19 @@ import { List } from '../models/list.model';
 import { Player } from '../models/player.model';
 
 export const listSelector = (listId: string) =>
-  createSelector(
-    playersSelector,
-    skatListsSelector,
-    (players, lists): List => ({
+  createSelector(playersSelector, skatListsSelector, (players, lists): List => {
+    const playersArray: Player[] = lists[listId].playerIds
+      .map((playerId) =>
+        toIdAware(players).find((player) => player.id === playerId)
+      )
+      .filter<Player>((p): p is Player => !!p);
+    return {
       id: listId,
       summary:
         lists[listId].rules.addOn !== AddOn.None
           ? `${lists[listId].rules.addOn}`
           : lists[listId].rules.calculationType,
       lastUpdate: parseISO(lists[listId].created),
-      players: lists[listId].playerIds
-        .map((playerId) =>
-          toIdAware(players).find((player) => player.id === playerId)
-        )
-        .filter<Player>((p): p is Player => !!p),
-    })
-  );
+      players: playersArray,
+    };
+  });

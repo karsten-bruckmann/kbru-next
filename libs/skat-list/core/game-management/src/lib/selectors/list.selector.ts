@@ -8,6 +8,8 @@ import { createSelector } from '@ngrx/store';
 import { Game } from '../models/game.model';
 import { List } from '../models/list.model';
 import { Player } from '../models/player.model';
+import { getInitialStatus } from '../rules/get-initial-status.rule';
+import { getStatus } from '../rules/get-status.rule';
 import { gamesSelector } from './games.selector';
 import { playersSelector } from './players.selector';
 
@@ -16,8 +18,10 @@ export const listSelector = (listId: string) =>
     skatListsSelector,
     playersSelector(listId),
     gamesSelector(listId),
-    (lists, players, games): List | null =>
-      lists[listId]
+    (lists, players, games): List | null => {
+      const status =
+        lists[listId] && lists[listId].status ? lists[listId].status : null;
+      return lists[listId]
         ? {
             id: listId,
             description:
@@ -26,6 +30,10 @@ export const listSelector = (listId: string) =>
                 : lists[listId].rules.calculationType,
             players: players,
             games: games,
+            status: status
+              ? getStatus(status, players)
+              : getInitialStatus(lists[listId], players),
           }
-        : null
+        : null;
+    }
   );

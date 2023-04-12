@@ -1,16 +1,24 @@
 import { FormGroup } from '@angular/forms';
-import { SkatGame } from '@kbru/skat-list/data-access/skat-games';
+import { v4 } from 'uuid';
 
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
 import { PlayerIdFormControl } from '../form-controls/player-id.form-control';
+import { Game } from '../models/game.model';
+import { Player } from '../models/player.model';
 
 export class SkatGameFormGroup extends FormGroup<{
   listId: ListIdFormControl;
   playerId: PlayerIdFormControl;
 }> {
-  public get skatGame(): SkatGame {
+  public getGame(listPlayers: Player[]): Game {
     return {
-      playerId: this.controls.playerId.value || '',
+      id: v4(),
+      player: listPlayers.find(
+        (p) => p.id === this.controls.playerId.value
+      ) || {
+        id: '',
+        name: 'unknown player',
+      },
     };
   }
 }

@@ -1,5 +1,6 @@
 export * from './lib/form-groups/skat-list.form-group';
 export * from './lib/models/group.model';
+export * from './lib/models/player.model';
 export * from './lib/selectors/list.selector';
 export * from './lib/selectors/lists.selector';
 export * from './lib/selectors/players.selector';

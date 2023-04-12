@@ -1,7 +1,8 @@
-import { SkatGame } from '@kbru/skat-list/data-access/skat-games';
 import { createAction, props } from '@ngrx/store';
+
+import { Game } from '../models/game.model';
 
 export const skatGameFormSubmittedAction = createAction(
   'skat-game-management/skat-game-form-submitted',
-  props<{ skatGame: SkatGame; uuid: string; listId: string }>()
+  props<{ game: Game; listId: string }>()
 );

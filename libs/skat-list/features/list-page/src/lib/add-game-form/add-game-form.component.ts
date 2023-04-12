@@ -7,10 +7,10 @@ import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
   GameManagementModule,
   Player,
+  playersSelector,
   SkatGameFormGroup,
   SkatGameFormService,
 } from '@kbru/skat-list/core/game-management';
-import { playersSelector } from '@kbru/skat-list/core/game-management';
 import { Store } from '@ngrx/store';
 import { filter, map, shareReplay, switchMap } from 'rxjs';
 

@@ -7,6 +7,8 @@ import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted
 export const skatGamesReducer = createCoreReducer<SkatGamesState>(
   on(skatGameFormSubmittedAction, (state, action) => ({
     ...state,
-    [action.uuid]: action.skatGame,
+    [action.game.id]: {
+      playerId: action.game.player.id,
+    },
   }))
 );

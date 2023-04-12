@@ -17,18 +17,20 @@ export const listsSelector = (groupId: string) =>
     playersSelector(groupId),
     (group, lists, players): List[] =>
       group
-        ? group.listIds.map((id) => ({
-            id,
-            summary:
-              lists[id].rules.addOn !== AddOn.None
-                ? `${lists[id].rules.addOn}`
-                : lists[id].rules.calculationType,
-            lastUpdate: parseISO(lists[id].created),
-            players: lists[id].playerIds
-              .map((playerId) =>
-                players.find((player) => player.id === playerId)
-              )
-              .filter<Player>((p): p is Player => !!p),
-          }))
+        ? group.listIds.map((id) => {
+            return {
+              id,
+              summary:
+                lists[id].rules.addOn !== AddOn.None
+                  ? `${lists[id].rules.addOn}`
+                  : lists[id].rules.calculationType,
+              lastUpdate: parseISO(lists[id].created),
+              players: lists[id].playerIds
+                .map((playerId) =>
+                  players.find((player) => player.id === playerId)
+                )
+                .filter<Player>((p): p is Player => !!p),
+            };
+          })
         : []
   );
