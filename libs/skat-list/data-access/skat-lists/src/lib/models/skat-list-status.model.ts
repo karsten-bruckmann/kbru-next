@@ -1,3 +1,3 @@
 export interface SkatListStatus {
-  activePlayerIds: [string, string, string];
+  activePlayers: [number, number, number];
 }

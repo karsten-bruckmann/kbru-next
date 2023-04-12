@@ -6,8 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
   GameManagementModule,
+  listSelector,
   Player,
-  playersSelector,
   SkatGameFormGroup,
   SkatGameFormService,
 } from '@kbru/skat-list/core/game-management';
@@ -41,8 +41,8 @@ export class AddGameFormComponent {
     filter((groupId): groupId is string => !!groupId)
   );
 
-  protected players$ = this.listId$.pipe(
-    switchMap((listId) => this.store$.select(playersSelector(listId)))
+  protected list$ = this.listId$.pipe(
+    switchMap((listId) => this.store$.select(listSelector(listId)))
   );
 
   protected form$ = this.listId$.pipe(
@@ -55,8 +55,8 @@ export class AddGameFormComponent {
     this.open = false;
   }
 
-  protected playerName(id: string, players: Player[]): string | null {
-    return players.find((p) => p.id === id)?.name || null;
+  protected playerName(index: number, players: Player[]): string | null {
+    return players[index]?.name || null;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -31,8 +31,8 @@ export const listSelector = (listId: string) =>
             players: players,
             games: games,
             status: status
-              ? getStatus(status, players)
-              : getInitialStatus(lists[listId], players),
+              ? getStatus(status)
+              : getInitialStatus(lists[listId]),
           }
         : null;
     }

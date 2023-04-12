@@ -10,51 +10,33 @@ export const updateStatus = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addedGame: Game
 ): SkatListStatus => {
-  let activePlayerIds: [string, string, string];
+  let activePlayers: [number, number, number];
   switch (skatList.playerIds.length) {
     case 3:
-      activePlayerIds = [
-        skatList.playerIds[
-          (2 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
-        skatList.playerIds[
-          (3 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
-        skatList.playerIds[
-          (1 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
+      activePlayers = [
+        (2 + skatList.gameIds.length) % skatList.playerIds.length,
+        (3 + skatList.gameIds.length) % skatList.playerIds.length,
+        (1 + skatList.gameIds.length) % skatList.playerIds.length,
       ];
       break;
     case 4:
-      activePlayerIds = [
-        skatList.playerIds[
-          (2 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
-        skatList.playerIds[
-          (3 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
-        skatList.playerIds[
-          (4 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
+      activePlayers = [
+        (2 + skatList.gameIds.length) % skatList.playerIds.length,
+        (3 + skatList.gameIds.length) % skatList.playerIds.length,
+        (4 + skatList.gameIds.length) % skatList.playerIds.length,
       ];
       break;
     case 5:
-      activePlayerIds = [
-        skatList.playerIds[
-          (2 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
-        skatList.playerIds[
-          (4 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
-        skatList.playerIds[
-          (5 + skatList.gameIds.length) % skatList.playerIds.length
-        ],
+      activePlayers = [
+        (2 + skatList.gameIds.length) % skatList.playerIds.length,
+        (4 + skatList.gameIds.length) % skatList.playerIds.length,
+        (5 + skatList.gameIds.length) % skatList.playerIds.length,
       ];
       break;
     default:
       throw new Error('invalid number of players');
   }
   return {
-    activePlayerIds,
+    activePlayers,
   };
 };

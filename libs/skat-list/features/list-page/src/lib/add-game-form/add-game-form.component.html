@@ -1,6 +1,6 @@
 <ion-modal [isOpen]="open">
   <ng-template>
-    <ng-container *ngIf="players$ | async as players">
+    <ng-container *ngIf="list$ | async as list">
       <ng-container *ngIf="form$ | async as form" [formGroup]="form">
         <ion-header>
           <ion-toolbar color="primary">
@@ -13,17 +13,17 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <ion-list inset *ngIf="form.controls.playerId">
+          <ion-list inset *ngIf="form.controls.playerIndex">
             <ion-item-divider color="primary">
               <ion-label>Spieler</ion-label>
             </ion-item-divider>
-            <ion-item color="light" *ngIf="form.controls.playerId">
+            <ion-item color="light" *ngIf="form.controls.playerIndex">
               <ion-label>Spieler</ion-label>
-              <ion-select interface="popover" formControlName="playerId">
+              <ion-select interface="popover" formControlName="playerIndex">
                 <ion-select-option
-                  *ngFor="let value of form.controls.playerId.possibleValues"
+                  *ngFor="let value of form.controls.playerIndex.possibleValues"
                   [value]="value"
-                  >{{ playerName(value, players) }}</ion-select-option
+                  >{{ playerName(value, list.players) }}</ion-select-option
                 >
               </ion-select>
             </ion-item>
@@ -44,7 +44,7 @@
                   <ion-label>debug</ion-label>
                 </ion-item>
                 <ion-item slot="content">
-                  <pre>{{ form.skatGame | json }}</pre>
+                  <!-- <pre>{{ form.game | json }}</pre> -->
                 </ion-item>
                 <ion-item slot="content">
                   <pre>{{ form.value | json }}</pre>

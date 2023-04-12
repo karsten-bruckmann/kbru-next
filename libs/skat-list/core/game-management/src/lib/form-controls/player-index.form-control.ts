@@ -5,25 +5,23 @@ import { Store } from '@ngrx/store';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { playersSelector } from '../selectors/players.selector';
+import { listSelector } from '../selectors/list.selector';
 
-export class PlayerIdFormControl extends FormControl<string | null> {
-  public possibleValues: string[] = [];
+export class PlayerIndexFormControl extends FormControl<number | null> {
+  public possibleValues: number[] = [];
 
   public static getAsyncValidator(
     listId: string,
     store$: Store
   ): AsyncValidatorFn {
     return async (control) => {
-      if (typeof control.value !== 'string') {
+      if (typeof control.value !== 'number') {
         return { type: true };
       }
 
-      const listPlayerIds = (
-        await firstValueFrom(store$.select(playersSelector(listId)))
-      ).map((player) => player.id);
+      const list = await firstValueFrom(store$.select(listSelector(listId)));
 
-      if (!listPlayerIds.includes(control.value)) {
+      if (!list?.players[control.value]) {
         return { invalidId: true };
       }
 
@@ -36,18 +34,16 @@ export class PlayerIdFormControl extends FormControl<string | null> {
       return form.controls.listId.valueChanges.pipe(
         startWith(form.controls.listId.value),
         filterNullish(),
-        switchMap((listId) => store$.select(playersSelector(listId))),
-        map((players) => {
-          form.controls.playerId.possibleValues = players.map(
-            (player) => player.id
-          );
-          form.controls.playerId.getPlayerName = (id) =>
-            players.find((player) => player.id === id)?.name ||
-            '[Unbekannter Spieler]';
+        switchMap((listId) => store$.select(listSelector(listId))),
+        filterNullish(),
+        map((list) => {
+          form.controls.playerIndex.possibleValues = list.status.activePlayers;
+          form.controls.playerIndex.getPlayerName = (index) =>
+            list?.players[index].name || '';
         })
       );
     };
   }
 
-  public getPlayerName: (id: string) => string = () => '';
+  public getPlayerName: (index: number) => string = () => '';
 }
