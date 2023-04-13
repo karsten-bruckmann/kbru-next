@@ -13,7 +13,7 @@ import { skatGamesReducer } from './reducers/skat-games.reducer';
 import { skatListsReducer } from './reducers/skat-lists.reducer';
 
 @NgModule({ imports: [GroupsModule, SkatListsModule, SkatGamesModule] })
-export class GameManagementModule {
+export class SkatGameManagementModule {
   constructor() {
     skatGamesCoreReducerRegistry.add(skatGamesReducer, 'game-management');
     skatListsCoreReducerRegistry.add(skatListsReducer, 'game-management');

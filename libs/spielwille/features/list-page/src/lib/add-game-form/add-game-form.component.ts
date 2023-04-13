@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
-  GameManagementModule,
+  SkatGameManagementModule,
   listSelector,
   Player,
   SkatGameFormGroup,
@@ -22,7 +22,7 @@ import { filter, map, shareReplay, switchMap } from 'rxjs';
     IonicModule,
     IonicListInputComponent,
     ReactiveFormsModule,
-    GameManagementModule,
+    SkatGameManagementModule,
   ],
   templateUrl: './add-game-form.component.html',
   styleUrls: ['./add-game-form.component.scss'],

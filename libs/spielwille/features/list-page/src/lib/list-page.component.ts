@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { GroupManagementModule } from '@kbru/spielwille/core/group-management';
 import {
-  GameManagementModule,
+  SkatGameManagementModule,
   listSelector,
 } from '@kbru/spielwille/core/skat-game-management';
 import { SkatListManagementModule } from '@kbru/spielwille/core/skat-list-management';
@@ -21,7 +21,7 @@ import { AddGameFormComponent } from './add-game-form/add-game-form.component';
     CommonModule,
     IonicModule,
     RouterModule,
-    GameManagementModule,
+    SkatGameManagementModule,
     SkatListManagementModule,
     GroupManagementModule,
     AddGameFormComponent,
