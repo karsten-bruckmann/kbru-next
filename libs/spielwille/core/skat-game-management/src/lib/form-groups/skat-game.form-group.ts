@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
 import { HandFormControl } from '../form-controls/hand.form-control';
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
-import { NullGameTypeFormControl } from '../form-controls/null-game-type.form-control';
+import { NullTypeFormControl } from '../form-controls/null-game-type.form-control';
 import { PlayerIndexFormControl } from '../form-controls/player-index.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { SpritzeFormControl } from '../form-controls/spritze.form-control';
@@ -21,7 +21,7 @@ export class SkatGameFormGroup extends FormGroup<{
   threshold?: ThresholdFormControl;
   thresholdAnnounced?: ThresholdAnnouncedFormControl;
   spritze?: SpritzeFormControl;
-  nullGameType?: NullGameTypeFormControl;
+  nullType?: NullTypeFormControl;
 }> {
   public get game(): Game | null {
     if (this.controls.playerIndex.value === null) {

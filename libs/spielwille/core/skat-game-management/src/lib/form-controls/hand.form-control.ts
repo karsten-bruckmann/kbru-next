@@ -4,6 +4,7 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { GameType } from '../schemas/game.schema';
 
 export class HandFormControl extends FormControl<boolean | null> {
@@ -21,13 +22,7 @@ export class HandFormControl extends FormControl<boolean | null> {
       return form.controls.gameType.valueChanges.pipe(
         startWith(form.controls.gameType.value),
         tap((gameType) => {
-          const types: (GameType | null)[] = [
-            'diamonds',
-            'hearts',
-            'spades',
-            'clubs',
-            'grand',
-          ];
+          const types: (GameType | null)[] = getStandardGameTypes();
           if (types.includes(gameType) && !form.controls.hand) {
             form.addControl(
               'hand',

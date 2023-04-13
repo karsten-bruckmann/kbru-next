@@ -22,12 +22,9 @@ export const skatListSchema = z.object({
     spitzen: z.union([z.literal(4), z.literal(11)]),
     saechsischeSpitze: z.boolean(),
     thresholdAnnouncementWithoutHand: z.boolean(),
-    maxSpritze: z.union([
-      z.literal('none'),
-      z.literal('kontra'),
-      z.literal('re'),
-      z.literal('hirsch'),
-    ]),
+    maxSpritze: z.nullable(
+      z.union([z.literal('kontra'), z.literal('re'), z.literal('hirsch')])
+    ),
     ramsch: ramschSettingsSchema,
     bockSets: z.union([
       z.boolean(),

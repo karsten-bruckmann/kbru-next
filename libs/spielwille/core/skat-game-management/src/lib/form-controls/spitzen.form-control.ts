@@ -4,43 +4,43 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { getPossibleSpitzen } from '../rules/get-possible-spitzen.rule';
+import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { GameType } from '../schemas/game.schema';
+import { List } from '../schemas/list.schema';
 
 export class SpitzenFormControl extends FormControl<number | null> {
   public possibleValues: number[] = [];
 
-  public static get validator(): ValidatorFn {
+  public static getValidator(list: List): ValidatorFn {
     return (control) => {
-      if (![-4, -3, -2, -1, 1, 2, 3, 4].includes(control.value)) {
+      if (!getPossibleSpitzen(list).includes(control.value)) {
         return { invalid: true };
       }
       return null;
     };
   }
 
-  public static formEffect(): FormEffect<SkatGameFormGroup> {
+  public static formEffect(list: List): FormEffect<SkatGameFormGroup> {
     return (form) => {
       return form.controls.gameType.valueChanges.pipe(
         startWith(form.controls.gameType.value),
         tap((gameType) => {
-          const types: (GameType | null)[] = [
-            'diamonds',
-            'hearts',
-            'spades',
-            'clubs',
-            'grand',
-          ];
+          const types: (GameType | null)[] = getStandardGameTypes();
           if (types.includes(gameType) && !form.controls.spitzen) {
             form.addControl(
               'spitzen',
-              new SpitzenFormControl(null, SpitzenFormControl.validator)
+              new SpitzenFormControl(
+                null,
+                SpitzenFormControl.getValidator(list)
+              )
             );
           }
           if (!types.includes(gameType) && form.controls.spitzen) {
             form.removeControl('spitzen');
           }
           if (form.controls.spitzen) {
-            form.controls.spitzen.possibleValues = [-4, -3, -2, -1, 1, 2, 3, 4];
+            form.controls.spitzen.possibleValues = getPossibleSpitzen(list);
           }
         }),
         toVoid()

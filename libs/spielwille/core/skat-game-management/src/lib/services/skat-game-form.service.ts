@@ -8,7 +8,7 @@ import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
 import { HandFormControl } from '../form-controls/hand.form-control';
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
-import { NullGameTypeFormControl } from '../form-controls/null-game-type.form-control';
+import { NullTypeFormControl } from '../form-controls/null-game-type.form-control';
 import { PlayerIndexFormControl } from '../form-controls/player-index.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { SpritzeFormControl } from '../form-controls/spritze.form-control';
@@ -69,12 +69,12 @@ export class SkatGameFormService {
             ListIdFormControl.formEffect(),
             PlayerIndexFormControl.formEffect(list),
             GameTypeFormControl.formEffect(),
-            SpitzenFormControl.formEffect(),
+            SpitzenFormControl.formEffect(list),
             HandFormControl.formEffect(),
             ThresholdFormControl.formEffect(),
             ThresholdAnnouncedFormControl.formEffect(list),
-            SpritzeFormControl.formEffect(),
-            NullGameTypeFormControl.formEffect(),
+            SpritzeFormControl.formEffect(list),
+            NullTypeFormControl.formEffect(),
           ]
         )
       )

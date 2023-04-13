@@ -76,7 +76,7 @@ export class SkatListFormGroup extends FormGroup<{
             ? 're'
             : this.value.kontra
             ? 'kontra'
-            : 'none',
+            : null,
           ramsch: this.value.ramsch
             ? {
                 geschoben: this.value.ramschSchieben,

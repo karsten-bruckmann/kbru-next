@@ -4,10 +4,11 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { GameType, NullGameType } from '../schemas/game.schema';
+import { getAllNullTypes } from '../rules/get-all-null-types.rule';
+import { GameType, NullType } from '../schemas/game.schema';
 
-export class NullGameTypeFormControl extends FormControl<NullGameType | null> {
-  public possibleValues: NullGameType[] = [];
+export class NullTypeFormControl extends FormControl<NullType | null> {
+  public possibleValues: NullType[] = [];
 
   public static get validator(): ValidatorFn {
     return (control) => {
@@ -26,25 +27,17 @@ export class NullGameTypeFormControl extends FormControl<NullGameType | null> {
         startWith(form.controls.gameType.value),
         tap((gameType) => {
           const types: (GameType | null)[] = ['null'];
-          if (types.includes(gameType) && !form.controls.nullGameType) {
+          if (types.includes(gameType) && !form.controls.nullType) {
             form.addControl(
-              'nullGameType',
-              new NullGameTypeFormControl(
-                null,
-                NullGameTypeFormControl.validator
-              )
+              'nullType',
+              new NullTypeFormControl(null, NullTypeFormControl.validator)
             );
           }
-          if (!types.includes(gameType) && form.controls.nullGameType) {
-            form.removeControl('nullGameType');
+          if (!types.includes(gameType) && form.controls.nullType) {
+            form.removeControl('nullType');
           }
-          if (form.controls.nullGameType) {
-            form.controls.nullGameType.possibleValues = [
-              'einfach',
-              'hand',
-              'ouvert',
-              'hand-ouvert',
-            ];
+          if (form.controls.nullType) {
+            form.controls.nullType.possibleValues = getAllNullTypes();
           }
         }),
         toVoid()

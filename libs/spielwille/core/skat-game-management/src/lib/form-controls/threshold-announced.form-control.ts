@@ -4,6 +4,8 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { map, startWith, switchMap, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { getPossibleThresholdAnnouncements } from '../rules/get-possible-threshold-announcements.rule';
+import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { GameType, Threshold } from '../schemas/game.schema';
 import { List } from '../schemas/list.schema';
 
@@ -12,7 +14,7 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
 
   public static get validator(): ValidatorFn {
     return (control) => {
-      if (![null, 'schneider', 'schwarz'].includes(control.value)) {
+      if (!getPossibleThresholdAnnouncements().includes(control.value)) {
         return { invalid: true };
       }
       return null;
@@ -24,19 +26,15 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
       return form.controls.gameType.valueChanges.pipe(
         startWith(form.controls.gameType.value),
         switchMap((gameType) => {
-          const types: (GameType | null)[] = [
-            'diamonds',
-            'hearts',
-            'spades',
-            'clubs',
-            'grand',
-          ];
+          const types: (GameType | null)[] = getStandardGameTypes();
+          let control = form.controls.thresholdAnnounced;
           if (!types.includes(gameType)) {
-            if (form.controls.thresholdAnnounced) {
+            if (control) {
               form.removeControl('thresholdAnnounced');
+              control = undefined;
             }
           } else {
-            if (!form.controls.thresholdAnnounced) {
+            if (!control) {
               form.addControl(
                 'thresholdAnnounced',
                 new ThresholdAnnouncedFormControl(
@@ -44,12 +42,10 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
                   ThresholdAnnouncedFormControl.validator
                 )
               );
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              form.controls.thresholdAnnounced!.possibleValues = [
-                null,
-                'schneider',
-                'schwarz',
-              ];
+              control = form.controls.thresholdAnnounced;
+              if (control) {
+                control.possibleValues = getPossibleThresholdAnnouncements();
+              }
             }
           }
           return form.valueChanges.pipe(
@@ -60,18 +56,18 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
               if (
                 !hand &&
                 !list.rules.thresholdAnnouncementWithoutHand &&
-                form.controls.thresholdAnnounced &&
-                form.controls.thresholdAnnounced.enabled
+                control &&
+                control.enabled
               ) {
-                form.controls.thresholdAnnounced.disable();
-                form.controls.thresholdAnnounced.setValue(null);
+                control.disable();
+                control.setValue(null);
               }
               if (
                 (hand || list.rules.thresholdAnnouncementWithoutHand) &&
-                form.controls.thresholdAnnounced &&
-                form.controls.thresholdAnnounced.disabled
+                control &&
+                control.disabled
               ) {
-                form.controls.thresholdAnnounced.enable();
+                control.enable();
               }
             })
           );

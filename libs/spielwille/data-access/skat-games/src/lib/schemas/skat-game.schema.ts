@@ -17,7 +17,7 @@ export const skatGameSchema = z.object({
       z.union([z.literal('kontra'), z.literal('re'), z.literal('hirsch')])
     )
   ),
-  nullGameType: z.optional(
+  nullType: z.optional(
     z.nullable(
       z.union([
         z.literal('einfach'),

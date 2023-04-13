@@ -55,13 +55,11 @@
                 >
               </ion-select>
             </ion-item>
-            <ion-item color="light" *ngIf="form.controls.nullGameType">
+            <ion-item color="light" *ngIf="form.controls.nullType">
               <ion-label>Null</ion-label>
-              <ion-select interface="popover" formControlName="nullGameType">
+              <ion-select interface="popover" formControlName="nullType">
                 <ion-select-option
-                  *ngFor="
-                    let value of form.controls.nullGameType.possibleValues
-                  "
+                  *ngFor="let value of form.controls.nullType.possibleValues"
                   [value]="value"
                   >{{ value }}</ion-select-option
                 >

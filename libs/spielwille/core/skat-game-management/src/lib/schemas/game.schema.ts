@@ -18,7 +18,7 @@ export type Threshold = StandardGame['threshold'];
 export type Spritze = StandardGame['spritze'];
 
 export type NullGame = z.infer<typeof nullGameSchema>;
-export type NullGameType = NullGame['nullGameType'];
+export type NullType = NullGame['nullType'];
 
 const baseGameSchema = z.object({
   id: z.string(),
@@ -35,12 +35,7 @@ const baseStandardGameSchema = baseGameSchema.extend({
     .default(null),
   spritze: z
     .nullable(
-      z.union([
-        z.null(),
-        z.literal('kontra'),
-        z.literal('re'),
-        z.literal('hirsch'),
-      ])
+      z.union([z.literal('kontra'), z.literal('re'), z.literal('hirsch')])
     )
     .default(null),
 });
@@ -68,7 +63,7 @@ export const grandGameSchema = baseStandardGameSchema.extend({
 export const nullGameSchema = baseGameSchema.extend({
   gameType: z.literal('null'),
   playerIndex: z.number(),
-  nullGameType: z.union([
+  nullType: z.union([
     z.literal('einfach'),
     z.literal('hand'),
     z.literal('ouvert'),
