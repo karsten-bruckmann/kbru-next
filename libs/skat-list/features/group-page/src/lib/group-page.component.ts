@@ -11,7 +11,7 @@ import {
   groupSelector,
 } from '@kbru/skat-list/core/group-management';
 import {
-  listsSelector,
+  listsCollectionSelector,
   SkatListManagementModule,
 } from '@kbru/skat-list/core/skat-list-management';
 import { Store } from '@ngrx/store';
@@ -55,7 +55,7 @@ export class GroupPageComponent {
   );
 
   protected lists$ = this.group$.pipe(
-    switchMap((group) => this.store$.select(listsSelector(group.id)))
+    switchMap((group) => this.store$.select(listsCollectionSelector(group.id)))
   );
 
   protected async deleteGroup(): Promise<void> {

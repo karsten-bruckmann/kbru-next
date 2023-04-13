@@ -1,5 +1,4 @@
 import {
-  AddOn,
   skatListsSelector,
   SkatListsState,
 } from '@kbru/skat-list/data-access/skat-lists';
@@ -25,7 +24,7 @@ export const listSelector = (listId: string) =>
         ? {
             id: listId,
             description:
-              lists[listId].rules.addOn !== AddOn.None
+              lists[listId].rules.addOn !== null
                 ? `${lists[listId].rules.addOn}`
                 : lists[listId].rules.calculationType,
             players: players,

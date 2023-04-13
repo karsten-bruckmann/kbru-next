@@ -10,10 +10,7 @@ export class AddOnFormControl extends FormControl<AddOn | null> {
 
   public static get validator(): ValidatorFn {
     return (control) => {
-      if (!control.value) {
-        return { required: true };
-      }
-      if (!Object.values(AddOn).includes(control.value)) {
+      if (![null, 'romanow'].includes(control.value)) {
         return { type: true };
       }
 
@@ -23,8 +20,8 @@ export class AddOnFormControl extends FormControl<AddOn | null> {
 
   public static formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
-      form.controls.addOn.setValue(AddOn.None);
-      form.controls.addOn.possibleValues = [AddOn.None, AddOn.Romanow];
+      form.controls.addOn.setValue(null);
+      form.controls.addOn.possibleValues = [null, 'romanow'];
       return EMPTY;
     };
   }

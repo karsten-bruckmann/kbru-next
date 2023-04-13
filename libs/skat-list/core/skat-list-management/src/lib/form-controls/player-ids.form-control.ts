@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
-import { playersSelector } from '../selectors/players.selector';
+import { groupPlayersSelector } from '../selectors/group-players.selector';
 
 export class PlayerIdsFormControl extends FormControl<string[] | null> {
   public possibleValues: string[] = [];
@@ -24,7 +24,7 @@ export class PlayerIdsFormControl extends FormControl<string[] | null> {
       }
 
       const groupPlayerIds = (
-        await firstValueFrom(store$.select(playersSelector(groupId)))
+        await firstValueFrom(store$.select(groupPlayersSelector(groupId)))
       ).map((player) => player.id);
 
       if (
@@ -42,7 +42,7 @@ export class PlayerIdsFormControl extends FormControl<string[] | null> {
       return form.controls.groupId.valueChanges.pipe(
         startWith(form.controls.groupId.value),
         filterNullish(),
-        switchMap((groupId) => store$.select(playersSelector(groupId))),
+        switchMap((groupId) => store$.select(groupPlayersSelector(groupId))),
         map((players) => {
           form.controls.playerIds.possibleValues = players.map(
             (player) => player.id

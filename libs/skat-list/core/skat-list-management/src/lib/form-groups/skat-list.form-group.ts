@@ -1,5 +1,8 @@
 import { FormGroup } from '@angular/forms';
-import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
+import {
+  SkatList,
+  skatListSchema,
+} from '@kbru/skat-list/data-access/skat-lists';
 import { formatISO } from 'date-fns';
 
 import { AddOnFormControl } from '../form-controls/add-on.form-control';
@@ -52,46 +55,51 @@ export class SkatListFormGroup extends FormGroup<{
       return null;
     }
 
-    return {
-      created: formatISO(new Date()),
-      gameIds: [],
-      playerIds: this.value.playerIds || [],
-      rules: {
-        addOn: this.value.addOn || null,
-        calculationType: this.value.calculationType || 'seger-fabian',
-        maxSets: this.value.maxSets || null,
-        centPerPoint: this.value.centPerPoint || 0,
-        spitzen: this.value.spitzen || 11,
-        saechsischeSpitze: this.value.saechsischeSpitze || false,
-        thresholdAnnouncementWithoutHand:
-          this.value.thresholdAnnouncementWithoutHand || false,
-        maxSpritze: this.value.hirsch
-          ? 'hirsch'
-          : this.value.re
-          ? 're'
-          : this.value.kontra
-          ? 'kontra'
-          : 'none',
-        ramsch: this.value.ramsch
-          ? {
-              geschoben: this.value.ramschSchieben || false,
-              jungfrau: this.value.ramschJungfrau || false,
-            }
-          : false,
-        bockSets: this.value.bockSets
-          ? {
-              kontraRe: this.value.autoBockKontraRe || false,
-              kontraLost: this.value.autoBockKontraLost || false,
-              ramsch: this.value.ramschSets
-                ? {
-                    geschoben: this.value.ramschSetsSchieben || false,
-                    jungfrau: this.value.ramschSetsJungfrau || false,
-                  }
-                : false,
-            }
-          : false,
-      },
-      status: null,
-    };
+    try {
+      return skatListSchema.parse({
+        created: formatISO(new Date()),
+        gameIds: [],
+        playerIds: this.value.playerIds || [],
+        status: null,
+        rules: {
+          addOn: this.value.addOn || null,
+          calculationType: this.value.calculationType || 'seger-fabian',
+          maxSets: this.value.maxSets || null,
+          centPerPoint: this.value.centPerPoint || 0,
+          spitzen: this.value.spitzen || 11,
+          saechsischeSpitze: this.value.saechsischeSpitze || false,
+          thresholdAnnouncementWithoutHand:
+            this.value.thresholdAnnouncementWithoutHand || false,
+          maxSpritze: this.value.hirsch
+            ? 'hirsch'
+            : this.value.re
+            ? 're'
+            : this.value.kontra
+            ? 'kontra'
+            : 'none',
+          ramsch: this.value.ramsch
+            ? {
+                geschoben: this.value.ramschSchieben || false,
+                jungfrau: this.value.ramschJungfrau || false,
+              }
+            : false,
+          bockSets: this.value.bockSets
+            ? {
+                kontraRe: this.value.autoBockKontraRe || false,
+                kontraLost: this.value.autoBockKontraLost || false,
+                ramsch: this.value.ramschSets
+                  ? {
+                      geschoben: this.value.ramschSetsSchieben || false,
+                      jungfrau: this.value.ramschSetsJungfrau || false,
+                    }
+                  : false,
+              }
+            : false,
+        },
+      });
+    } catch (e: unknown) {
+      console.error(e);
+      return null;
+    }
   }
 }

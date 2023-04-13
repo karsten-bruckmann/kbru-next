@@ -10,7 +10,7 @@ export const playersSelector = (listId: string) =>
     basePlayersSelector,
     (lists, players): Player[] =>
       lists[listId]
-        ? lists[listId].playerIds.map((id) => ({
+        ? lists[listId].playerIds.map((id: string) => ({
             id,
             name: players[id].name,
           }))

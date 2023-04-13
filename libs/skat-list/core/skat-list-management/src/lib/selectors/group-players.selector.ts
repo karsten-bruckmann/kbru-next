@@ -1,10 +1,10 @@
+import { groupSelector } from '@kbru/skat-list/data-access/groups';
 import { playersSelector as basePlayersSelector } from '@kbru/skat-list/data-access/players';
 import { createSelector } from '@ngrx/store';
 
 import { Player } from '../models/player.model';
-import { groupSelector } from './group.selector';
 
-export const playersSelector = (groupId: string) =>
+export const groupPlayersSelector = (groupId: string) =>
   createSelector(
     groupSelector(groupId),
     basePlayersSelector,

@@ -2,7 +2,7 @@ import { FormControl, ValidatorFn } from '@angular/forms';
 import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { AddOn, SkatList } from '@kbru/skat-list/data-access/skat-lists';
+import { SkatList } from '@kbru/skat-list/data-access/skat-lists';
 import { tap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
@@ -37,7 +37,7 @@ export class CentPerPointFormControl extends FormControl<
       control.setValue(0.1);
       return controlValue$(form.controls.addOn).pipe(
         tap((addOn) => {
-          if (addOn === AddOn.Romanow) {
+          if (addOn === 'romanow') {
             control.setValue(0);
             control.possibleValues = [0];
             control.disable();

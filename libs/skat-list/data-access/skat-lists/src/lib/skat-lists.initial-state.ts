@@ -1,3 +1,3 @@
-import { SkatListsState } from './models/skat-lists-state.model';
+import { SkatListsState } from './schemas/skat-lists-state.schema';
 
 export const skatListsInitialState: SkatListsState = {};
