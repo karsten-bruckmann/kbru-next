@@ -44,6 +44,12 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
                   ThresholdAnnouncedFormControl.validator
                 )
               );
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              form.controls.thresholdAnnounced!.possibleValues = [
+                null,
+                'schneider',
+                'schwarz',
+              ];
             }
           }
           return form.valueChanges.pipe(
