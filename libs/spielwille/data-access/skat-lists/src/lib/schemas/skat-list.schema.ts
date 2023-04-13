@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { ramschSettingsSchema } from './ramsch-settings.schema';
-import { skatListStatusSchema } from './skat-list-status.schema.schema';
+import { skatListStatusSchema } from './skat-list-status.schema';
 
 export type SkatList = z.infer<typeof skatListSchema>;
 export type AddOn = SkatList['rules']['addOn'];

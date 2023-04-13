@@ -4,10 +4,11 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { map, startWith, switchMap, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { Threshold } from '../models/threshold.model';
+import { GameType } from '../models/game-type.model';
+import { List } from '../models/list.model';
 import { getPossibleThresholdAnnouncements } from '../rules/get-possible-threshold-announcements.rule';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
-import { GameType, Threshold } from '../schemas/game.schema';
-import { List } from '../schemas/list.schema';
 
 export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
   public possibleValues: Threshold[] = [];

@@ -1,6 +1,6 @@
 import { SkatList } from '@kbru/spielwille/data-access/skat-lists';
 
-import { Status } from '../schemas/list.schema';
+import { Status } from '../models/status.model';
 
 export const getInitialStatus = (list: SkatList): Status => {
   let activePlayers: [number, number, number];

@@ -1,4 +1,4 @@
-import { NullType } from '../schemas/game.schema';
+import { NullType } from '../models/null-type.model';
 
 export const getAllNullTypes = (): NullType[] => [
   'einfach',

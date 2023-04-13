@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { firstValueFrom, NEVER } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { List } from '../schemas/list.schema';
+import { List } from '../models/list.model';
 import { listSelector } from '../selectors/list.selector';
 
 export class PlayerIndexFormControl extends FormControl<number | null> {

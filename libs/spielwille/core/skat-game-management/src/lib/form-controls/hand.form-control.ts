@@ -4,8 +4,8 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { GameType } from '../models/game-type.model';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
-import { GameType } from '../schemas/game.schema';
 
 export class HandFormControl extends FormControl<boolean | null> {
   public static get validator(): ValidatorFn {

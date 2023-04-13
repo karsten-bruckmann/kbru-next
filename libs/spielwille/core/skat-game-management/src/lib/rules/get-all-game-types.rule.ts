@@ -1,4 +1,4 @@
-import { GameType } from '../schemas/game.schema';
+import { GameType } from '../models/game-type.model';
 
 export const getAllGameTypes = (): GameType[] => [
   'diamonds',

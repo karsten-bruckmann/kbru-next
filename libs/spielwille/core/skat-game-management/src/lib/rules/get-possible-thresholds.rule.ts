@@ -1,4 +1,4 @@
-import { Threshold } from '../schemas/game.schema';
+import { Threshold } from '../models/threshold.model';
 
 export const getPossibleThresholds = (): Threshold[] => [
   null,

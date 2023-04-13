@@ -4,10 +4,10 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { GameType } from '../models/game-type.model';
+import { List } from '../models/list.model';
 import { getPossibleSpitzen } from '../rules/get-possible-spitzen.rule';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
-import { GameType } from '../schemas/game.schema';
-import { List } from '../schemas/list.schema';
 
 export class SpitzenFormControl extends FormControl<number | null> {
   public possibleValues: number[] = [];

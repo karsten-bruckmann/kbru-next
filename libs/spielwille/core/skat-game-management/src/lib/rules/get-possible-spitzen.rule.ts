@@ -1,4 +1,4 @@
-import { List } from '../schemas/list.schema';
+import { List } from '../models/list.model';
 
 export const getPossibleSpitzen = (list: List): number[] => {
   if (list.rules.spitzen === 4) {

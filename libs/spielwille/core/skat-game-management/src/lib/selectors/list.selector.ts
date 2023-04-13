@@ -4,9 +4,9 @@ import {
 } from '@kbru/spielwille/data-access/skat-lists';
 import { createSelector } from '@ngrx/store';
 
+import { Game } from '../models/game.model';
+import { List } from '../models/list.model';
 import { getInitialStatus } from '../rules/get-initial-status.rule';
-import { Game } from '../schemas/game.schema';
-import { List, listSchema } from '../schemas/list.schema';
 import { listGamesSelector } from './list-games.selector';
 import { listPlayersSelector } from './list-players.selector';
 
@@ -18,7 +18,7 @@ export const listSelector = (listId: string) =>
     (lists, players, games): List | null => {
       const list = lists[listId];
       return list
-        ? listSchema.parse({
+        ? {
             id: listId,
             description:
               list.rules.addOn !== null
@@ -28,7 +28,7 @@ export const listSelector = (listId: string) =>
             games,
             ...list,
             status: list.status ?? getInitialStatus(list),
-          })
+          }
         : null;
     }
   );
