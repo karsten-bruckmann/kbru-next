@@ -64,6 +64,7 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
                 form.controls.thresholdAnnounced.enabled
               ) {
                 form.controls.thresholdAnnounced.disable();
+                form.controls.thresholdAnnounced.setValue(null);
               }
               if (
                 (hand || list.rules.thresholdAnnouncementWithoutHand) &&
