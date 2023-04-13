@@ -53,11 +53,42 @@
                 >
               </ion-select>
             </ion-item>
-            <ion-item color="light" *ngIf="form.controls.nullGame">
+            <ion-item color="light" *ngIf="form.controls.nullGameType">
               <ion-label>Null</ion-label>
-              <ion-select interface="popover" formControlName="nullGame">
+              <ion-select interface="popover" formControlName="nullGameType">
                 <ion-select-option
-                  *ngFor="let value of form.controls.nullGame.possibleValues"
+                  *ngFor="
+                    let value of form.controls.nullGameType.possibleValues
+                  "
+                  [value]="value"
+                  >{{ value }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+            <ion-item color="light" *ngIf="form.controls.hand">
+              <ion-label>Hand</ion-label>
+              <ion-toggle formControlName="hand"></ion-toggle>
+            </ion-item>
+            <ion-item color="light" *ngIf="form.controls.threshold">
+              <ion-label>Gespielt</ion-label>
+              <ion-select interface="popover" formControlName="threshold">
+                <ion-select-option
+                  *ngFor="let value of form.controls.threshold.possibleValues"
+                  [value]="value"
+                  >{{ value }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+            <ion-item color="light" *ngIf="form.controls.thresholdAnnounced">
+              <ion-label>Angesagt</ion-label>
+              <ion-select
+                interface="popover"
+                formControlName="thresholdAnnounced"
+              >
+                <ion-select-option
+                  *ngFor="
+                    let value of form.controls.thresholdAnnounced.possibleValues
+                  "
                   [value]="value"
                   >{{ value }}</ion-select-option
                 >

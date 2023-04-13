@@ -5,10 +5,13 @@ import { Observable } from 'rxjs';
 
 import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted.action';
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
+import { HandFormControl } from '../form-controls/hand.form-control';
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
-import { NullGameFormControl } from '../form-controls/null-game.form-control';
+import { NullGameTypeFormControl } from '../form-controls/null-game-type.form-control';
 import { PlayerIndexFormControl } from '../form-controls/player-index.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
+import { ThresholdFormControl } from '../form-controls/threshold.form-control';
+import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { Game } from '../models/game.model';
 
@@ -56,7 +59,10 @@ export class SkatGameFormService {
         PlayerIndexFormControl.formEffect(this.store$),
         GameTypeFormControl.formEffect(),
         SpitzenFormControl.formEffect(),
-        NullGameFormControl.formEffect(),
+        HandFormControl.formEffect(),
+        ThresholdFormControl.formEffect(),
+        ThresholdAnnouncedFormControl.formEffect(),
+        NullGameTypeFormControl.formEffect(),
       ]
     );
   }

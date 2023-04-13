@@ -7,32 +7,38 @@ const baseGameSchema = z.object({
 const baseStandardGameSchema = baseGameSchema.extend({
   playerIndex: z.number(),
   spitzen: z.number(),
+  threshold: z.union([z.null(), z.literal('schneider'), z.literal('schwarz')]),
+  thresholdAnnounced: z.union([
+    z.null(),
+    z.literal('schneider'),
+    z.literal('schwarz'),
+  ]),
 });
 
-const diamondsGameSchema = baseStandardGameSchema.extend({
+export const diamondsGameSchema = baseStandardGameSchema.extend({
   gameType: z.literal('diamonds'),
 });
 
-const heartsGameSchema = baseStandardGameSchema.extend({
+export const heartsGameSchema = baseStandardGameSchema.extend({
   gameType: z.literal('hearts'),
 });
 
-const spadesGameSchema = baseStandardGameSchema.extend({
+export const spadesGameSchema = baseStandardGameSchema.extend({
   gameType: z.literal('spades'),
 });
 
-const clubsGameSchema = baseStandardGameSchema.extend({
+export const clubsGameSchema = baseStandardGameSchema.extend({
   gameType: z.literal('clubs'),
 });
 
-const grandGameSchema = baseStandardGameSchema.extend({
+export const grandGameSchema = baseStandardGameSchema.extend({
   gameType: z.literal('grand'),
 });
 
-const nullGameSchema = baseGameSchema.extend({
+export const nullGameSchema = baseGameSchema.extend({
   gameType: z.literal('null'),
   playerIndex: z.number(),
-  nullGame: z.union([
+  nullGameType: z.union([
     z.literal('einfach'),
     z.literal('hand'),
     z.literal('ouvert'),

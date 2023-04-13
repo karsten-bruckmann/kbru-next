@@ -4,12 +4,10 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { GameType } from '../models/game.model';
+import { GameType, NullGameType } from '../models/game.model';
 
-export class NullGameFormControl extends FormControl<
-  'einfach' | 'hand' | 'ouvert' | 'hand-ouvert' | null
-> {
-  public possibleValues: ('einfach' | 'hand' | 'ouvert' | 'hand-ouvert')[] = [];
+export class NullGameTypeFormControl extends FormControl<NullGameType | null> {
+  public possibleValues: NullGameType[] = [];
 
   public static get validator(): ValidatorFn {
     return (control) => {
@@ -28,17 +26,20 @@ export class NullGameFormControl extends FormControl<
         startWith(form.controls.gameType.value),
         tap((gameType) => {
           const types: (GameType | null)[] = ['null'];
-          if (types.includes(gameType) && !form.controls.spitzen) {
+          if (types.includes(gameType) && !form.controls.nullGameType) {
             form.addControl(
-              'nullGame',
-              new NullGameFormControl(null, NullGameFormControl.validator)
+              'nullGameType',
+              new NullGameTypeFormControl(
+                null,
+                NullGameTypeFormControl.validator
+              )
             );
           }
-          if (!types.includes(gameType) && form.controls.spitzen) {
-            form.removeControl('nullGame');
+          if (!types.includes(gameType) && form.controls.nullGameType) {
+            form.removeControl('nullGameType');
           }
-          if (form.controls.nullGame) {
-            form.controls.nullGame.possibleValues = [
+          if (form.controls.nullGameType) {
+            form.controls.nullGameType.possibleValues = [
               'einfach',
               'hand',
               'ouvert',
