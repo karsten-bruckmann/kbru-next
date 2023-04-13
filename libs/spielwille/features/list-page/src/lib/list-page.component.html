@@ -1,0 +1,26 @@
+<ng-container *ngIf="list$ | async as list">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button [routerLink]="['..']" routerDirection="back">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{ list.description }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <pre>{{ list$ | async | json }}</pre>
+  </ion-content>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button (click)="addGameForm.open = true">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <spielwille-list-page-add-game-form
+    #addGameForm
+    (submitted)="addGameModalOpen = false"
+    (canceled)="addGameModalOpen = false"
+  ></spielwille-list-page-add-game-form>
+</ng-container>

@@ -85,35 +85,35 @@
       ],
       "@kbru/shared/utils/uuid": ["libs/shared/utils/uuid/src/index.ts"],
       "@kbru/shared/utils/zip": ["libs/shared/utils/zip/src/index.ts"],
-      "@kbru/skat-list/core/game-management": [
-        "libs/skat-list/core/game-management/src/index.ts"
+      "@kbru/spielwille/core/group-management": [
+        "libs/spielwille/core/group-management/src/index.ts"
       ],
-      "@kbru/skat-list/core/group-management": [
-        "libs/skat-list/core/group-management/src/index.ts"
+      "@kbru/spielwille/core/skat-game-management": [
+        "libs/spielwille/core/skat-game-management/src/index.ts"
       ],
-      "@kbru/skat-list/core/skat-list-management": [
-        "libs/skat-list/core/skat-list-management/src/index.ts"
+      "@kbru/spielwille/core/skat-list-management": [
+        "libs/spielwille/core/skat-list-management/src/index.ts"
       ],
-      "@kbru/skat-list/data-access/groups": [
-        "libs/skat-list/data-access/groups/src/index.ts"
+      "@kbru/spielwille/data-access/groups": [
+        "libs/spielwille/data-access/groups/src/index.ts"
       ],
-      "@kbru/skat-list/data-access/players": [
-        "libs/skat-list/data-access/players/src/index.ts"
+      "@kbru/spielwille/data-access/players": [
+        "libs/spielwille/data-access/players/src/index.ts"
       ],
-      "@kbru/skat-list/data-access/skat-games": [
-        "libs/skat-list/data-access/skat-games/src/index.ts"
+      "@kbru/spielwille/data-access/skat-games": [
+        "libs/spielwille/data-access/skat-games/src/index.ts"
       ],
-      "@kbru/skat-list/data-access/skat-lists": [
-        "libs/skat-list/data-access/skat-lists/src/index.ts"
+      "@kbru/spielwille/data-access/skat-lists": [
+        "libs/spielwille/data-access/skat-lists/src/index.ts"
       ],
-      "@kbru/skat-list/features/group-page": [
-        "libs/skat-list/features/group-page/src/index.ts"
+      "@kbru/spielwille/features/group-page": [
+        "libs/spielwille/features/group-page/src/index.ts"
       ],
-      "@kbru/skat-list/features/list-page": [
-        "libs/skat-list/features/list-page/src/index.ts"
+      "@kbru/spielwille/features/list-page": [
+        "libs/spielwille/features/list-page/src/index.ts"
       ],
-      "@kbru/skat-list/features/start-page": [
-        "libs/skat-list/features/start-page/src/index.ts"
+      "@kbru/spielwille/features/start-page": [
+        "libs/spielwille/features/start-page/src/index.ts"
       ],
       "stream": ["node_modules/stream-browserify"],
       "timers": ["node_modules/timers-browserify"]

@@ -1,5 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
+
 import { routeParam } from './route-param';
 
 export const routeParams = (

@@ -1,0 +1,73 @@
+<ng-container *ngIf="group$ | async as group">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button [routerLink]="['/']" routerDirection="back">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{ group.name }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="popoverMenuOpen = true" id="menuButton">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+        <ion-popover [isOpen]="popoverMenuOpen" trigger="menuButton">
+          <ng-template>
+            <ion-list>
+              <ion-button
+                fill="clear"
+                color="danger"
+                (click)="popoverMenuOpen = false; deleteGroup()"
+              >
+                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                Gruppe Löschen
+              </ion-button>
+            </ion-list>
+          </ng-template>
+        </ion-popover>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list inset>
+      <ion-item-group>
+        <ion-item-divider color="primary">
+          <ion-label>Offene Listen</ion-label>
+        </ion-item-divider>
+        <ion-item
+          color="light"
+          *ngFor="let list of lists$ | async"
+          [routerLink]="[list.id]"
+        >
+          <ion-label>{{ list.summary | calculationType }}</ion-label>
+          <ion-note slot="end" outline>{{
+            list.lastUpdate | relativeDate
+          }}</ion-note>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+
+    <ion-list inset>
+      <ion-item-group>
+        <ion-item-divider color="primary">
+          <ion-label>Spieler</ion-label>
+        </ion-item-divider>
+        <ion-item color="light" *ngFor="let player of group.players">
+          <ion-label>{{ player.name }}</ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </ion-content>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button (click)="addListForm.open = true">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <spielwille-group-page-add-list-form
+    #addListForm
+    (submitted)="addListModalOpen = false"
+    (canceled)="addListModalOpen = false"
+  ></spielwille-group-page-add-list-form>
+</ng-container>
