@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { Group } from '../models/group.model';
+import { Group } from '../schemas/group.schema';
 import { groupsSelector } from './groups.selector';
 
 export const groupSelector = (id: string) =>

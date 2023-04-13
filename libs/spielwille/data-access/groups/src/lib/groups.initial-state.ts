@@ -1,3 +1,3 @@
-import { GroupsState } from './models/groups-state.model';
+import { GroupsState } from './schemas/groups-state.schema';
 
 export const groupsInitialState: GroupsState = {};

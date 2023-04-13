@@ -1,5 +1,5 @@
 import { coreReducerRegistry } from '@kbru/shared/utils/ngrx-architecture';
 
-import { GroupsState } from './models/groups-state.model';
+import { GroupsState } from './schemas/groups-state.schema';
 
 export const groupsCoreReducerRegistry = coreReducerRegistry<GroupsState>();

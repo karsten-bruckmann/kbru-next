@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export type SkatGame = z.infer<typeof skatGameSchema>;
+
 export const skatGameSchema = z.object({
   gameType: z.string(),
   playerIndex: z.optional(z.number()),

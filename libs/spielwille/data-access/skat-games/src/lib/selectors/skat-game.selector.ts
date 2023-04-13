@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { SkatGame } from '../models/skat-game.model';
+import { SkatGame } from '../schemas/skat-game.schema';
 import { skatGamesSelector } from './skat-games.selector';
 
 export const skatGameSelector = (gameId: string) =>

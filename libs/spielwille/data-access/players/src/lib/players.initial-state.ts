@@ -1,3 +1,3 @@
-import { PlayersState } from './models/players-state.model';
+import { PlayersState } from './schemas/players-state.schema';
 
 export const playersInitialState: PlayersState = {};

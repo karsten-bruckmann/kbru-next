@@ -1,3 +1,3 @@
-import { SkatGamesState } from './models/skat-games-state.model';
+import { SkatGamesState } from './schemas/skat-games-state.schema';
 
 export const skatGamesInitialState: SkatGamesState = {};
