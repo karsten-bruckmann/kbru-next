@@ -3,7 +3,7 @@ import {
   SkatListStatus,
 } from '@kbru/spielwille/data-access/skat-lists';
 
-import { Game } from '../models/game.model';
+import { Game } from '../schemas/game.schema';
 
 export const updateStatus = (
   skatList: SkatList,

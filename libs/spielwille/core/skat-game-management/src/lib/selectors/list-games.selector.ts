@@ -8,10 +8,9 @@ import {
 } from '@kbru/spielwille/data-access/skat-lists';
 import { createSelector } from '@ngrx/store';
 
-import { Game } from '../models/game.model';
-import { gameSchema } from '../schemas/game.schema';
+import { Game, gameSchema } from '../schemas/game.schema';
 
-export const gamesSelector = (listId: string) =>
+export const listGamesSelector = (listId: string) =>
   createSelector<object, SkatListsState, SkatGamesState, Game[]>(
     skatListsSelector,
     skatGamesSelector,

@@ -15,7 +15,7 @@ import { SpritzeFormControl } from '../form-controls/spritze.form-control';
 import { ThresholdFormControl } from '../form-controls/threshold.form-control';
 import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { Game } from '../models/game.model';
+import { Game } from '../schemas/game.schema';
 import { listSelector } from '../selectors/list.selector';
 
 @Injectable({ providedIn: 'root' })

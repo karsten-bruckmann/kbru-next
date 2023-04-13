@@ -4,40 +4,31 @@ import {
 } from '@kbru/spielwille/data-access/skat-lists';
 import { createSelector } from '@ngrx/store';
 
-import { Game } from '../models/game.model';
-import { List } from '../models/list.model';
-import { Player } from '../models/player.model';
 import { getInitialStatus } from '../rules/get-initial-status.rule';
-import { getStatus } from '../rules/get-status.rule';
-import { gamesSelector } from './games.selector';
-import { playersSelector } from './players.selector';
+import { Game } from '../schemas/game.schema';
+import { List, listSchema } from '../schemas/list.schema';
+import { listGamesSelector } from './list-games.selector';
+import { listPlayersSelector } from './list-players.selector';
 
 export const listSelector = (listId: string) =>
-  createSelector<object, SkatListsState, Player[], Game[], List | null>(
+  createSelector<object, SkatListsState, string[], Game[], List | null>(
     skatListsSelector,
-    playersSelector(listId),
-    gamesSelector(listId),
+    listPlayersSelector(listId),
+    listGamesSelector(listId),
     (lists, players, games): List | null => {
-      const status =
-        lists[listId] && lists[listId].status ? lists[listId].status : null;
-      return lists[listId]
-        ? {
+      const list = lists[listId];
+      return list
+        ? listSchema.parse({
             id: listId,
             description:
-              lists[listId].rules.addOn !== null
-                ? `${lists[listId].rules.addOn}`
-                : lists[listId].rules.calculationType,
-            players: players,
-            games: games,
-            status: status
-              ? getStatus(status)
-              : getInitialStatus(lists[listId]),
-            rules: {
-              thresholdAnnouncementWithoutHand:
-                lists[listId].rules.thresholdAnnouncementWithoutHand,
-              maxSpritze: lists[listId].rules.maxSpritze,
-            },
-          }
+              list.rules.addOn !== null
+                ? `${list.rules.addOn}`
+                : list.rules.calculationType,
+            playerNames: players,
+            games,
+            ...list,
+            status: list.status ?? getInitialStatus(list),
+          })
         : null;
     }
   );

@@ -23,7 +23,9 @@
                 <ion-select-option
                   *ngFor="let value of form.controls.playerIndex.possibleValues"
                   [value]="value"
-                  >{{ playerName(value, list.players) }}</ion-select-option
+                  >{{
+                    form.controls.playerIndex.names[value]
+                  }}</ion-select-option
                 >
               </ion-select>
             </ion-item>

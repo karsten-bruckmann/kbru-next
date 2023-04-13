@@ -3,7 +3,7 @@ import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { NEVER } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { GameType } from '../models/game.model';
+import { GameType } from '../schemas/game.schema';
 
 export class GameTypeFormControl extends FormControl<GameType | null> {
   public possibleValues: GameType[] = [];

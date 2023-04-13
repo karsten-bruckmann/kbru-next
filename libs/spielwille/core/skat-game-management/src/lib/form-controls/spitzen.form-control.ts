@@ -4,7 +4,7 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { GameType } from '../models/game.model';
+import { GameType } from '../schemas/game.schema';
 
 export class SpitzenFormControl extends FormControl<number | null> {
   public possibleValues: number[] = [];

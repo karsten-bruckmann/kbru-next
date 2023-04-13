@@ -4,7 +4,7 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { GameType, Spritze } from '../models/game.model';
+import { GameType, Spritze } from '../schemas/game.schema';
 
 export class SpritzeFormControl extends FormControl<Spritze> {
   public possibleValues: Spritze[] = [];

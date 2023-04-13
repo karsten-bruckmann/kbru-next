@@ -10,8 +10,7 @@ import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { SpritzeFormControl } from '../form-controls/spritze.form-control';
 import { ThresholdFormControl } from '../form-controls/threshold.form-control';
 import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
-import { Game } from '../models/game.model';
-import { gameSchema } from '../schemas/game.schema';
+import { Game, gameSchema } from '../schemas/game.schema';
 
 export class SkatGameFormGroup extends FormGroup<{
   listId: ListIdFormControl;

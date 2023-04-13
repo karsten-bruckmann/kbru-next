@@ -5,11 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
-  SkatGameManagementModule,
   listSelector,
-  Player,
   SkatGameFormGroup,
   SkatGameFormService,
+  SkatGameManagementModule,
 } from '@kbru/spielwille/core/skat-game-management';
 import { Store } from '@ngrx/store';
 import { filter, map, shareReplay, switchMap } from 'rxjs';
@@ -53,10 +52,6 @@ export class AddGameFormComponent {
   protected submit(form: SkatGameFormGroup): void {
     this.skatGameFormService.submit(form);
     this.open = false;
-  }
-
-  protected playerName(index: number, players: Player[]): string | null {
-    return players[index]?.name || null;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

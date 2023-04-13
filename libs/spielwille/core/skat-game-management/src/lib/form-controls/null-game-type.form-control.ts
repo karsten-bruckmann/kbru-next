@@ -4,7 +4,7 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { GameType, NullGameType } from '../models/game.model';
+import { GameType, NullGameType } from '../schemas/game.schema';
 
 export class NullGameTypeFormControl extends FormControl<NullGameType | null> {
   public possibleValues: NullGameType[] = [];
