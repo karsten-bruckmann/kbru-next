@@ -25,6 +25,7 @@ export type StandardGame =
   | ClubsGame
   | GrandGame;
 export type Threshold = StandardGame['threshold'];
+export type Spritze = StandardGame['spritze'];
 
 export type NullGame = z.infer<typeof nullGameSchema>;
 export type NullGameType = NullGame['nullGameType'];

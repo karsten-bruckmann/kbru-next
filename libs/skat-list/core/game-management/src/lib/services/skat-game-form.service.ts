@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
+import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted.action';
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
@@ -10,10 +11,12 @@ import { ListIdFormControl } from '../form-controls/list-id.form-control';
 import { NullGameTypeFormControl } from '../form-controls/null-game-type.form-control';
 import { PlayerIndexFormControl } from '../form-controls/player-index.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
+import { SpritzeFormControl } from '../form-controls/spritze.form-control';
 import { ThresholdFormControl } from '../form-controls/threshold.form-control';
 import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { Game } from '../models/game.model';
+import { listSelector } from '../selectors/list.selector';
 
 @Injectable({ providedIn: 'root' })
 export class SkatGameFormService {
@@ -42,28 +45,39 @@ export class SkatGameFormService {
   }
 
   public getForm$(listId: string): Observable<SkatGameFormGroup> {
-    return createEffectAwareForm(
-      new SkatGameFormGroup({
-        listId: new ListIdFormControl(listId, {
-          asyncValidators: [ListIdFormControl.getAsyncValidator(this.store$)],
-        }),
-        playerIndex: new PlayerIndexFormControl(null, {
-          asyncValidators: [
-            PlayerIndexFormControl.getAsyncValidator(listId, this.store$),
-          ],
-        }),
-        gameType: new GameTypeFormControl(null, GameTypeFormControl.validator),
-      }),
-      [
-        ListIdFormControl.formEffect(),
-        PlayerIndexFormControl.formEffect(this.store$),
-        GameTypeFormControl.formEffect(),
-        SpitzenFormControl.formEffect(),
-        HandFormControl.formEffect(),
-        ThresholdFormControl.formEffect(),
-        ThresholdAnnouncedFormControl.formEffect(),
-        NullGameTypeFormControl.formEffect(),
-      ]
+    return this.store$.select(listSelector(listId)).pipe(
+      filterNullish(),
+      switchMap((list) =>
+        createEffectAwareForm(
+          new SkatGameFormGroup({
+            listId: new ListIdFormControl(listId, {
+              asyncValidators: [
+                ListIdFormControl.getAsyncValidator(this.store$),
+              ],
+            }),
+            playerIndex: new PlayerIndexFormControl(null, {
+              asyncValidators: [
+                PlayerIndexFormControl.getAsyncValidator(listId, this.store$),
+              ],
+            }),
+            gameType: new GameTypeFormControl(
+              null,
+              GameTypeFormControl.validator
+            ),
+          }),
+          [
+            ListIdFormControl.formEffect(),
+            PlayerIndexFormControl.formEffect(list),
+            GameTypeFormControl.formEffect(),
+            SpitzenFormControl.formEffect(),
+            HandFormControl.formEffect(),
+            ThresholdFormControl.formEffect(),
+            ThresholdAnnouncedFormControl.formEffect(list),
+            SpritzeFormControl.formEffect(),
+            NullGameTypeFormControl.formEffect(),
+          ]
+        )
+      )
     );
   }
 }

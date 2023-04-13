@@ -33,6 +33,11 @@ export const listSelector = (listId: string) =>
             status: status
               ? getStatus(status)
               : getInitialStatus(lists[listId]),
+            rules: {
+              thresholdAnnouncementWithoutHand:
+                lists[listId].rules.thresholdAnnouncementWithoutHand,
+              maxSpritze: lists[listId].rules.maxSpritze,
+            },
           }
         : null;
     }

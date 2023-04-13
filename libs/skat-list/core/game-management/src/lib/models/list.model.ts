@@ -8,4 +8,8 @@ export interface List {
   players: Player[];
   games: Game[];
   status: Status;
+  rules: {
+    thresholdAnnouncementWithoutHand: boolean;
+    maxSpritze: 'none' | 'kontra' | 're' | 'hirsch';
+  };
 }

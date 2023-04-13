@@ -67,8 +67,6 @@ export class SkatListFormGroup extends FormGroup<{
           this.value.thresholdAnnouncementWithoutHand || false,
         maxSpritze: this.value.hirsch
           ? 'hirsch'
-          : this.value.bock
-          ? 'bock'
           : this.value.re
           ? 're'
           : this.value.kontra

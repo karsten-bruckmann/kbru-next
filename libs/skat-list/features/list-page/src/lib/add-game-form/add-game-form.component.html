@@ -94,6 +94,16 @@
                 >
               </ion-select>
             </ion-item>
+            <ion-item color="light" *ngIf="form.controls.spritze">
+              <ion-label>Spritze</ion-label>
+              <ion-select interface="popover" formControlName="spritze">
+                <ion-select-option
+                  *ngFor="let value of form.controls.spritze.possibleValues"
+                  [value]="value"
+                  >{{ value }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
           </ion-list>
         </ion-content>
 

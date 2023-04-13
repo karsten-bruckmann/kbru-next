@@ -2,9 +2,10 @@ import { AsyncValidatorFn, FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import { Store } from '@ngrx/store';
-import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
+import { firstValueFrom, map, NEVER, startWith, switchMap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { List } from '../models/list.model';
 import { listSelector } from '../selectors/list.selector';
 
 export class PlayerIndexFormControl extends FormControl<number | null> {
@@ -29,19 +30,12 @@ export class PlayerIndexFormControl extends FormControl<number | null> {
     };
   }
 
-  public static formEffect(store$: Store): FormEffect<SkatGameFormGroup> {
+  public static formEffect(list: List): FormEffect<SkatGameFormGroup> {
     return (form) => {
-      return form.controls.listId.valueChanges.pipe(
-        startWith(form.controls.listId.value),
-        filterNullish(),
-        switchMap((listId) => store$.select(listSelector(listId))),
-        filterNullish(),
-        map((list) => {
-          form.controls.playerIndex.possibleValues = list.status.activePlayers;
-          form.controls.playerIndex.getPlayerName = (index) =>
-            list?.players[index].name || '';
-        })
-      );
+      form.controls.playerIndex.possibleValues = list.status.activePlayers;
+      form.controls.playerIndex.getPlayerName = (index) =>
+        list?.players[index].name || '';
+      return NEVER;
     };
   }
 

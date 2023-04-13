@@ -7,12 +7,20 @@ const baseGameSchema = z.object({
 const baseStandardGameSchema = baseGameSchema.extend({
   playerIndex: z.number(),
   spitzen: z.number(),
-  threshold: z.union([z.null(), z.literal('schneider'), z.literal('schwarz')]),
-  thresholdAnnounced: z.union([
-    z.null(),
-    z.literal('schneider'),
-    z.literal('schwarz'),
-  ]),
+  threshold: z.nullable(
+    z.union([z.literal('schneider'), z.literal('schwarz')])
+  ),
+  thresholdAnnounced: z.nullable(
+    z.union([z.literal('schneider'), z.literal('schwarz')])
+  ),
+  spritze: z.nullable(
+    z.union([
+      z.null(),
+      z.literal('kontra'),
+      z.literal('re'),
+      z.literal('hirsch'),
+    ])
+  ),
 });
 
 export const diamondsGameSchema = baseStandardGameSchema.extend({

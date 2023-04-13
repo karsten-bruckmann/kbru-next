@@ -13,7 +13,7 @@ export interface SkatList {
     spitzen: 4 | 11;
     saechsischeSpitze: boolean;
     thresholdAnnouncementWithoutHand: boolean;
-    maxSpritze: 'none' | 'kontra' | 're' | 'bock' | 'hirsch';
+    maxSpritze: 'none' | 'kontra' | 're' | 'hirsch';
     ramsch: RamschSettings;
     bockSets:
       | false
