@@ -59,17 +59,17 @@ export class SkatListFormGroup extends FormGroup<{
       return skatListSchema.parse({
         created: formatISO(new Date()),
         gameIds: [],
-        playerIds: this.value.playerIds || [],
+        playerIds: this.value.playerIds,
         status: null,
         rules: {
-          addOn: this.value.addOn || null,
-          calculationType: this.value.calculationType || 'seger-fabian',
-          maxSets: this.value.maxSets || null,
-          centPerPoint: this.value.centPerPoint || 0,
-          spitzen: this.value.spitzen || 11,
-          saechsischeSpitze: this.value.saechsischeSpitze || false,
+          addOn: this.value.addOn,
+          calculationType: this.value.calculationType,
+          maxSets: this.value.maxSets,
+          centPerPoint: this.value.centPerPoint,
+          spitzen: this.value.spitzen,
+          saechsischeSpitze: this.value.saechsischeSpitze,
           thresholdAnnouncementWithoutHand:
-            this.value.thresholdAnnouncementWithoutHand || false,
+            this.value.thresholdAnnouncementWithoutHand,
           maxSpritze: this.value.hirsch
             ? 'hirsch'
             : this.value.re
@@ -79,18 +79,18 @@ export class SkatListFormGroup extends FormGroup<{
             : 'none',
           ramsch: this.value.ramsch
             ? {
-                geschoben: this.value.ramschSchieben || false,
-                jungfrau: this.value.ramschJungfrau || false,
+                geschoben: this.value.ramschSchieben,
+                jungfrau: this.value.ramschJungfrau,
               }
             : false,
           bockSets: this.value.bockSets
             ? {
-                kontraRe: this.value.autoBockKontraRe || false,
-                kontraLost: this.value.autoBockKontraLost || false,
+                kontraRe: this.value.autoBockKontraRe,
+                kontraLost: this.value.autoBockKontraLost,
                 ramsch: this.value.ramschSets
                   ? {
-                      geschoben: this.value.ramschSetsSchieben || false,
-                      jungfrau: this.value.ramschSetsJungfrau || false,
+                      geschoben: this.value.ramschSetsSchieben,
+                      jungfrau: this.value.ramschSetsJungfrau,
                     }
                   : false,
               }
