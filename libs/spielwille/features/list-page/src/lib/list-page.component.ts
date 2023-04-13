@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { GroupManagementModule } from '@kbru/spielwille/core/group-management';
 import {
-  SkatGameManagementModule,
   listSelector,
+  SkatGameManagementModule,
 } from '@kbru/spielwille/core/skat-game-management';
 import { SkatListManagementModule } from '@kbru/spielwille/core/skat-list-management';
 import { Store } from '@ngrx/store';
