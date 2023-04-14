@@ -38,8 +38,19 @@ export const updateStatus = (
   }
 
   const fixedSets: FixedSet[] = skatList.status
-    ? skatList.status.fixedSets
+    ? [...skatList.status.fixedSets]
     : [];
+
+  if (fixedSets[0]) {
+    fixedSets[0] = {
+      ...fixedSets[0],
+      remainingGames: fixedSets[0].remainingGames - 1,
+    };
+    if (fixedSets[0].remainingGames === 0) {
+      fixedSets.shift();
+    }
+  }
+
   if (addedGame.addsBockSet) {
     fixedSets.push({
       type: 'bock',
@@ -47,7 +58,7 @@ export const updateStatus = (
     });
     if (skatList.rules.ramsch) {
       fixedSets.push({
-        type: 'bock',
+        type: 'ramsch',
         remainingGames: skatList.playerIds.length,
       });
     }

@@ -42,7 +42,7 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
             form.addControl(
               'addsBockSet',
               new AddsBockSetControl(
-                null,
+                false,
                 AddsBockSetControl.getValidator(list)
               )
             );
@@ -52,7 +52,10 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
             throw new Error();
           }
 
-          if (spritze === 're' && bockSetsSettings.kontraRe) {
+          if (
+            (spritze === 're' || spritze === 'hirsch') &&
+            bockSetsSettings.kontraRe
+          ) {
             control.value !== true && control.setValue(true);
             control.enabled && control.disable();
             return;
