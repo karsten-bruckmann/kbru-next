@@ -16,4 +16,13 @@ export interface NullGame extends BaseGame {
   nullType: 'einfach' | 'hand' | 'ouvert' | 'hand-ouvert';
 }
 
-export type Game = StandardGame | NullGame;
+export interface RamschGame extends BaseGame {
+  gameType: 'ramsch';
+  ramschPoints: number;
+}
+
+export interface DurchmarschGame extends BaseGame {
+  gameType: 'durchmarsch';
+}
+
+export type Game = StandardGame | NullGame | RamschGame | DurchmarschGame;

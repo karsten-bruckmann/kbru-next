@@ -104,6 +104,20 @@
                 >
               </ion-select>
             </ion-item>
+            <ion-item color="light" *ngIf="form.controls.ramschPoints">
+              <ion-label>Augen</ion-label>
+              <ion-range
+                labelPlacement="start"
+                snaps
+                [ticks]="false"
+                [min]="form.controls.ramschPoints.min"
+                [max]="form.controls.ramschPoints.max"
+                formControlName="ramschPoints"
+              ></ion-range>
+              <ion-label class="range-value">{{
+                form.controls.ramschPoints.value
+              }}</ion-label>
+            </ion-item>
           </ion-list>
         </ion-content>
 

@@ -17,3 +17,8 @@ ion-footer {
     background: var(--ion-color-light);
   }
 }
+
+.range-value {
+  text-align: right;
+  flex: 0 0 35px;
+}

@@ -27,4 +27,5 @@ export const skatGameSchema = z.object({
       ])
     )
   ),
+  ramschPoints: z.optional(z.number()),
 });

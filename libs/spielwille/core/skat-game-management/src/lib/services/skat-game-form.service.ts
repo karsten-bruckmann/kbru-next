@@ -10,6 +10,7 @@ import { HandFormControl } from '../form-controls/hand.form-control';
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
 import { NullTypeFormControl } from '../form-controls/null-game-type.form-control';
 import { PlayerIndexFormControl } from '../form-controls/player-index.form-control';
+import { RamschPointsFormControl } from '../form-controls/ramsch-points.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { SpritzeFormControl } from '../form-controls/spritze.form-control';
 import { ThresholdFormControl } from '../form-controls/threshold.form-control';
@@ -59,19 +60,20 @@ export class SkatGameFormService {
             }),
             gameType: new GameTypeFormControl(
               null,
-              GameTypeFormControl.validator
+              GameTypeFormControl.getValidator(list)
             ),
           }),
           [
             ListIdFormControl.formEffect(),
             PlayerIndexFormControl.formEffect(list),
-            GameTypeFormControl.formEffect(),
+            GameTypeFormControl.formEffect(list),
             SpitzenFormControl.formEffect(list),
             HandFormControl.formEffect(),
             ThresholdFormControl.formEffect(),
             ThresholdAnnouncedFormControl.formEffect(list),
             SpritzeFormControl.formEffect(list),
             NullTypeFormControl.formEffect(),
+            RamschPointsFormControl.formEffect(),
           ]
         )
       )

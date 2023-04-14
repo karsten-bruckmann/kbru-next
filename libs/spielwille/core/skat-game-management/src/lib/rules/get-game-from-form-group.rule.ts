@@ -2,7 +2,7 @@
 import { v4 as uuid } from 'uuid';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { Game } from '../models/game.model';
+import { Game, RamschGame } from '../models/game.model';
 import { StandardGame } from '../models/game.model';
 import { NullGame } from '../models/game.model';
 
@@ -56,5 +56,21 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         nullType,
       };
       return nullGame;
+
+    case 'ramsch':
+      const ramschPoints = value.ramschPoints;
+      if (!ramschPoints) {
+        throw new Error('error getting game value');
+      }
+      const ramschGame: RamschGame = {
+        id: uuid(),
+        gameType,
+        playerIndex,
+        ramschPoints,
+      };
+      return ramschGame;
+
+    case 'durchmarsch':
+      throw new Error('not implemented');
   }
 };
