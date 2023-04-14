@@ -32,9 +32,6 @@ export class SkatGameFormService {
     }
 
     const game = getGameFromFormGroup(form);
-    if (!game) {
-      throw new Error('error getting list value');
-    }
 
     this.store$.dispatch(
       skatGameFormSubmittedAction({
