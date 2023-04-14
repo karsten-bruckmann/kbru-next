@@ -1,9 +1,4 @@
 import { FormGroup } from '@angular/forms';
-import {
-  SkatList,
-  skatListSchema,
-} from '@kbru/spielwille/data-access/skat-lists';
-import { formatISO } from 'date-fns';
 
 import { AddOnFormControl } from '../form-controls/add-on.form-control';
 import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
@@ -49,57 +44,4 @@ export class SkatListFormGroup extends FormGroup<{
   autoBockKontraRe: AutoBockKontraReFormControl;
   autoBockKontraLost: AutoBockKontraLostFormControl;
   thresholdAnnouncementWithoutHand: ThresholdAnnouncementWithoutHandControl;
-}> {
-  public get skatList(): SkatList | null {
-    if (!this.valid) {
-      return null;
-    }
-
-    try {
-      return skatListSchema.parse({
-        created: formatISO(new Date()),
-        gameIds: [],
-        playerIds: this.value.playerIds,
-        status: null,
-        rules: {
-          addOn: this.value.addOn,
-          calculationType: this.value.calculationType,
-          maxSets: this.value.maxSets,
-          centPerPoint: this.value.centPerPoint,
-          spitzen: this.value.spitzen,
-          saechsischeSpitze: this.value.saechsischeSpitze,
-          thresholdAnnouncementWithoutHand:
-            this.value.thresholdAnnouncementWithoutHand,
-          maxSpritze: this.value.hirsch
-            ? 'hirsch'
-            : this.value.re
-            ? 're'
-            : this.value.kontra
-            ? 'kontra'
-            : null,
-          ramsch: this.value.ramsch
-            ? {
-                geschoben: this.value.ramschSchieben,
-                jungfrau: this.value.ramschJungfrau,
-              }
-            : false,
-          bockSets: this.value.bockSets
-            ? {
-                kontraRe: this.value.autoBockKontraRe,
-                kontraLost: this.value.autoBockKontraLost,
-                ramsch: this.value.ramschSets
-                  ? {
-                      geschoben: this.value.ramschSetsSchieben,
-                      jungfrau: this.value.ramschSetsJungfrau,
-                    }
-                  : false,
-              }
-            : false,
-        },
-      });
-    } catch (e: unknown) {
-      console.error(e);
-      return null;
-    }
-  }
-}
+}> {}

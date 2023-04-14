@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
@@ -11,10 +11,7 @@ import {
   MaxSetsPipe,
   SpitzenPipe,
 } from '@kbru/shared/ui/skat-naming';
-import {
-  addPlayerFormSubmittedAction,
-  PlayerFormService,
-} from '@kbru/spielwille/core/group-management';
+import { PlayerFormService } from '@kbru/spielwille/core/group-management';
 import {
   SkatListFormGroup,
   SkatListFormService,
@@ -126,11 +123,7 @@ export class AddListFormComponent {
               handler: (value: any) => {
                 form.patchValue(value);
                 if (form.valid) {
-                  this.store$.dispatch(
-                    addPlayerFormSubmittedAction({
-                      value: form.value,
-                    })
-                  );
+                  this.playerFormService.submit(form);
                 }
                 return form.valid;
               },
@@ -139,15 +132,5 @@ export class AddListFormComponent {
         });
         alert.present();
       });
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected fieldErrors(form: FormGroup): any {
-    return Object.keys(form.controls).reduce((errors, name) => {
-      if (form.controls[name].errors === null) {
-        return errors;
-      }
-      return { ...errors, [name]: form.controls[name].errors };
-    }, {});
   }
 }

@@ -2,11 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AlertController, IonicModule } from '@ionic/angular';
 import {
-  addGroupFormSubmittedAction,
   GroupFormService,
   GroupManagementModule,
 } from '@kbru/spielwille/core/group-management';
-import { Store } from '@ngrx/store';
 
 import { GroupsListComponent } from './groups-list/groups-list.component';
 
@@ -25,8 +23,7 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
 export class StartPageComponent {
   constructor(
     private groupFormService: GroupFormService,
-    private alertController: AlertController,
-    private store$: Store
+    private alertController: AlertController
   ) {}
 
   protected async addGroup(): Promise<void> {
@@ -61,12 +58,7 @@ export class StartPageComponent {
               handler: (value: any) => {
                 form.patchValue(value);
                 if (form.valid) {
-                  this.store$.dispatch(
-                    addGroupFormSubmittedAction({
-                      value: form.value,
-                      created: new Date(),
-                    })
-                  );
+                  this.groupFormService.submit(form);
                 }
                 return form.valid;
               },

@@ -10,3 +10,10 @@
     --inner-padding-start: 30px;
   }
 }
+
+ion-footer {
+  background: var(--ion-color-light);
+  ion-list {
+    background: var(--ion-color-light);
+  }
+}

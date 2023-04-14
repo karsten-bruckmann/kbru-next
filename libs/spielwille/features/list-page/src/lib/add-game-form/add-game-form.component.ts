@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
@@ -52,15 +52,5 @@ export class AddGameFormComponent {
   protected submit(form: SkatGameFormGroup): void {
     this.skatGameFormService.submit(form);
     this.open = false;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected fieldErrors(form: FormGroup): any {
-    return Object.keys(form.controls).reduce((errors, name) => {
-      if (form.controls[name].errors === null) {
-        return errors;
-      }
-      return { ...errors, [name]: form.controls[name].errors };
-    }, {});
   }
 }

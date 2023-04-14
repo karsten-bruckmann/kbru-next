@@ -1,5 +1,3 @@
-export * from './lib/actions/add-group-form-submitted.action';
-export * from './lib/actions/add-player-form-submitted.action';
 export * from './lib/actions/group-deleted.action';
 export * from './lib/group-management.module';
 export * from './lib/form-groups/group.form-group';

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
-import { SkatList } from '@kbru/spielwille/data-access/skat-lists';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { v4 as uuid } from 'uuid';
@@ -29,6 +28,7 @@ import { SaechsischeSpitzeFormControl } from '../form-controls/saechsische-spitz
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { ThresholdAnnouncementWithoutHandControl } from '../form-controls/threshold-announcement-without-hand.form-control';
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
+import { getListFromFormGroup } from '../rules/get-list-from-form-group.rule';
 
 @Injectable({ providedIn: 'root' })
 export class SkatListFormService {
@@ -43,10 +43,7 @@ export class SkatListFormService {
       throw new Error('no group id');
     }
 
-    const skatList: SkatList | null = form.skatList;
-    if (!skatList) {
-      throw new Error('error getting list value');
-    }
+    const skatList = getListFromFormGroup(form);
 
     this.store$.dispatch(
       skatListFormSubmittedAction({
