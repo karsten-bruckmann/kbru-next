@@ -1,5 +1,6 @@
 import { FormGroup } from '@angular/forms';
 
+import { AddsBockSetControl } from '../form-controls/adds-bock-set.form-control';
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
 import { HandFormControl } from '../form-controls/hand.form-control';
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
@@ -15,6 +16,7 @@ export class SkatGameFormGroup extends FormGroup<{
   listId: ListIdFormControl;
   playerIndex: PlayerIndexFormControl;
   gameType: GameTypeFormControl;
+  addsBockSet?: AddsBockSetControl;
   // Standard Games
   spitzen?: SpitzenFormControl;
   hand?: HandFormControl;

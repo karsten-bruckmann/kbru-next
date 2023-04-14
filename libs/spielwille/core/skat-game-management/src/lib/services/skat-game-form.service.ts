@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable, switchMap } from 'rxjs';
 
 import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted.action';
+import { AddsBockSetControl } from '../form-controls/adds-bock-set.form-control';
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
 import { HandFormControl } from '../form-controls/hand.form-control';
 import { ListIdFormControl } from '../form-controls/list-id.form-control';
@@ -74,6 +75,7 @@ export class SkatGameFormService {
             SpritzeFormControl.formEffect(list),
             NullTypeFormControl.formEffect(),
             RamschPointsFormControl.formEffect(),
+            AddsBockSetControl.formEffect(list),
           ]
         )
       )

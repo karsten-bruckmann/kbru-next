@@ -1,6 +1,7 @@
 export interface BaseGame {
   id: string;
   playerIndex: number;
+  addsBockSet: boolean;
 }
 
 export interface StandardGame extends BaseGame {

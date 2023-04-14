@@ -27,7 +27,7 @@ export const skatListSchema = z.object({
     ),
     ramsch: ramschSettingsSchema,
     bockSets: z.union([
-      z.boolean(),
+      z.literal(false),
       z.object({
         kontraRe: z.boolean(),
         kontraLost: z.boolean(),

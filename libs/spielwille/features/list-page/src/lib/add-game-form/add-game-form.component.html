@@ -123,6 +123,10 @@
 
         <ion-footer>
           <ion-list inset color="light">
+            <ion-item color="light" *ngIf="form.controls.addsBockSet">
+              <ion-label>addsBockSet</ion-label>
+              <ion-toggle formControlName="addsBockSet"></ion-toggle>
+            </ion-item>
             <ion-button
               expand="block"
               [disabled]="form.invalid"

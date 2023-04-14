@@ -2,11 +2,12 @@
 import { SkatGame } from '@kbru/spielwille/data-access/skat-games';
 import { v4 as uuid } from 'uuid';
 
-import { Game, NullGame, StandardGame } from '../models/game.model';
+import { Game, NullGame, RamschGame, StandardGame } from '../models/game.model';
 
 export const getGameFromData = (skatGame: SkatGame): Game | null => {
   const gameType = skatGame.gameType;
   const playerIndex = skatGame.playerIndex;
+  const addsBockSet = skatGame.addsBockSet;
 
   switch (gameType) {
     case 'diamonds':
@@ -31,6 +32,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         id: uuid(),
         gameType: gameType,
         playerIndex: playerIndex,
+        addsBockSet: addsBockSet,
         spitzen: spitzen,
         threshold: threshold,
         thresholdAnnounced: thresholdAnnounced,
@@ -47,9 +49,24 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         id: uuid(),
         gameType,
         playerIndex,
+        addsBockSet,
         nullType,
       };
       return nullGame;
+
+    case 'ramsch':
+      const ramschPoints = skatGame.ramschPoints;
+      if (typeof ramschPoints !== 'number') {
+        return null;
+      }
+      const ramschGame: RamschGame = {
+        id: uuid(),
+        gameType,
+        playerIndex,
+        addsBockSet,
+        ramschPoints,
+      };
+      return ramschGame;
 
     default:
       return null;

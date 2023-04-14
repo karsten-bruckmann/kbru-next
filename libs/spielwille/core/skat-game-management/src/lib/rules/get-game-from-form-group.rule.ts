@@ -15,8 +15,13 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
 
   const gameType = value.gameType;
   const playerIndex = value.playerIndex;
+  const addsBockSet = value.addsBockSet;
 
-  if (typeof playerIndex !== 'number' || !gameType) {
+  if (
+    typeof playerIndex !== 'number' ||
+    !gameType ||
+    (addsBockSet !== false && !addsBockSet)
+  ) {
     throw new Error('error getting game value');
   }
 
@@ -37,6 +42,7 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         id: uuid(),
         gameType: gameType,
         playerIndex: playerIndex,
+        addsBockSet: addsBockSet,
         spitzen: spitzen,
         threshold: threshold ?? null,
         thresholdAnnounced: thresholdAnnounced ?? null,
@@ -53,6 +59,7 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         id: uuid(),
         gameType,
         playerIndex,
+        addsBockSet: addsBockSet,
         nullType,
       };
       return nullGame;
@@ -66,6 +73,7 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         id: uuid(),
         gameType,
         playerIndex,
+        addsBockSet: addsBockSet,
         ramschPoints,
       };
       return ramschGame;
