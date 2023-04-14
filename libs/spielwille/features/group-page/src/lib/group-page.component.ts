@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { RelativeDatePipe } from '@kbru/shared/ui/date-pipes';
+import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
 import { CalculationTypePipe } from '@kbru/shared/ui/skat-naming';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
@@ -31,6 +32,7 @@ import { AddListFormComponent } from './add-list-form/add-list-form.component';
     AddListFormComponent,
     CalculationTypePipe,
     RelativeDatePipe,
+    IonicHistoryBackComponent,
   ],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],

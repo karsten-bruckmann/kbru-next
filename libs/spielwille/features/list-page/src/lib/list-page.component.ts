@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { GroupManagementModule } from '@kbru/spielwille/core/group-management';
 import {
@@ -13,7 +14,6 @@ import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs';
 
 import { AddGameFormComponent } from './add-game-form/add-game-form.component';
-
 @Component({
   selector: 'spielwille-list-page',
   standalone: true,
@@ -25,6 +25,7 @@ import { AddGameFormComponent } from './add-game-form/add-game-form.component';
     SkatListManagementModule,
     GroupManagementModule,
     AddGameFormComponent,
+    IonicHistoryBackComponent,
   ],
   templateUrl: './list-page.component.html',
   styleUrls: ['./list-page.component.scss'],

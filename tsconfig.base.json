@@ -53,6 +53,9 @@
       "@kbru/shared/ui/ionic-file-input": [
         "libs/shared/ui/ionic-file-input/src/index.ts"
       ],
+      "@kbru/shared/ui/ionic-history-back": [
+        "libs/shared/ui/ionic-history-back/src/index.ts"
+      ],
       "@kbru/shared/ui/ionic-list-input": [
         "libs/shared/ui/ionic-list-input/src/index.ts"
       ],
