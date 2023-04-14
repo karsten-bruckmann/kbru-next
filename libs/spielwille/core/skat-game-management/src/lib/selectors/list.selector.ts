@@ -26,7 +26,8 @@ export const listSelector = (listId: string) =>
                 : list.rules.calculationType,
             playerNames: players,
             games,
-            ...list,
+            created: list.created,
+            rules: list.rules,
             status: list.status ?? getInitialStatus(list),
           }
         : null;
