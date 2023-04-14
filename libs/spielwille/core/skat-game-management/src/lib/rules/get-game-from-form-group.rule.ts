@@ -11,7 +11,7 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
     throw new Error('error getting game value');
   }
 
-  const value = formGroup.value;
+  const value = formGroup.getRawValue();
 
   const gameType = value.gameType;
   const playerIndex = value.playerIndex;
