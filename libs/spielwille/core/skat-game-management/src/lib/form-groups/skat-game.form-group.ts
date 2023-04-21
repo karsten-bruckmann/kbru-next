@@ -11,6 +11,7 @@ import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { SpritzeFormControl } from '../form-controls/spritze.form-control';
 import { ThresholdFormControl } from '../form-controls/threshold.form-control';
 import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
+import { WonFormControl } from '../form-controls/won.form-control';
 
 export class SkatGameFormGroup extends FormGroup<{
   listId: ListIdFormControl;
@@ -27,4 +28,6 @@ export class SkatGameFormGroup extends FormGroup<{
   nullType?: NullTypeFormControl;
   // Ramsch
   ramschPoints?: RamschPointsFormControl;
+  // Misc
+  won?: WonFormControl;
 }> {}

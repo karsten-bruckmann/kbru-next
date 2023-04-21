@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { IonicBooleanSegmentComponent } from '@kbru/shared/ui/ionic-boolean-segment';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
   listSelector,
@@ -22,6 +23,7 @@ import { filter, map, shareReplay, switchMap } from 'rxjs';
     IonicListInputComponent,
     ReactiveFormsModule,
     SkatGameManagementModule,
+    IonicBooleanSegmentComponent,
   ],
   templateUrl: './add-game-form.component.html',
   styleUrls: ['./add-game-form.component.scss'],
@@ -52,5 +54,16 @@ export class AddGameFormComponent {
   protected submit(form: SkatGameFormGroup): void {
     this.skatGameFormService.submit(form);
     this.open = false;
+  }
+
+  protected hasAdditionalControls(formGroup: SkatGameFormGroup): boolean {
+    return (
+      Object.keys(formGroup.controls).filter(
+        (name) =>
+          !['listId', 'playerIndex', 'gameType', 'addsBockSet', 'won'].includes(
+            name
+          )
+      ).length > 0
+    );
   }
 }

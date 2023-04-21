@@ -22,3 +22,14 @@ ion-footer {
   text-align: right;
   flex: 0 0 35px;
 }
+
+ion-footer {
+  padding: 5px;
+  ion-button {
+    margin-top: 10px;
+    margin-inline: 0;
+  }
+  ion-item {
+    --padding-start: 5px;
+  }
+}

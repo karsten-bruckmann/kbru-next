@@ -16,6 +16,7 @@ import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
 import { SpritzeFormControl } from '../form-controls/spritze.form-control';
 import { ThresholdFormControl } from '../form-controls/threshold.form-control';
 import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
+import { WonFormControl } from '../form-controls/won.form-control';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { getGameFromFormGroup } from '../rules/get-game-from-form-group.rule';
 import { listSelector } from '../selectors/list.selector';
@@ -63,6 +64,7 @@ export class SkatGameFormService {
               null,
               GameTypeFormControl.getValidator(list)
             ),
+            won: new WonFormControl(true, WonFormControl.getValidator()),
           }),
           [
             ListIdFormControl.formEffect(),
@@ -76,6 +78,7 @@ export class SkatGameFormService {
             NullTypeFormControl.formEffect(),
             RamschPointsFormControl.formEffect(),
             AddsBockSetControl.formEffect(list),
+            WonFormControl.formEffect(),
           ]
         )
       )

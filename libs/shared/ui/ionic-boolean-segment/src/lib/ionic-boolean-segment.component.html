@@ -1,0 +1,14 @@
+<ion-segment
+  color="primary"
+  #seg
+  (ionChange)="set(seg.value || 'false')"
+  [value]="value"
+>
+  <ion-segment-button
+    color="primary"
+    [value]="e"
+    *ngFor="let e of order"
+    [disabled]="!enabled.includes(e)"
+    >{{ labels[e] }}</ion-segment-button
+  >
+</ion-segment>

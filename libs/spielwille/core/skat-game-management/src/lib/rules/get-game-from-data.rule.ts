@@ -8,6 +8,11 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
   const gameType = skatGame.gameType;
   const playerIndex = skatGame.playerIndex;
   const addsBockSet = skatGame.addsBockSet;
+  const won = skatGame.won;
+  const spitzen = skatGame.spitzen;
+  const threshold = skatGame.threshold;
+  const thresholdAnnounced = skatGame.thresholdAnnounced;
+  const spritze = skatGame.spritze;
 
   switch (gameType) {
     case 'diamonds':
@@ -15,34 +20,32 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
     case 'spades':
     case 'clubs':
     case 'grand':
-      const spitzen = skatGame.spitzen;
-      const threshold = skatGame.threshold;
-      const thresholdAnnounced = skatGame.thresholdAnnounced;
-      const spritze = skatGame.spritze;
       if (
         typeof spitzen !== 'number' ||
         threshold === undefined ||
         threshold === undefined ||
         thresholdAnnounced === undefined ||
-        spritze === undefined
+        spritze === undefined ||
+        won === undefined
       ) {
         return null;
       }
       const standardGame: StandardGame = {
         id: uuid(),
-        gameType: gameType,
-        playerIndex: playerIndex,
-        addsBockSet: addsBockSet,
-        spitzen: spitzen,
-        threshold: threshold,
-        thresholdAnnounced: thresholdAnnounced,
-        spritze: spritze,
+        gameType,
+        playerIndex,
+        addsBockSet,
+        spitzen,
+        threshold,
+        thresholdAnnounced,
+        spritze,
+        won,
       };
       return standardGame;
 
     case 'null':
       const nullType = skatGame.nullType;
-      if (!nullType) {
+      if (!nullType || won === undefined) {
         return null;
       }
       const nullGame: NullGame = {
@@ -51,12 +54,13 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         playerIndex,
         addsBockSet,
         nullType,
+        won,
       };
       return nullGame;
 
     case 'ramsch':
       const ramschPoints = skatGame.ramschPoints;
-      if (typeof ramschPoints !== 'number') {
+      if (typeof ramschPoints !== 'number' || won === undefined) {
         return null;
       }
       const ramschGame: RamschGame = {
@@ -65,6 +69,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         playerIndex,
         addsBockSet,
         ramschPoints,
+        won: false,
       };
       return ramschGame;
 

@@ -1,7 +1,7 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { distinctUntilChanged, map, NEVER, tap } from 'rxjs';
+import { distinctUntilChanged, map, NEVER, startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { List } from '../models/list.model';
@@ -32,20 +32,18 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
         return NEVER;
       }
 
+      form.addControl(
+        'addsBockSet',
+        new AddsBockSetControl(false, AddsBockSetControl.getValidator(list))
+      );
+
       return form.valueChanges.pipe(
         map((value) => value.spritze),
+        startWith(form.value.spritze),
         distinctUntilChanged(),
         tap((spritze) => {
-          if (!form.controls.addsBockSet) {
-            form.addControl(
-              'addsBockSet',
-              new AddsBockSetControl(
-                null,
-                AddsBockSetControl.getValidator(list)
-              )
-            );
-          }
           const control = form.controls.addsBockSet;
+
           if (!control) {
             throw new Error();
           }

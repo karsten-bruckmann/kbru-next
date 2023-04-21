@@ -15,7 +15,7 @@
         <ion-content>
           <ion-list inset *ngIf="form.controls.playerIndex">
             <ion-item-divider color="primary">
-              <ion-label>Spieler</ion-label>
+              <ion-label>Spiel</ion-label>
             </ion-item-divider>
             <ion-item color="light" *ngIf="form.controls.playerIndex">
               <ion-label>Spieler</ion-label>
@@ -29,12 +29,6 @@
                 >
               </ion-select>
             </ion-item>
-          </ion-list>
-
-          <ion-list inset *ngIf="form.controls.gameType">
-            <ion-item-divider color="primary">
-              <ion-label>Spiel</ion-label>
-            </ion-item-divider>
             <ion-item color="light" *ngIf="form.controls.gameType">
               <ion-label>Spiel</ion-label>
               <ion-select interface="popover" formControlName="gameType">
@@ -45,6 +39,15 @@
                 >
               </ion-select>
             </ion-item>
+          </ion-list>
+
+          <ion-list
+            inset
+            *ngIf="form.controls.gameType.value && hasAdditionalControls(form)"
+          >
+            <ion-item-divider color="primary">
+              <ion-label>{{ form.controls.gameType.value }}</ion-label>
+            </ion-item-divider>
             <ion-item color="light" *ngIf="form.controls.spitzen">
               <ion-label>Spitzen</ion-label>
               <ion-select interface="popover" formControlName="spitzen">
@@ -122,18 +125,27 @@
         </ion-content>
 
         <ion-footer>
-          <ion-list inset color="light">
+          <ion-list color="light">
             <ion-item color="light" *ngIf="form.controls.addsBockSet">
               <ion-label>addsBockSet</ion-label>
               <ion-toggle formControlName="addsBockSet"></ion-toggle>
             </ion-item>
-            <ion-button
-              expand="block"
-              [disabled]="form.invalid"
-              (click)="submit(form)"
-              >Spiel eintragen</ion-button
-            >
           </ion-list>
+          <ui-ionic-boolean-segment
+            [labels]="{ true: 'gewonnen', false: 'verloren' }"
+            first="false"
+            [enabled]="form.controls.won.possibleValues"
+            *ngIf="form.controls.won"
+            formControlName="won"
+          >
+          </ui-ionic-boolean-segment>
+          <ion-button
+            expand="block"
+            fill="solid"
+            [disabled]="form.invalid"
+            (click)="submit(form)"
+            >Eintragen</ion-button
+          >
         </ion-footer>
       </ng-container>
     </ng-container>

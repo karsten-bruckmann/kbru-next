@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "strict": true,
     "noErrorTruncation": true,
-    "forceConsistentCasingInFileNames":true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@kbru/battle-companion/core/roster-management": [
         "libs/battle-companion/core/roster-management/src/index.ts"
@@ -52,6 +52,9 @@
         "libs/shared/features/translatable/src/index.ts"
       ],
       "@kbru/shared/ui/date-pipes": ["libs/shared/ui/date-pipes/src/index.ts"],
+      "@kbru/shared/ui/ionic-boolean-segment": [
+        "libs/shared/ui/ionic-boolean-segment/src/index.ts"
+      ],
       "@kbru/shared/ui/ionic-file-input": [
         "libs/shared/ui/ionic-file-input/src/index.ts"
       ],
