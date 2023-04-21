@@ -24,19 +24,16 @@ ion-footer {
 }
 
 ion-footer {
-  padding: 5px;
   ion-item {
-    --padding-start: 5px;
-    --padding-end: 0;
-    --inner-padding-end: 0;
+    --padding-start: 8px;
   }
   ion-toolbar {
-    padding: 0;
     --border-width: 0;
     --padding-start: 0;
     --padding-end: 0;
+    padding-bottom: calc(var(--ion-safe-area-bottom) + 8px);
     ion-button {
-      margin-top: 10px;
+      margin: 10px 0 0 0;
       margin-inline: 0;
     }
   }
