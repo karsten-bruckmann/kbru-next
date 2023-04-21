@@ -195,15 +195,16 @@
         </ion-list>
       </ion-content>
 
-      <ion-footer>
-        <ion-list inset>
+      <ion-footer color="light">
+        <ion-toolbar color="light">
           <ion-button
             expand="block"
+            fill="solid"
             [disabled]="form.invalid"
             (click)="submit(form)"
             >Liste erstellen</ion-button
           >
-        </ion-list>
+        </ion-toolbar>
       </ion-footer>
     </ng-container>
   </ng-template>

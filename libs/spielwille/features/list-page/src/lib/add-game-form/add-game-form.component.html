@@ -39,6 +39,10 @@
                 >
               </ion-select>
             </ion-item>
+            <ion-item color="light" *ngIf="form.controls.addsBockSet">
+              <ion-label>addsBockSet</ion-label>
+              <ion-toggle formControlName="addsBockSet"></ion-toggle>
+            </ion-item>
           </ion-list>
 
           <ion-list
@@ -126,14 +130,6 @@
 
         <ion-footer>
           <ion-list color="light" lines="none">
-            <ion-item
-              color="light"
-              lines="none"
-              *ngIf="form.controls.addsBockSet"
-            >
-              <ion-label>addsBockSet</ion-label>
-              <ion-toggle formControlName="addsBockSet"></ion-toggle>
-            </ion-item>
             <ion-item color="light" lines="none">
               <ui-ionic-boolean-segment
                 [labels]="{ true: 'gewonnen', false: 'verloren' }"
@@ -145,7 +141,7 @@
               </ui-ionic-boolean-segment>
             </ion-item>
           </ion-list>
-          <ion-toolbar>
+          <ion-toolbar color="light">
             <ion-button
               expand="block"
               fill="solid"
