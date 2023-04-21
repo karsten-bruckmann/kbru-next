@@ -3,11 +3,11 @@ import {
   SkatListStatus,
 } from '@kbru/spielwille/data-access/skat-lists';
 
+import { FixedSet } from '../models/fixed-set.model';
 import { Game } from '../models/game.model';
 
 export const updateStatus = (
   skatList: SkatList,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addedGame: Game
 ): SkatListStatus => {
   let activePlayers: [number, number, number];
@@ -36,7 +36,36 @@ export const updateStatus = (
     default:
       throw new Error('invalid number of players');
   }
+
+  const fixedSets: FixedSet[] = skatList.status
+    ? [...skatList.status.fixedSets]
+    : [];
+
+  if (fixedSets[0]) {
+    fixedSets[0] = {
+      ...fixedSets[0],
+      remainingGames: fixedSets[0].remainingGames - 1,
+    };
+    if (fixedSets[0].remainingGames === 0) {
+      fixedSets.shift();
+    }
+  }
+
+  if (addedGame.addsBockSet) {
+    fixedSets.push({
+      type: 'bock',
+      remainingGames: skatList.playerIds.length,
+    });
+    if (skatList.rules.ramsch) {
+      fixedSets.push({
+        type: 'ramsch',
+        remainingGames: skatList.playerIds.length,
+      });
+    }
+  }
+
   return {
     activePlayers,
+    fixedSets,
   };
 };

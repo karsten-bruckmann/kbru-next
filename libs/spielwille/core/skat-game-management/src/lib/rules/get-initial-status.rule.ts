@@ -20,5 +20,6 @@ export const getInitialStatus = (list: SkatList): Status => {
 
   return {
     activePlayers,
+    fixedSets: [],
   };
 };
