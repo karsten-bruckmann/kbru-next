@@ -1,7 +1,7 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { distinctUntilChanged, map, NEVER, startWith, tap } from 'rxjs';
+import { distinctUntilChanged, map, NEVER, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { List } from '../models/list.model';
