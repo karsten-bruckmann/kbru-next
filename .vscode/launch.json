@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Served App",
+            "url": "http://127.0.0.1:4200",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}

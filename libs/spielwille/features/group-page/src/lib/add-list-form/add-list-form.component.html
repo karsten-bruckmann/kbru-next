@@ -108,144 +108,90 @@
             <ion-label>Kontra</ion-label>
             <ion-toggle formControlName="kontra"></ion-toggle>
           </ion-item>
-          <ion-accordion-group
-            [value]="
-              form.controls.re.enabled ||
-              form.controls.bock.enabled ||
-              form.controls.hirsch.enabled
-                ? 'open'
-                : 'closed'
-            "
-          >
-            <ion-accordion value="open">
-              <ion-item color="light" slot="content" *ngIf="form.controls.re">
-                <ion-label>Re</ion-label>
-                <ion-toggle formControlName="re"></ion-toggle>
-              </ion-item>
-              <ion-item color="light" slot="content" *ngIf="form.controls.bock">
-                <ion-label>Bock</ion-label>
-                <ion-toggle formControlName="bock"></ion-toggle>
-              </ion-item>
-              <ion-item
-                color="light"
-                slot="content"
-                *ngIf="form.controls.hirsch"
-              >
-                <ion-label>Hirsch</ion-label>
-                <ion-toggle formControlName="hirsch"></ion-toggle>
-              </ion-item>
-            </ion-accordion>
-          </ion-accordion-group>
+          <ion-item color="light" slot="content" *ngIf="form.controls.re">
+            <ion-label>Re</ion-label>
+            <ion-toggle formControlName="re"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" slot="content" *ngIf="form.controls.bock">
+            <ion-label>Bock</ion-label>
+            <ion-toggle formControlName="bock"></ion-toggle>
+          </ion-item>
+          <ion-item color="light" slot="content" *ngIf="form.controls.hirsch">
+            <ion-label>Hirsch</ion-label>
+            <ion-toggle formControlName="hirsch"></ion-toggle>
+          </ion-item>
           <ion-item color="light" *ngIf="form.controls.ramsch">
             <ion-label>Ramsch statt Einpassen</ion-label>
             <ion-toggle formControlName="ramsch"></ion-toggle>
           </ion-item>
-          <ion-accordion-group
-            [value]="
-              form.controls.ramschSchieben.enabled ||
-              form.controls.ramschJungfrau.enabled
-                ? 'open'
-                : 'closed'
-            "
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.ramschSchieben"
           >
-            <ion-accordion value="open">
-              <ion-item
-                color="light"
-                slot="content"
-                *ngIf="form.controls.ramschSchieben"
-              >
-                <ion-label>Schieben verdoppelt</ion-label>
-                <ion-toggle formControlName="ramschSchieben"></ion-toggle>
-              </ion-item>
-              <ion-item
-                color="light"
-                slot="content"
-                *ngIf="form.controls.ramschJungfrau"
-              >
-                <ion-label>Jungfrau verdoppelt</ion-label>
-                <ion-toggle formControlName="ramschJungfrau"></ion-toggle>
-              </ion-item>
-            </ion-accordion>
-          </ion-accordion-group>
+            <ion-label>Schieben verdoppelt</ion-label>
+            <ion-toggle formControlName="ramschSchieben"></ion-toggle>
+          </ion-item>
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.ramschJungfrau"
+          >
+            <ion-label>Jungfrau verdoppelt</ion-label>
+            <ion-toggle formControlName="ramschJungfrau"></ion-toggle>
+          </ion-item>
           <ion-item color="light" *ngIf="form.controls.bockSets">
             <ion-label>Bock-Runden</ion-label>
             <ion-toggle formControlName="bockSets"></ion-toggle>
           </ion-item>
-          <ion-accordion-group
-            [value]="
-              form.controls.ramschSets.enabled ||
-              form.controls.autoBockKontraRe.enabled ||
-              form.controls.autoBockKontraLost.enabled
-                ? 'open'
-                : 'closed'
-            "
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.autoBockKontraRe"
           >
-            <ion-accordion value="open">
-              <ion-item
-                color="light"
-                slot="content"
-                *ngIf="form.controls.autoBockKontraRe"
-              >
-                <ion-label
-                  >Bock{{
-                    form.controls.ramschSets.value ? '/Ramsch' : ''
-                  }}
-                  durch Kontra+Re</ion-label
-                >
-                <ion-toggle formControlName="autoBockKontraRe"></ion-toggle>
-              </ion-item>
-              <ion-item
-                color="light"
-                slot="content"
-                *ngIf="form.controls.autoBockKontraLost"
-              >
-                <ion-label
-                  >Bock{{
-                    form.controls.ramschSets.value ? '/Ramsch' : ''
-                  }}
-                  durch verlorenes Kontra</ion-label
-                >
-                <ion-toggle formControlName="autoBockKontraLost"></ion-toggle>
-              </ion-item>
-              <ion-item
-                color="light"
-                slot="content"
-                *ngIf="form.controls.ramschSets"
-              >
-                <ion-label>Ramsch nach Bock</ion-label>
-                <ion-toggle formControlName="ramschSets"></ion-toggle>
-              </ion-item>
-            </ion-accordion>
-          </ion-accordion-group>
-          <ion-accordion-group
-            [value]="
-              form.controls.ramschSetsSchieben.enabled ||
-              form.controls.ramschSetsJungfrau.enabled
-                ? 'open'
-                : 'closed'
-            "
+            <ion-label
+              >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
+              Kontra+Re</ion-label
+            >
+            <ion-toggle formControlName="autoBockKontraRe"></ion-toggle>
+          </ion-item>
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.autoBockKontraLost"
           >
-            <ion-accordion value="open">
-              <ion-item
-                color="light"
-                class="inset"
-                slot="content"
-                *ngIf="form.controls.ramschSetsSchieben"
-              >
-                <ion-label>Schieben verdoppelt</ion-label>
-                <ion-toggle formControlName="ramschSetsSchieben"></ion-toggle>
-              </ion-item>
-              <ion-item
-                color="light"
-                class="inset"
-                slot="content"
-                *ngIf="form.controls.ramschSetsJungfrau"
-              >
-                <ion-label>Jungfrau verdoppelt</ion-label>
-                <ion-toggle formControlName="ramschSetsJungfrau"></ion-toggle>
-              </ion-item>
-            </ion-accordion>
-          </ion-accordion-group>
+            <ion-label
+              >Bock{{ form.controls.ramschSets.value ? '/Ramsch' : '' }} durch
+              verlorenes Kontra</ion-label
+            >
+            <ion-toggle formControlName="autoBockKontraLost"></ion-toggle>
+          </ion-item>
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.ramschSets"
+          >
+            <ion-label>Ramsch nach Bock</ion-label>
+            <ion-toggle formControlName="ramschSets"></ion-toggle>
+          </ion-item>
+          <ion-item
+            color="light"
+            class="inset"
+            slot="content"
+            *ngIf="form.controls.ramschSetsSchieben"
+          >
+            <ion-label>Schieben verdoppelt</ion-label>
+            <ion-toggle formControlName="ramschSetsSchieben"></ion-toggle>
+          </ion-item>
+          <ion-item
+            color="light"
+            class="inset"
+            slot="content"
+            *ngIf="form.controls.ramschSetsJungfrau"
+          >
+            <ion-label>Jungfrau verdoppelt</ion-label>
+            <ion-toggle formControlName="ramschSetsJungfrau"></ion-toggle>
+          </ion-item>
         </ion-list>
       </ion-content>
 

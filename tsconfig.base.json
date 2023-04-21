@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "strict": true,
     "noErrorTruncation": true,
+    "forceConsistentCasingInFileNames":true,
     "paths": {
       "@kbru/battle-companion/core/roster-management": [
         "libs/battle-companion/core/roster-management/src/index.ts"
