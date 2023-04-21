@@ -25,11 +25,19 @@ ion-footer {
 
 ion-footer {
   padding: 5px;
-  ion-button {
-    margin-top: 10px;
-    margin-inline: 0;
-  }
   ion-item {
     --padding-start: 5px;
+    --padding-end: 0;
+    --inner-padding-end: 0;
+  }
+  ion-toolbar {
+    padding: 0;
+    --border-width: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    ion-button {
+      margin-top: 10px;
+      margin-inline: 0;
+    }
   }
 }

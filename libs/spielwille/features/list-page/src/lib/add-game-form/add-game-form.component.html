@@ -125,8 +125,12 @@
         </ion-content>
 
         <ion-footer>
-          <ion-list color="light">
-            <ion-item color="light" *ngIf="form.controls.addsBockSet">
+          <ion-list color="light" lines="none">
+            <ion-item
+              color="light"
+              *ngIf="form.controls.addsBockSet"
+              lines="none"
+            >
               <ion-label>addsBockSet</ion-label>
               <ion-toggle formControlName="addsBockSet"></ion-toggle>
             </ion-item>
@@ -139,13 +143,15 @@
             formControlName="won"
           >
           </ui-ionic-boolean-segment>
-          <ion-button
-            expand="block"
-            fill="solid"
-            [disabled]="form.invalid"
-            (click)="submit(form)"
-            >Eintragen</ion-button
-          >
+          <ion-toolbar>
+            <ion-button
+              expand="block"
+              fill="solid"
+              [disabled]="form.invalid"
+              (click)="submit(form)"
+              >Eintragen</ion-button
+            >
+          </ion-toolbar>
         </ion-footer>
       </ng-container>
     </ng-container>
