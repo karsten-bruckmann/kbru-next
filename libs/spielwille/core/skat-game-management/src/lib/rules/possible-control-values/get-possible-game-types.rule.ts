@@ -1,5 +1,5 @@
-import { GameType } from '../models/game-type.model';
-import { List } from '../models/list.model';
+import { GameType } from '../../models/game-type.model';
+import { List } from '../../models/list.model';
 
 export const getPossibleGameTypes = (list: List): GameType[] => {
   if (

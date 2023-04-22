@@ -5,7 +5,7 @@ import { NEVER } from 'rxjs';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { GameType } from '../models/game-type.model';
 import { List } from '../models/list.model';
-import { getPossibleGameTypes } from '../rules/get-possible-game-types.rule';
+import { getPossibleGameTypes } from '../rules/possible-control-values/get-possible-game-types.rule';
 
 export class GameTypeFormControl extends FormControl<GameType | null> {
   public possibleValues: GameType[] = [];

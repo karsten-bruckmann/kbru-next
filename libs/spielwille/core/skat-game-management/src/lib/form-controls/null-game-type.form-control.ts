@@ -4,9 +4,9 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { NullType } from '../models/null-type.model';
 import { GameType } from '../models/game-type.model';
-import { getAllNullTypes } from '../rules/get-all-null-types.rule';
+import { NullType } from '../models/null-type.model';
+import { getPossibleNullTypes } from '../rules/possible-control-values/get-possible-null-types.rule';
 
 export class NullTypeFormControl extends FormControl<NullType | null> {
   public possibleValues: NullType[] = [];
@@ -38,7 +38,7 @@ export class NullTypeFormControl extends FormControl<NullType | null> {
             form.removeControl('nullType');
           }
           if (form.controls.nullType) {
-            form.controls.nullType.possibleValues = getAllNullTypes();
+            form.controls.nullType.possibleValues = getPossibleNullTypes();
           }
         }),
         toVoid()

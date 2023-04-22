@@ -1,4 +1,4 @@
-import { Threshold } from '../models/threshold.model';
+import { Threshold } from '../../models/threshold.model';
 
 export const getPossibleThresholdAnnouncements = (): Threshold[] => [
   null,

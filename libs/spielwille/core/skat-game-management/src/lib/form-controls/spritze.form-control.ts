@@ -4,11 +4,11 @@ import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { NEVER, startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { Spritze } from '../models/spritze.model';
 import { GameType } from '../models/game-type.model';
-import { getPossibleSpritzen } from '../rules/get-possible-spritzen.rule';
-import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { List } from '../models/list.model';
+import { Spritze } from '../models/spritze.model';
+import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
+import { getPossibleSpritzen } from '../rules/possible-control-values/get-possible-spritzen.rule';
 
 export class SpritzeFormControl extends FormControl<Spritze> {
   public possibleValues: Spritze[] = [];

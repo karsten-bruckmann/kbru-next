@@ -1,5 +1,5 @@
-import { List } from '../models/list.model';
-import { Spritze } from '../models/spritze.model';
+import { List } from '../../models/list.model';
+import { Spritze } from '../../models/spritze.model';
 
 export const getPossibleSpritzen = (list: List): Spritze[] => {
   switch (list.rules.maxSpritze) {
