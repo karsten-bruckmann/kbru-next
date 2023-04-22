@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { AddOnFormControl } from '../form-controls/add-on.form-control';
 import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
 import { AutoBockKontraReFormControl } from '../form-controls/auto-bock-kontra-re.form-control';
-import { BockFormControl } from '../form-controls/bock.form-control';
 import { BockSetsFormControl } from '../form-controls/bock-sets.form-control';
 import { CalculationTypeFormControl } from '../form-controls/calculation-type.form-control';
 import { CentPerPointFormControl } from '../form-controls/cent-per-point.form-control';
@@ -32,7 +31,6 @@ export class SkatListFormGroup extends FormGroup<{
   centPerPoint: CentPerPointFormControl;
   kontra: KontraFormControl;
   re: ReFormControl;
-  bock: BockFormControl;
   hirsch: HirschFormControl;
   ramsch: RamschFormControl;
   ramschSchieben: RamschSchiebenFormControl;

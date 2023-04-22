@@ -17,16 +17,13 @@ export class HirschFormControl extends FormControl<boolean | null> {
           startWith(form.controls.kontra.value)
         ),
         form.controls.re.valueChanges.pipe(startWith(form.controls.re.value)),
-        form.controls.bock.valueChanges.pipe(
-          startWith(form.controls.bock.value)
-        ),
       ]).pipe(
-        map(([kontra, re, bock]) => {
-          if ((kontra || re || bock) && form.controls.hirsch.disabled) {
+        map(([kontra, re]) => {
+          if ((kontra || re) && form.controls.hirsch.disabled) {
             form.controls.hirsch.enable();
             form.controls.hirsch.setValue(true);
           }
-          if ((!kontra || !re || !bock) && form.controls.hirsch.enabled) {
+          if ((!kontra || !re) && form.controls.hirsch.enabled) {
             form.controls.hirsch.disable();
             form.controls.hirsch.setValue(false);
           }

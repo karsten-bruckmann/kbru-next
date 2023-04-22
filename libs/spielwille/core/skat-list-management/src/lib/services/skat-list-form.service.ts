@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
+import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
+import { groupSelector } from '@kbru/spielwille/data-access/groups';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { skatListFormSubmittedAction } from '../actions/skat-list-form-submitted.action';
 import { AddOnFormControl } from '../form-controls/add-on.form-control';
 import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
 import { AutoBockKontraReFormControl } from '../form-controls/auto-bock-kontra-re.form-control';
-import { BockFormControl } from '../form-controls/bock.form-control';
 import { BockSetsFormControl } from '../form-controls/bock-sets.form-control';
 import { CalculationTypeFormControl } from '../form-controls/calculation-type.form-control';
 import { CentPerPointFormControl } from '../form-controls/cent-per-point.form-control';
@@ -55,94 +56,102 @@ export class SkatListFormService {
   }
 
   public getForm$(groupId: string): Observable<SkatListFormGroup> {
-    return createEffectAwareForm(
-      new SkatListFormGroup({
-        groupId: new GroupIdFormControl(groupId, {
-          asyncValidators: [GroupIdFormControl.getAsyncValidator(this.store$)],
-        }),
-        playerIds: new PlayerIdsFormControl(null, {
-          asyncValidators: [
-            PlayerIdsFormControl.getAsyncValidator(groupId, this.store$),
-          ],
-        }),
-        addOn: new AddOnFormControl(null, AddOnFormControl.validator),
-        calculationType: new CalculationTypeFormControl(
-          null,
-          CalculationTypeFormControl.validator
-        ),
-        spitzen: new SpitzenFormControl(null, SpitzenFormControl.validator),
-        saechsischeSpitze: new SaechsischeSpitzeFormControl(
-          null,
-          SaechsischeSpitzeFormControl.validator
-        ),
-        maxSets: new MaxSetsFormControl(null, MaxSetsFormControl.validator),
-        centPerPoint: new CentPerPointFormControl(
-          null,
-          CentPerPointFormControl.validator
-        ),
-        kontra: new KontraFormControl(null, KontraFormControl.validator),
-        re: new KontraFormControl(null, KontraFormControl.validator),
-        bock: new KontraFormControl(null, KontraFormControl.validator),
-        hirsch: new HirschFormControl(null, HirschFormControl.validator),
-        ramsch: new RamschFormControl(null, RamschFormControl.validator),
-        ramschSchieben: new RamschSchiebenFormControl(
-          null,
-          RamschSchiebenFormControl.validator
-        ),
-        ramschJungfrau: new RamschJungfrauFormControl(
-          null,
-          RamschJungfrauFormControl.validator
-        ),
-        bockSets: new BockSetsFormControl(null, BockSetsFormControl.validator),
-        ramschSets: new RamschSetsFormControl(
-          null,
-          RamschSetsFormControl.validator
-        ),
-        ramschSetsSchieben: new RamschSetsSchiebenFormControl(
-          null,
-          RamschSetsSchiebenFormControl.validator
-        ),
-        ramschSetsJungfrau: new RamschSetsJungfrauFormControl(
-          null,
-          RamschSetsJungfrauFormControl.validator
-        ),
-        autoBockKontraRe: new AutoBockKontraReFormControl(
-          null,
-          AutoBockKontraReFormControl.validator
-        ),
-        autoBockKontraLost: new AutoBockKontraLostFormControl(
-          null,
-          AutoBockKontraLostFormControl.validator
-        ),
-        thresholdAnnouncementWithoutHand:
-          new ThresholdAnnouncementWithoutHandControl(
-            null,
-            ThresholdAnnouncementWithoutHandControl.validator
-          ),
-      }),
-      [
-        PlayerIdsFormControl.formEffect(this.store$),
-        AddOnFormControl.formEffect(),
-        CalculationTypeFormControl.formEffect(),
-        SpitzenFormControl.formEffect(),
-        SaechsischeSpitzeFormControl.formEffect(),
-        MaxSetsFormControl.formEffect(),
-        CentPerPointFormControl.formEffect(),
-        KontraFormControl.formEffect(),
-        ReFormControl.formEffect(),
-        BockFormControl.formEffect(),
-        HirschFormControl.formEffect(),
-        RamschFormControl.formEffect(),
-        RamschSchiebenFormControl.formEffect(),
-        RamschJungfrauFormControl.formEffect(),
-        BockSetsFormControl.formEffect(),
-        RamschSetsFormControl.formEffect(),
-        RamschSetsSchiebenFormControl.formEffect(),
-        RamschSetsJungfrauFormControl.formEffect(),
-        AutoBockKontraReFormControl.formEffect(),
-        AutoBockKontraLostFormControl.formEffect(),
-        ThresholdAnnouncementWithoutHandControl.formEffect(),
-      ]
+    return this.store$.select(groupSelector(groupId)).pipe(
+      filterNullish(),
+      switchMap(() =>
+        createEffectAwareForm(
+          new SkatListFormGroup({
+            groupId: new GroupIdFormControl(groupId, {
+              asyncValidators: [
+                GroupIdFormControl.getAsyncValidator(this.store$),
+              ],
+            }),
+            playerIds: new PlayerIdsFormControl(null, {
+              asyncValidators: [
+                PlayerIdsFormControl.getAsyncValidator(groupId, this.store$),
+              ],
+            }),
+            addOn: new AddOnFormControl(null, AddOnFormControl.validator),
+            calculationType: new CalculationTypeFormControl(
+              null,
+              CalculationTypeFormControl.validator
+            ),
+            spitzen: new SpitzenFormControl(null, SpitzenFormControl.validator),
+            saechsischeSpitze: new SaechsischeSpitzeFormControl(
+              null,
+              SaechsischeSpitzeFormControl.validator
+            ),
+            maxSets: new MaxSetsFormControl(null, MaxSetsFormControl.validator),
+            centPerPoint: new CentPerPointFormControl(
+              null,
+              CentPerPointFormControl.validator
+            ),
+            kontra: new KontraFormControl(null, KontraFormControl.validator),
+            re: new KontraFormControl(null, KontraFormControl.validator),
+            hirsch: new HirschFormControl(null, HirschFormControl.validator),
+            ramsch: new RamschFormControl(null, RamschFormControl.validator),
+            ramschSchieben: new RamschSchiebenFormControl(
+              null,
+              RamschSchiebenFormControl.validator
+            ),
+            ramschJungfrau: new RamschJungfrauFormControl(
+              null,
+              RamschJungfrauFormControl.validator
+            ),
+            bockSets: new BockSetsFormControl(
+              null,
+              BockSetsFormControl.validator
+            ),
+            ramschSets: new RamschSetsFormControl(
+              null,
+              RamschSetsFormControl.validator
+            ),
+            ramschSetsSchieben: new RamschSetsSchiebenFormControl(
+              null,
+              RamschSetsSchiebenFormControl.validator
+            ),
+            ramschSetsJungfrau: new RamschSetsJungfrauFormControl(
+              null,
+              RamschSetsJungfrauFormControl.validator
+            ),
+            autoBockKontraRe: new AutoBockKontraReFormControl(
+              null,
+              AutoBockKontraReFormControl.validator
+            ),
+            autoBockKontraLost: new AutoBockKontraLostFormControl(
+              null,
+              AutoBockKontraLostFormControl.validator
+            ),
+            thresholdAnnouncementWithoutHand:
+              new ThresholdAnnouncementWithoutHandControl(
+                null,
+                ThresholdAnnouncementWithoutHandControl.validator
+              ),
+          }),
+          [
+            PlayerIdsFormControl.formEffect(this.store$),
+            AddOnFormControl.formEffect(),
+            CalculationTypeFormControl.formEffect(),
+            SpitzenFormControl.formEffect(),
+            SaechsischeSpitzeFormControl.formEffect(),
+            MaxSetsFormControl.formEffect(),
+            CentPerPointFormControl.formEffect(),
+            KontraFormControl.formEffect(),
+            ReFormControl.formEffect(),
+            HirschFormControl.formEffect(),
+            RamschFormControl.formEffect(),
+            RamschSchiebenFormControl.formEffect(),
+            RamschJungfrauFormControl.formEffect(),
+            BockSetsFormControl.formEffect(),
+            RamschSetsFormControl.formEffect(),
+            RamschSetsSchiebenFormControl.formEffect(),
+            RamschSetsJungfrauFormControl.formEffect(),
+            AutoBockKontraReFormControl.formEffect(),
+            AutoBockKontraLostFormControl.formEffect(),
+            ThresholdAnnouncementWithoutHandControl.formEffect(),
+          ]
+        )
+      )
     );
   }
 }
