@@ -2,7 +2,13 @@
 import { SkatGame } from '@kbru/spielwille/data-access/skat-games';
 import { v4 as uuid } from 'uuid';
 
-import { Game, NullGame, RamschGame, StandardGame } from '../models/game.model';
+import {
+  DurchmarschGame,
+  Game,
+  NullGame,
+  RamschGame,
+  StandardGame,
+} from '../models/game.model';
 
 export const getGameFromData = (skatGame: SkatGame): Game | null => {
   const gameType = skatGame.gameType;
@@ -72,6 +78,16 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         won: false,
       };
       return ramschGame;
+
+    case 'durchmarsch':
+      const durchmarschGame: DurchmarschGame = {
+        id: uuid(),
+        gameType,
+        playerIndex,
+        addsBockSet,
+        won: true,
+      };
+      return durchmarschGame;
 
     default:
       return null;

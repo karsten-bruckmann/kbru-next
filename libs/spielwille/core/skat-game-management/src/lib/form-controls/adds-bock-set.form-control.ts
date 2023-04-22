@@ -4,7 +4,7 @@ import {
   distinctUntilContentChanged,
   toVoid,
 } from '@kbru/shared/utils/rxjs-utils';
-import { distinctUntilChanged, map, NEVER, startWith, tap } from 'rxjs';
+import { map, NEVER, startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { List } from '../models/list.model';

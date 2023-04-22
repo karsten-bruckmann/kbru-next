@@ -2,7 +2,7 @@
 import { v4 as uuid } from 'uuid';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { Game, RamschGame } from '../models/game.model';
+import { DurchmarschGame, Game, RamschGame } from '../models/game.model';
 import { StandardGame } from '../models/game.model';
 import { NullGame } from '../models/game.model';
 
@@ -15,13 +15,9 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
 
   const gameType = value.gameType;
   const playerIndex = value.playerIndex;
-  const addsBockSet = value.addsBockSet;
+  const addsBockSet = value.addsBockSet ?? false;
 
-  if (
-    typeof playerIndex !== 'number' ||
-    !gameType ||
-    (addsBockSet !== false && !addsBockSet)
-  ) {
+  if (typeof playerIndex !== 'number' || !gameType) {
     throw new Error('error getting game value');
   }
 
@@ -58,7 +54,7 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         id: uuid(),
         gameType,
         playerIndex,
-        addsBockSet: addsBockSet,
+        addsBockSet,
         nullType,
         won: value.won ?? false,
       };
@@ -73,13 +69,20 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         id: uuid(),
         gameType,
         playerIndex,
-        addsBockSet: addsBockSet,
+        addsBockSet,
         ramschPoints,
         won: false,
       };
       return ramschGame;
 
     case 'durchmarsch':
-      throw new Error('not implemented');
+      const durchmarschGame: DurchmarschGame = {
+        id: uuid(),
+        gameType,
+        playerIndex,
+        addsBockSet,
+        won: true,
+      };
+      return durchmarschGame;
   }
 };
