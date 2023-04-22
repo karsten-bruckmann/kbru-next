@@ -14,11 +14,9 @@ import {
 import { PlayerFormService } from '@kbru/spielwille/core/group-management';
 import {
   SkatListFormGroup,
-  SkatListFormService,
   SkatListManagementModule,
 } from '@kbru/spielwille/core/skat-list-management';
-import { Store } from '@ngrx/store';
-import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
+import { filter, firstValueFrom, map, shareReplay, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'spielwille-group-page-add-list-form',
@@ -40,11 +38,10 @@ import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
 })
 export class AddListFormComponent {
   constructor(
-    private skatListFormService: SkatListFormService,
+    private skatListFormGroup: SkatListFormGroup,
     private activatedRoute: ActivatedRoute,
     private playerFormService: PlayerFormService,
-    private alertController: AlertController,
-    private store$: Store
+    private alertController: AlertController
   ) {}
 
   public open = false;
@@ -55,12 +52,16 @@ export class AddListFormComponent {
   );
 
   protected form$ = this.groupId$.pipe(
-    switchMap((groupId) => this.skatListFormService.getForm$(groupId)),
+    switchMap((groupId) =>
+      this.skatListFormGroup.effectAware$.pipe(
+        tap((f) => f.patchValue({ groupId }))
+      )
+    ),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
   protected submit(form: SkatListFormGroup): void {
-    this.skatListFormService.submit(form);
+    this.skatListFormGroup.submit(form);
     this.open = false;
   }
 

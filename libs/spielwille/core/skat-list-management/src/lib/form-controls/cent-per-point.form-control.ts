@@ -1,4 +1,5 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
@@ -7,13 +8,12 @@ import { tap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 
+@Injectable({ providedIn: 'root' })
 export class CentPerPointFormControl extends FormControl<
   SkatList['rules']['centPerPoint'] | null
 > {
-  public possibleValues: SkatList['rules']['centPerPoint'][] = [];
-
-  public static get validator(): ValidatorFn {
-    return (control) => {
+  constructor() {
+    super(null, (control) => {
       if (typeof control.value !== 'number') {
         return { required: true };
       }
@@ -28,10 +28,12 @@ export class CentPerPointFormControl extends FormControl<
       }
 
       return null;
-    };
+    });
   }
 
-  public static formEffect(): FormEffect<SkatListFormGroup> {
+  public possibleValues: SkatList['rules']['centPerPoint'][] = [];
+
+  public formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
       const control = form.controls.centPerPoint;
       control.setValue(0.1);

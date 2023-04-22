@@ -1,4 +1,5 @@
-import { AsyncValidatorFn, FormControl } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import { Store } from '@ngrx/store';
@@ -7,42 +8,61 @@ import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 import { groupPlayersSelector } from '../selectors/group-players.selector';
 
+@Injectable({ providedIn: 'root' })
 export class PlayerIdsFormControl extends FormControl<string[] | null> {
-  public possibleValues: string[] = [];
+  constructor(private store$: Store) {
+    super(null, {
+      asyncValidators: [
+        async (control) => {
+          if (!(control.parent instanceof SkatListFormGroup)) {
+            return { parent: true };
+          }
 
-  public static getAsyncValidator(
-    groupId: string,
-    store$: Store
-  ): AsyncValidatorFn {
-    return async (control) => {
-      if (!Array.isArray(control.value)) {
-        return { type: true };
-      }
+          if (
+            !control.parent.controls.groupId ||
+            !control.parent.controls.groupId.value
+          ) {
+            return { groupId: true };
+          }
 
-      if (control.value.length > 5 || control.value.length < 3) {
-        return { amount: true };
-      }
+          if (!Array.isArray(control.value)) {
+            return { type: true };
+          }
 
-      const groupPlayerIds = (
-        await firstValueFrom(store$.select(groupPlayersSelector(groupId)))
-      ).map((player) => player.id);
+          if (control.value.length > 5 || control.value.length < 3) {
+            return { amount: true };
+          }
 
-      if (
-        control.value.find((playerId) => !groupPlayerIds.includes(playerId))
-      ) {
-        return { invalidId: true };
-      }
+          const groupPlayerIds = (
+            await firstValueFrom(
+              this.store$.select(
+                groupPlayersSelector(control.parent.controls.groupId.value)
+              )
+            )
+          ).map((p) => p.id);
 
-      return null;
-    };
+          if (
+            control.value.find((playerId) => !groupPlayerIds.includes(playerId))
+          ) {
+            return { invalidId: true };
+          }
+
+          return null;
+        },
+      ],
+    });
   }
 
-  public static formEffect(store$: Store): FormEffect<SkatListFormGroup> {
+  public possibleValues: string[] = [];
+
+  public formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
       return form.controls.groupId.valueChanges.pipe(
         startWith(form.controls.groupId.value),
         filterNullish(),
-        switchMap((groupId) => store$.select(groupPlayersSelector(groupId))),
+        switchMap((groupId) =>
+          this.store$.select(groupPlayersSelector(groupId))
+        ),
         map((players) => {
           form.controls.playerIds.possibleValues = players.map(
             (player) => player.id

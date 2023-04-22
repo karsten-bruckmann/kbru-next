@@ -1,4 +1,5 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
@@ -7,12 +8,13 @@ import { tap } from 'rxjs';
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 import { requiredBooleanValidatorFunction } from '../validator-functions/required-boolean.validator-function';
 
+@Injectable({ providedIn: 'root' })
 export class SaechsischeSpitzeFormControl extends FormControl<boolean | null> {
-  public static get validator(): ValidatorFn {
-    return requiredBooleanValidatorFunction;
+  constructor() {
+    super(null, requiredBooleanValidatorFunction);
   }
 
-  public static formEffect(): FormEffect<SkatListFormGroup> {
+  public formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
       const control = form.controls.saechsischeSpitze;
       control.setValue(false);

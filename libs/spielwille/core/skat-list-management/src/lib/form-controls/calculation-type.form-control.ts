@@ -1,4 +1,5 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { controlValue$ } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
@@ -7,13 +8,12 @@ import { tap } from 'rxjs';
 
 import { SkatListFormGroup } from '../form-groups/skat-list.form-group';
 
+@Injectable({ providedIn: 'root' })
 export class CalculationTypeFormControl extends FormControl<
   SkatList['rules']['calculationType'] | null
 > {
-  public possibleValues: SkatList['rules']['calculationType'][] = [];
-
-  public static get validator(): ValidatorFn {
-    return (control) => {
+  constructor() {
+    super(null, (control) => {
       if (!control.value) {
         return { required: true };
       }
@@ -26,10 +26,12 @@ export class CalculationTypeFormControl extends FormControl<
       }
 
       return null;
-    };
+    });
   }
 
-  public static formEffect(): FormEffect<SkatListFormGroup> {
+  public possibleValues: SkatList['rules']['calculationType'][] = [];
+
+  public formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
       const control = form.controls.calculationType;
       control.setValue('seger-fabian');

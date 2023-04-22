@@ -1,4 +1,5 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
 import { startWith, tap } from 'rxjs';
@@ -9,29 +10,27 @@ import { Threshold } from '../models/threshold.model';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { getPossibleThresholds } from '../rules/possible-control-values/get-possible-thresholds.rule';
 
+@Injectable({ providedIn: 'root' })
 export class ThresholdFormControl extends FormControl<Threshold> {
-  public possibleValues: Threshold[] = [];
-
-  public static get validator(): ValidatorFn {
-    return (control) => {
+  constructor() {
+    super(null, (control) => {
       if (![null, 'schneider', 'schwarz'].includes(control.value)) {
         return { invalid: true };
       }
       return null;
-    };
+    });
   }
 
-  public static formEffect(): FormEffect<SkatGameFormGroup> {
+  public possibleValues: Threshold[] = [];
+
+  public formEffect(): FormEffect<SkatGameFormGroup> {
     return (form) => {
       return form.controls.gameType.valueChanges.pipe(
         startWith(form.controls.gameType.value),
         tap((gameType) => {
           const types: (GameType | null)[] = getStandardGameTypes();
           if (types.includes(gameType) && !form.controls.threshold) {
-            form.addControl(
-              'threshold',
-              new ThresholdFormControl(null, ThresholdFormControl.validator)
-            );
+            form.addControl('threshold', this);
           }
           if (!types.includes(gameType) && form.controls.threshold) {
             form.removeControl('threshold');

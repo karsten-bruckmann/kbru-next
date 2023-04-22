@@ -1,4 +1,5 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import {
   distinctUntilContentChanged,
@@ -9,20 +10,21 @@ import { startWith, tap } from 'rxjs';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { isLostByThresholdAnnouncement } from '../rules/is-lost-by-threshold-announcement.rule';
 
+@Injectable({ providedIn: 'root' })
 export class WonFormControl extends FormControl<boolean | null> {
-  public possibleValues: boolean[] = [true, false];
-
-  public static getValidator(): ValidatorFn {
-    return (control) => {
+  constructor() {
+    super(null, (control) => {
       if (typeof control.value !== 'boolean') {
         return { invalid: true };
       }
 
       return null;
-    };
+    });
   }
 
-  public static formEffect(): FormEffect<SkatGameFormGroup> {
+  public possibleValues: boolean[] = [true, false];
+
+  public formEffect(): FormEffect<SkatGameFormGroup> {
     return (form) => {
       return form.valueChanges.pipe(
         distinctUntilContentChanged(),

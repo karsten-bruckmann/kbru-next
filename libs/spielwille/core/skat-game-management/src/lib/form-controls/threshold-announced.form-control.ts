@@ -1,32 +1,44 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { map, startWith, switchMap, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { GameType } from '../models/game-type.model';
-import { List } from '../models/list.model';
 import { Threshold } from '../models/threshold.model';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { getPossibleThresholdAnnouncements } from '../rules/possible-control-values/get-possible-threshold-announcements.rule';
+import { listSelector } from '../selectors/list.selector';
 
+@Injectable({ providedIn: 'root' })
 export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
-  public possibleValues: Threshold[] = [];
-
-  public static get validator(): ValidatorFn {
-    return (control) => {
+  constructor(private store$: Store) {
+    super(null, (control) => {
       if (!getPossibleThresholdAnnouncements().includes(control.value)) {
         return { invalid: true };
       }
       return null;
-    };
+    });
   }
 
-  public static formEffect(list: List): FormEffect<SkatGameFormGroup> {
+  public possibleValues: Threshold[] = [];
+
+  public formEffect(): FormEffect<SkatGameFormGroup> {
     return (form) => {
-      return form.controls.gameType.valueChanges.pipe(
-        startWith(form.controls.gameType.value),
-        switchMap((gameType) => {
+      return combineLatest([
+        form.controls.gameType.valueChanges.pipe(
+          startWith(form.controls.gameType.value)
+        ),
+        form.controls.listId.valueChanges.pipe(
+          startWith(form.controls.listId.value),
+          switchMap((listId) =>
+            listId ? this.store$.select(listSelector(listId)) : of(null)
+          )
+        ),
+      ]).pipe(
+        switchMap(([gameType, list]) => {
           const types: (GameType | null)[] = getStandardGameTypes();
           let control = form.controls.thresholdAnnounced;
           if (!types.includes(gameType)) {
@@ -36,13 +48,7 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
             }
           } else {
             if (!control) {
-              form.addControl(
-                'thresholdAnnounced',
-                new ThresholdAnnouncedFormControl(
-                  null,
-                  ThresholdAnnouncedFormControl.validator
-                )
-              );
+              form.addControl('thresholdAnnounced', this);
               control = form.controls.thresholdAnnounced;
               if (control) {
                 control.possibleValues = getPossibleThresholdAnnouncements();
@@ -56,7 +62,7 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
             tap((hand) => {
               if (
                 !hand &&
-                !list.rules.thresholdAnnouncementWithoutHand &&
+                !list?.rules.thresholdAnnouncementWithoutHand &&
                 control &&
                 control.enabled
               ) {
@@ -64,7 +70,7 @@ export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
                 control.setValue(null);
               }
               if (
-                (hand || list.rules.thresholdAnnouncementWithoutHand) &&
+                (hand || list?.rules.thresholdAnnouncementWithoutHand) &&
                 control &&
                 control.disabled
               ) {

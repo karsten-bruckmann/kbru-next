@@ -8,11 +8,10 @@ import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
   listSelector,
   SkatGameFormGroup,
-  SkatGameFormService,
   SkatGameManagementModule,
 } from '@kbru/spielwille/core/skat-game-management';
 import { Store } from '@ngrx/store';
-import { filter, map, shareReplay, switchMap } from 'rxjs';
+import { filter, map, shareReplay, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'spielwille-list-page-add-game-form',
@@ -30,7 +29,7 @@ import { filter, map, shareReplay, switchMap } from 'rxjs';
 })
 export class AddGameFormComponent {
   constructor(
-    private skatGameFormService: SkatGameFormService,
+    private skatGameFormGroup: SkatGameFormGroup,
     private activatedRoute: ActivatedRoute,
     private store$: Store
   ) {}
@@ -47,12 +46,16 @@ export class AddGameFormComponent {
   );
 
   protected form$ = this.listId$.pipe(
-    switchMap((groupId) => this.skatGameFormService.getForm$(groupId)),
+    switchMap((listId) =>
+      this.skatGameFormGroup.effectAware$.pipe(
+        tap((f) => f.patchValue({ listId }))
+      )
+    ),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
   protected submit(form: SkatGameFormGroup): void {
-    this.skatGameFormService.submit(form);
+    this.skatGameFormGroup.submit(form);
     this.open = false;
   }
 
