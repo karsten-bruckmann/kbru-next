@@ -52,8 +52,8 @@ export class IonicBooleanSegmentComponent implements ControlValueAccessor {
 
   public set(value: string) {
     const v = value === 'true';
-    this.value = v;
     if (v !== this.value) {
+      this.value = v;
       this.onChange(v);
     }
   }

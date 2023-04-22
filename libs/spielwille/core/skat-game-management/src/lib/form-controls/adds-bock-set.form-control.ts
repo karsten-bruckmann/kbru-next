@@ -1,6 +1,9 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
-import { toVoid } from '@kbru/shared/utils/rxjs-utils';
+import {
+  distinctUntilContentChanged,
+  toVoid,
+} from '@kbru/shared/utils/rxjs-utils';
 import { distinctUntilChanged, map, NEVER, startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
@@ -32,16 +35,18 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
         return NEVER;
       }
 
-      form.addControl(
-        'addsBockSet',
-        new AddsBockSetControl(false, AddsBockSetControl.getValidator(list))
-      );
+      if (!form.controls.addsBockSet) {
+        form.addControl(
+          'addsBockSet',
+          new AddsBockSetControl(false, AddsBockSetControl.getValidator(list))
+        );
+      }
 
       return form.valueChanges.pipe(
-        map((value) => value.spritze),
-        startWith(form.value.spritze),
-        distinctUntilChanged(),
-        tap((spritze) => {
+        map((value) => [value.spritze, value.won]),
+        startWith([form.value.spritze, form.value.won]),
+        distinctUntilContentChanged(),
+        tap(([spritze, won]) => {
           const control = form.controls.addsBockSet;
 
           if (!control) {
@@ -49,8 +54,9 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
           }
 
           if (
-            (spritze === 're' || spritze === 'hirsch') &&
-            bockSetsSettings.kontraRe
+            ((spritze === 're' || spritze === 'hirsch') &&
+              bockSetsSettings.kontraRe) ||
+            (spritze !== null && won === false && bockSetsSettings.kontraLost)
           ) {
             control.value !== true && control.setValue(true);
             control.enabled && control.disable();
