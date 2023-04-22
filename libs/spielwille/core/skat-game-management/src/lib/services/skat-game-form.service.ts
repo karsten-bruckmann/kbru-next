@@ -71,7 +71,7 @@ export class SkatGameFormService {
             PlayerIndexFormControl.formEffect(list),
             GameTypeFormControl.formEffect(list),
             SpitzenFormControl.formEffect(list),
-            HandFormControl.formEffect(),
+            HandFormControl.formEffect(list),
             ThresholdFormControl.formEffect(),
             ThresholdAnnouncedFormControl.formEffect(list),
             SpritzeFormControl.formEffect(list),
