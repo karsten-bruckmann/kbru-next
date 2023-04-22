@@ -1,9 +1,13 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
-import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { distinctUntilChanged, map, startWith, tap } from 'rxjs';
+import {
+  distinctUntilContentChanged,
+  toVoid,
+} from '@kbru/shared/utils/rxjs-utils';
+import { startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
+import { isLostByThresholdAnnouncement } from '../rules/is-lost-by-threshold-announcement.rule';
 
 export class WonFormControl extends FormControl<boolean | null> {
   public possibleValues: boolean[] = [true, false];
@@ -21,11 +25,13 @@ export class WonFormControl extends FormControl<boolean | null> {
   public static formEffect(): FormEffect<SkatGameFormGroup> {
     return (form) => {
       return form.valueChanges.pipe(
-        map((value) => value.gameType),
-        distinctUntilChanged(),
-        startWith(form.value.gameType),
-        tap((gameType) => {
+        distinctUntilContentChanged(),
+        startWith(form.value),
+        tap((formValue) => {
           const wonControl = form.controls.won;
+          const gameType = formValue.gameType;
+          const threshold = formValue.threshold;
+          const thresholdAnnounced = formValue.thresholdAnnounced;
 
           if (!wonControl) {
             return;
@@ -52,6 +58,17 @@ export class WonFormControl extends FormControl<boolean | null> {
           if ('durchmarsch' === gameType) {
             wonControl.possibleValues = [true];
             wonControl.setValue(true);
+            return;
+          }
+
+          if (
+            isLostByThresholdAnnouncement(
+              threshold ?? null,
+              thresholdAnnounced ?? null
+            )
+          ) {
+            wonControl.possibleValues = [false];
+            wonControl.setValue(false);
             return;
           }
 
