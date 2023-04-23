@@ -16,7 +16,7 @@ import {
   SkatListFormGroup,
   SkatListManagementModule,
 } from '@kbru/spielwille/core/skat-list-management';
-import { filter, firstValueFrom, map, shareReplay, switchMap, tap } from 'rxjs';
+import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
 
 @Component({
   selector: 'spielwille-group-page-add-list-form',
@@ -52,11 +52,7 @@ export class AddListFormComponent {
   );
 
   protected form$ = this.groupId$.pipe(
-    switchMap((groupId) =>
-      this.skatListFormGroup.effectAware$.pipe(
-        tap((f) => f.patchValue({ groupId }))
-      )
-    ),
+    switchMap((groupId) => this.skatListFormGroup.forGroup$(groupId)),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 

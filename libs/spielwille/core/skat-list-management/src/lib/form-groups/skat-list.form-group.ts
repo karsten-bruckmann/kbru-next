@@ -123,7 +123,7 @@ export class SkatListFormGroup extends FormGroup<{
     );
   }
 
-  public get effectAware$(): Observable<SkatListFormGroup> {
+  private get effectAware$(): Observable<SkatListFormGroup> {
     return createEffectAwareForm(this, [
       this.groupIdFormControl.formEffect(),
       this.playerIdsFormControl.formEffect(),
@@ -147,5 +147,10 @@ export class SkatListFormGroup extends FormGroup<{
       this.autoBockKontraLostFormControl.formEffect(),
       this.thresholdAnnouncementWithoutHandFormControl.formEffect(),
     ]);
+  }
+
+  public forGroup$(groupId: string): Observable<SkatListFormGroup> {
+    this.patchValue({ groupId });
+    return this.effectAware$;
   }
 }

@@ -11,7 +11,7 @@ import {
   SkatGameManagementModule,
 } from '@kbru/spielwille/core/skat-game-management';
 import { Store } from '@ngrx/store';
-import { filter, map, shareReplay, switchMap, tap } from 'rxjs';
+import { filter, map, shareReplay, switchMap } from 'rxjs';
 
 @Component({
   selector: 'spielwille-list-page-add-game-form',
@@ -46,11 +46,7 @@ export class AddGameFormComponent {
   );
 
   protected form$ = this.listId$.pipe(
-    switchMap((listId) =>
-      this.skatGameFormGroup.effectAware$.pipe(
-        tap((f) => f.patchValue({ listId }))
-      )
-    ),
+    switchMap((listId) => this.skatGameFormGroup.forList$(listId)),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 

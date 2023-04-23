@@ -69,7 +69,7 @@ export class SkatGameFormGroup extends FormGroup<{
     });
   }
 
-  public get effectAware$(): Observable<SkatGameFormGroup> {
+  private get effectAware$(): Observable<SkatGameFormGroup> {
     return createEffectAwareForm(this, [
       this.listIdFormControl.formEffect(),
       this.playerIndexFormControl.formEffect(),
@@ -84,6 +84,11 @@ export class SkatGameFormGroup extends FormGroup<{
       this.ramschPointsFormControl.formEffect(),
       this.wonFormControl.formEffect(),
     ]);
+  }
+
+  public forList$(listId: string): Observable<SkatGameFormGroup> {
+    this.patchValue({ listId });
+    return this.effectAware$;
   }
 
   public submit(form: SkatGameFormGroup): void {
