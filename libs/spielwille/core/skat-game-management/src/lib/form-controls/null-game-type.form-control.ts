@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
@@ -9,17 +8,9 @@ import { GameType } from '../models/game-type.model';
 import { NullType } from '../models/null-type.model';
 import { getPossibleNullTypes } from '../rules/possible-control-values/get-possible-null-types.rule';
 
-@Injectable({ providedIn: 'root' })
 export class NullTypeFormControl extends FormControl<NullType | null> {
   constructor() {
-    super(null, (control) => {
-      if (
-        !['einfach', 'hand', 'ouvert', 'hand-ouvert'].includes(control.value)
-      ) {
-        return { invalid: true };
-      }
-      return null;
-    });
+    super(null);
   }
 
   public possibleValues: NullType[] = [];

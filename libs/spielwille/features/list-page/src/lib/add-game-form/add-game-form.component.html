@@ -1,157 +1,138 @@
-<ion-modal [isOpen]="open">
-  <ng-template>
-    <ng-container *ngIf="list$ | async as list">
-      <ng-container *ngIf="form$ | async as form" [formGroup]="form">
-        <ion-header>
-          <ion-toolbar color="primary">
-            <ion-title>Spiel eintragen</ion-title>
-            <ion-buttons slot="end">
-              <ion-button (click)="open = false">
-                <ion-icon name="close"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <ion-list inset *ngIf="form.controls.playerIndex">
-            <ion-item-divider color="primary">
-              <ion-label>Spiel</ion-label>
-            </ion-item-divider>
-            <ion-item color="light" *ngIf="form.controls.playerIndex">
-              <ion-label>Spieler</ion-label>
-              <ion-select interface="popover" formControlName="playerIndex">
-                <ion-select-option
-                  *ngFor="let value of form.controls.playerIndex.possibleValues"
-                  [value]="value"
-                  >{{
-                    form.controls.playerIndex.names[value]
-                  }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.gameType">
-              <ion-label>Spiel</ion-label>
-              <ion-select interface="popover" formControlName="gameType">
-                <ion-select-option
-                  *ngFor="let value of form.controls.gameType.possibleValues"
-                  [value]="value"
-                  >{{ value }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.addsBockSet">
-              <ion-label>addsBockSet</ion-label>
-              <ion-toggle formControlName="addsBockSet"></ion-toggle>
-            </ion-item>
-          </ion-list>
-
-          <ion-list
-            inset
-            *ngIf="form.controls.gameType.value && hasAdditionalControls(form)"
-          >
-            <ion-item-divider color="primary">
-              <ion-label>{{ form.controls.gameType.value }}</ion-label>
-            </ion-item-divider>
-            <ion-item color="light" *ngIf="form.controls.spitzen">
-              <ion-label>Spitzen</ion-label>
-              <ion-select interface="popover" formControlName="spitzen">
-                <ion-select-option
-                  *ngFor="let value of form.controls.spitzen.possibleValues"
-                  [value]="value"
-                  >{{ value }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.nullType">
-              <ion-label>Null</ion-label>
-              <ion-select interface="popover" formControlName="nullType">
-                <ion-select-option
-                  *ngFor="let value of form.controls.nullType.possibleValues"
-                  [value]="value"
-                  >{{ value }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.hand">
-              <ion-label>Hand</ion-label>
-              <ion-toggle formControlName="hand"></ion-toggle>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.threshold">
-              <ion-label>Gespielt</ion-label>
-              <ion-select interface="popover" formControlName="threshold">
-                <ion-select-option
-                  *ngFor="let value of form.controls.threshold.possibleValues"
-                  [value]="value"
-                  >{{ value }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.thresholdAnnounced">
-              <ion-label>Angesagt</ion-label>
-              <ion-select
-                interface="popover"
-                formControlName="thresholdAnnounced"
-              >
-                <ion-select-option
-                  *ngFor="
-                    let value of form.controls.thresholdAnnounced.possibleValues
-                  "
-                  [value]="value"
-                  >{{ value }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.spritze">
-              <ion-label>Spritze</ion-label>
-              <ion-select interface="popover" formControlName="spritze">
-                <ion-select-option
-                  *ngFor="let value of form.controls.spritze.possibleValues"
-                  [value]="value"
-                  >{{ value }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-            <ion-item color="light" *ngIf="form.controls.ramschPoints">
-              <ion-label>Augen</ion-label>
-              <ion-range
-                labelPlacement="start"
-                snaps
-                [ticks]="false"
-                [min]="form.controls.ramschPoints.min"
-                [max]="form.controls.ramschPoints.max"
-                formControlName="ramschPoints"
-              ></ion-range>
-              <ion-label class="range-value">{{
-                form.controls.ramschPoints.value
-              }}</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-content>
-
-        <ion-footer>
-          <ion-list color="light" lines="none">
-            <ion-item color="light" lines="none">
-              <ui-ionic-boolean-segment
-                [labels]="{ true: 'gewonnen', false: 'verloren' }"
-                first="false"
-                [enabled]="form.controls.won.possibleValues"
-                *ngIf="form.controls.won"
-                formControlName="won"
-              >
-              </ui-ionic-boolean-segment>
-            </ion-item>
-          </ion-list>
-          <ion-toolbar color="light">
-            <ion-button
-              expand="block"
-              fill="solid"
-              [disabled]="form.invalid"
-              (click)="submit(form)"
-              >Eintragen</ion-button
+<ng-container *ngIf="list$ | async as list">
+  <ng-container *ngIf="form$ | async as form" [formGroup]="form">
+    <ion-content>
+      <ion-list inset *ngIf="form.controls.playerIndex">
+        <ion-item-divider color="primary">
+          <ion-label>Spiel</ion-label>
+        </ion-item-divider>
+        <ion-item color="light" *ngIf="form.controls.playerIndex">
+          <ion-label>Spieler</ion-label>
+          <ion-select interface="popover" formControlName="playerIndex">
+            <ion-select-option
+              *ngFor="let value of form.controls.playerIndex.possibleValues"
+              [value]="value"
+              >{{ list.playerNames[value] }}</ion-select-option
             >
-          </ion-toolbar>
-        </ion-footer>
-      </ng-container>
-    </ng-container>
-  </ng-template>
-</ion-modal>
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.gameType">
+          <ion-label>Spiel</ion-label>
+          <ion-select interface="popover" formControlName="gameType">
+            <ion-select-option
+              *ngFor="let value of form.controls.gameType.possibleValues"
+              [value]="value"
+              >{{ value }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.addsBockSet">
+          <ion-label>addsBockSet</ion-label>
+          <ion-toggle formControlName="addsBockSet"></ion-toggle>
+        </ion-item>
+      </ion-list>
+
+      <ion-list
+        inset
+        *ngIf="form.controls.gameType.value && hasAdditionalControls(form)"
+      >
+        <ion-item-divider color="primary">
+          <ion-label>{{ form.controls.gameType.value }}</ion-label>
+        </ion-item-divider>
+        <ion-item color="light" *ngIf="form.controls.spitzen">
+          <ion-label>Spitzen</ion-label>
+          <ion-select interface="popover" formControlName="spitzen">
+            <ion-select-option
+              *ngFor="let value of form.controls.spitzen.possibleValues"
+              [value]="value"
+              >{{ value }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.nullType">
+          <ion-label>Null</ion-label>
+          <ion-select interface="popover" formControlName="nullType">
+            <ion-select-option
+              *ngFor="let value of form.controls.nullType.possibleValues"
+              [value]="value"
+              >{{ value }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.hand">
+          <ion-label>Hand</ion-label>
+          <ion-toggle formControlName="hand"></ion-toggle>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.threshold">
+          <ion-label>Gespielt</ion-label>
+          <ion-select interface="popover" formControlName="threshold">
+            <ion-select-option
+              *ngFor="let value of form.controls.threshold.possibleValues"
+              [value]="value"
+              >{{ value }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.thresholdAnnounced">
+          <ion-label>Angesagt</ion-label>
+          <ion-select interface="popover" formControlName="thresholdAnnounced">
+            <ion-select-option
+              *ngFor="
+                let value of form.controls.thresholdAnnounced.possibleValues
+              "
+              [value]="value"
+              >{{ value }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.spritze">
+          <ion-label>Spritze</ion-label>
+          <ion-select interface="popover" formControlName="spritze">
+            <ion-select-option
+              *ngFor="let value of form.controls.spritze.possibleValues"
+              [value]="value"
+              >{{ value }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" *ngIf="form.controls.ramschPoints">
+          <ion-label>Augen</ion-label>
+          <ion-range
+            labelPlacement="start"
+            snaps
+            [ticks]="false"
+            [min]="form.controls.ramschPoints.min"
+            [max]="form.controls.ramschPoints.max"
+            formControlName="ramschPoints"
+          ></ion-range>
+          <ion-label class="range-value">{{
+            form.controls.ramschPoints.value
+          }}</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div slot="fixed">
+        <ion-list color="light" lines="none">
+          <ion-item color="light" lines="none">
+            <ui-ionic-boolean-segment
+              [labels]="{ true: 'gewonnen', false: 'verloren' }"
+              first="false"
+              [enabled]="form.controls.won.possibleValues"
+              *ngIf="form.controls.won"
+              formControlName="won"
+            >
+            </ui-ionic-boolean-segment>
+          </ion-item>
+        </ion-list>
+        <ion-toolbar color="light">
+          <ion-button
+            expand="block"
+            fill="solid"
+            [disabled]="form.invalid"
+            (click)="submit(form)"
+            >Eintragen</ion-button
+          >
+        </ion-toolbar>
+      </div>
+    </ion-content>
+  </ng-container>
+</ng-container>

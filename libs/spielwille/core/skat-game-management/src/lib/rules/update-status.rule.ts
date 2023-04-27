@@ -67,5 +67,6 @@ export const updateStatus = (
   return {
     activePlayers,
     fixedSets,
+    availableGameTypes: {},
   };
 };

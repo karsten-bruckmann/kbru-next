@@ -10,7 +10,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   constructor(
     protected environmentInjector: EnvironmentInjector,
-    @Optional() private updates?: SwUpdate
+    @Optional() updates?: SwUpdate
   ) {
     updates?.versionUpdates
       .pipe(

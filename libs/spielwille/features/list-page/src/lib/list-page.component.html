@@ -12,13 +12,26 @@
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button (click)="addGameForm.open = true">
+    <ion-fab-button (click)="addGameModalOpen = true">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <spielwille-list-page-add-game-form
-    #addGameForm
-    (submitted)="addGameModalOpen = false"
-    (canceled)="addGameModalOpen = false"
-  ></spielwille-list-page-add-game-form>
+
+  <ion-modal [isOpen]="addGameModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Spiel eintragen</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="addGameModalOpen = false">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <spielwille-list-page-add-game-form
+        (submitted)="addGameModalOpen = false"
+      ></spielwille-list-page-add-game-form>
+    </ng-template>
+  </ion-modal>
 </ng-container>

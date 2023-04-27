@@ -7,10 +7,6 @@ import { StandardGame } from '../models/game.model';
 import { NullGame } from '../models/game.model';
 
 export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
-  if (!formGroup.valid) {
-    throw new Error('error getting game value');
-  }
-
   const value = formGroup.getRawValue();
 
   const gameType = value.gameType;

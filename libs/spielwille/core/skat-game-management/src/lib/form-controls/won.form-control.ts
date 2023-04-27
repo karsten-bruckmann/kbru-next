@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import {
@@ -10,16 +9,9 @@ import { startWith, tap } from 'rxjs';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { isLostByThresholdAnnouncement } from '../rules/is-lost-by-threshold-announcement.rule';
 
-@Injectable({ providedIn: 'root' })
 export class WonFormControl extends FormControl<boolean | null> {
   constructor() {
-    super(null, (control) => {
-      if (typeof control.value !== 'boolean') {
-        return { invalid: true };
-      }
-
-      return null;
-    });
+    super(null);
   }
 
   public possibleValues: boolean[] = [true, false];

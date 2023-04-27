@@ -23,7 +23,11 @@ ion-footer {
   flex: 0 0 35px;
 }
 
-ion-footer {
+[slot='fixed'] {
+  bottom: 0;
+  width: 100%;
+  background: var(--ion-color-light);
+
   padding-top: 16px;
   padding-bottom: calc(var(--ion-safe-area-bottom, 0) + 16px);
   padding-left: calc(16px + var(--ion-safe-area-left));

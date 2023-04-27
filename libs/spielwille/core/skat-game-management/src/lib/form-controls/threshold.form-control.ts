@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
@@ -10,15 +9,9 @@ import { Threshold } from '../models/threshold.model';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { getPossibleThresholds } from '../rules/possible-control-values/get-possible-thresholds.rule';
 
-@Injectable({ providedIn: 'root' })
 export class ThresholdFormControl extends FormControl<Threshold> {
   constructor() {
-    super(null, (control) => {
-      if (![null, 'schneider', 'schwarz'].includes(control.value)) {
-        return { invalid: true };
-      }
-      return null;
-    });
+    super(null);
   }
 
   public possibleValues: Threshold[] = [];

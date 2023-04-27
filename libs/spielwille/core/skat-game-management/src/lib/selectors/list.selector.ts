@@ -7,6 +7,7 @@ import { createSelector } from '@ngrx/store';
 import { Game } from '../models/game.model';
 import { List } from '../models/list.model';
 import { getInitialStatus } from '../rules/get-initial-status.rule';
+import { listStatusFromData } from '../rules/list-status-from-data.rule';
 import { listGamesSelector } from './list-games.selector';
 import { listPlayersSelector } from './list-players.selector';
 
@@ -17,19 +18,28 @@ export const listSelector = (listId: string) =>
     listGamesSelector(listId),
     (lists, players, games): List | null => {
       const list = lists[listId];
-      return list
-        ? {
-            id: listId,
-            description:
-              list.rules.addOn !== null
-                ? `${list.rules.addOn}`
-                : list.rules.calculationType,
-            playerNames: players,
-            games,
-            created: list.created,
-            rules: list.rules,
-            status: list.status ?? getInitialStatus(list),
-          }
-        : null;
+
+      if (!list) {
+        return list;
+      }
+
+      const listWithoutStatus = {
+        id: listId,
+        description:
+          list.rules.addOn !== null
+            ? `${list.rules.addOn}`
+            : list.rules.calculationType,
+        playerNames: players,
+        games,
+        created: list.created,
+        rules: list.rules,
+      };
+
+      return {
+        ...listWithoutStatus,
+        status: list.status
+          ? listStatusFromData(list.status)
+          : getInitialStatus(listWithoutStatus),
+      };
     }
   );

@@ -1,42 +1,38 @@
-import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { Store } from '@ngrx/store';
-import { combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
+import {
+  combineLatest,
+  map,
+  Observable,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { GameType } from '../models/game-type.model';
+import { List } from '../models/list.model';
 import { Threshold } from '../models/threshold.model';
 import { getStandardGameTypes } from '../rules/get-standard-game-types.rule';
 import { getPossibleThresholdAnnouncements } from '../rules/possible-control-values/get-possible-threshold-announcements.rule';
-import { listSelector } from '../selectors/list.selector';
 
-@Injectable({ providedIn: 'root' })
 export class ThresholdAnnouncedFormControl extends FormControl<Threshold> {
-  constructor(private store$: Store) {
-    super(null, (control) => {
-      if (!getPossibleThresholdAnnouncements().includes(control.value)) {
-        return { invalid: true };
-      }
-      return null;
-    });
+  constructor() {
+    super(null);
   }
 
   public possibleValues: Threshold[] = [];
 
-  public formEffect(): FormEffect<SkatGameFormGroup> {
+  public formEffect(
+    list$: Observable<List | null>
+  ): FormEffect<SkatGameFormGroup> {
     return (form) => {
       return combineLatest([
         form.controls.gameType.valueChanges.pipe(
           startWith(form.controls.gameType.value)
         ),
-        form.controls.listId.valueChanges.pipe(
-          startWith(form.controls.listId.value),
-          switchMap((listId) =>
-            listId ? this.store$.select(listSelector(listId)) : of(null)
-          )
-        ),
+        list$,
       ]).pipe(
         switchMap(([gameType, list]) => {
           const types: (GameType | null)[] = getStandardGameTypes();

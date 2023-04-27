@@ -1,3 +1,7 @@
-import { List } from './list.model';
+import { SkatListStatus } from '@kbru/spielwille/data-access/skat-lists';
 
-export type Status = List['status'];
+import { GameType } from './game-type.model';
+
+export type Status = Omit<SkatListStatus, 'availableGameTypes'> & {
+  availableGameTypes: Record<number, GameType[]>;
+};

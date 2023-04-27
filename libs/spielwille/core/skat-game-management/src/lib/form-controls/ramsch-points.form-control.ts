@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
@@ -7,19 +6,9 @@ import { startWith, tap } from 'rxjs';
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { GameType } from '../models/game-type.model';
 
-@Injectable({ providedIn: 'root' })
 export class RamschPointsFormControl extends FormControl<number | null> {
   constructor() {
-    super(null, (control) => {
-      if (
-        typeof control.value !== 'number' ||
-        control.value < 40 ||
-        control.value > 120
-      ) {
-        return { invalid: true };
-      }
-      return null;
-    });
+    super(null);
   }
 
   public readonly min = 40;

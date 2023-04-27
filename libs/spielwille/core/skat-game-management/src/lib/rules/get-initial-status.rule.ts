@@ -1,10 +1,10 @@
-import { SkatList } from '@kbru/spielwille/data-access/skat-lists';
-
+import { List } from '../models/list.model';
 import { Status } from '../models/status.model';
+import { getPossibleGameTypes } from './get-possible-game-types.rule';
 
-export const getInitialStatus = (list: SkatList): Status => {
+export const getInitialStatus = (list: Omit<List, 'status'>): Status => {
   let activePlayers: [number, number, number];
-  switch (list.playerIds.length) {
+  switch (list.playerNames.length) {
     case 3:
       activePlayers = [1, 2, 0];
       break;
@@ -21,5 +21,6 @@ export const getInitialStatus = (list: SkatList): Status => {
   return {
     activePlayers,
     fixedSets: [],
+    availableGameTypes: getPossibleGameTypes(list),
   };
 };

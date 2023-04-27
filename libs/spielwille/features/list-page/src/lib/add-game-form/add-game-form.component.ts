@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicBooleanSegmentComponent } from '@kbru/shared/ui/ionic-boolean-segment';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
+  LIST_ID$,
   listSelector,
   SkatGameFormGroup,
   SkatGameManagementModule,
 } from '@kbru/spielwille/core/skat-game-management';
 import { Store } from '@ngrx/store';
-import { filter, map, shareReplay, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'spielwille-list-page-add-game-form',
@@ -24,6 +25,18 @@ import { filter, map, shareReplay, switchMap } from 'rxjs';
     SkatGameManagementModule,
     IonicBooleanSegmentComponent,
   ],
+  providers: [
+    SkatGameFormGroup,
+    {
+      provide: LIST_ID$,
+      useFactory: (activatedRoute: ActivatedRoute) =>
+        activatedRoute.paramMap.pipe(
+          map((paramMap) => paramMap.get('listId')),
+          filter((groupId): groupId is string => !!groupId)
+        ),
+      deps: [ActivatedRoute],
+    },
+  ],
   templateUrl: './add-game-form.component.html',
   styleUrls: ['./add-game-form.component.scss'],
 })
@@ -34,25 +47,19 @@ export class AddGameFormComponent {
     private store$: Store
   ) {}
 
-  public open = false;
+  @Output() public submitted = new EventEmitter<void>();
 
-  private listId$ = this.activatedRoute.paramMap.pipe(
+  protected list$ = this.activatedRoute.paramMap.pipe().pipe(
     map((paramMap) => paramMap.get('listId')),
-    filter((groupId): groupId is string => !!groupId)
-  );
-
-  protected list$ = this.listId$.pipe(
+    filter((groupId): groupId is string => !!groupId),
     switchMap((listId) => this.store$.select(listSelector(listId)))
   );
 
-  protected form$ = this.listId$.pipe(
-    switchMap((listId) => this.skatGameFormGroup.forList$(listId)),
-    shareReplay({ bufferSize: 1, refCount: true })
-  );
+  protected form$ = this.skatGameFormGroup.effectAware$;
 
   protected submit(form: SkatGameFormGroup): void {
     this.skatGameFormGroup.submit(form);
-    this.open = false;
+    this.submitted.next();
   }
 
   protected hasAdditionalControls(formGroup: SkatGameFormGroup): boolean {
