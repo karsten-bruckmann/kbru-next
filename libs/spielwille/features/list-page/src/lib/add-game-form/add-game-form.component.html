@@ -21,7 +21,7 @@
             <ion-select-option
               *ngFor="let value of form.controls.gameType.possibleValues"
               [value]="value"
-              >{{ value }}</ion-select-option
+              >{{ value | gameType }}</ion-select-option
             >
           </ion-select>
         </ion-item>
@@ -36,7 +36,7 @@
         *ngIf="form.controls.gameType.value && hasAdditionalControls(form)"
       >
         <ion-item-divider color="primary">
-          <ion-label>{{ form.controls.gameType.value }}</ion-label>
+          <ion-label>{{ form.controls.gameType.value | gameType }}</ion-label>
         </ion-item-divider>
         <ion-item color="light" *ngIf="form.controls.spitzen">
           <ion-label>Spitzen</ion-label>
@@ -44,7 +44,7 @@
             <ion-select-option
               *ngFor="let value of form.controls.spitzen.possibleValues"
               [value]="value"
-              >{{ value }}</ion-select-option
+              >{{ value | spitze }}</ion-select-option
             >
           </ion-select>
         </ion-item>
@@ -54,7 +54,7 @@
             <ion-select-option
               *ngFor="let value of form.controls.nullType.possibleValues"
               [value]="value"
-              >{{ value }}</ion-select-option
+              >{{ value | nullType }}</ion-select-option
             >
           </ion-select>
         </ion-item>
@@ -68,7 +68,7 @@
             <ion-select-option
               *ngFor="let value of form.controls.threshold.possibleValues"
               [value]="value"
-              >{{ value }}</ion-select-option
+              >{{ value | threshold }}</ion-select-option
             >
           </ion-select>
         </ion-item>
@@ -80,7 +80,7 @@
                 let value of form.controls.thresholdAnnounced.possibleValues
               "
               [value]="value"
-              >{{ value }}</ion-select-option
+              >{{ value | threshold }}</ion-select-option
             >
           </ion-select>
         </ion-item>
@@ -90,7 +90,7 @@
             <ion-select-option
               *ngFor="let value of form.controls.spritze.possibleValues"
               [value]="value"
-              >{{ value }}</ion-select-option
+              >{{ value | spritze }}</ion-select-option
             >
           </ion-select>
         </ion-item>

@@ -6,6 +6,13 @@ import { IonicModule } from '@ionic/angular';
 import { IonicBooleanSegmentComponent } from '@kbru/shared/ui/ionic-boolean-segment';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
+  GameTypePipe,
+  NullTypedPipe,
+  SpitzePipe,
+  SpritzePipe,
+  ThresholdPipe,
+} from '@kbru/shared/ui/skat-naming';
+import {
   LIST_ID$,
   listSelector,
   SkatGameFormGroup,
@@ -24,6 +31,11 @@ import { filter, map, switchMap } from 'rxjs';
     ReactiveFormsModule,
     SkatGameManagementModule,
     IonicBooleanSegmentComponent,
+    GameTypePipe,
+    SpitzePipe,
+    SpritzePipe,
+    ThresholdPipe,
+    NullTypedPipe,
   ],
   providers: [
     SkatGameFormGroup,

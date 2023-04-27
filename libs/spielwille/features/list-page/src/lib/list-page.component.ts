@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
+import { GameTypePipe } from '@kbru/shared/ui/skat-naming';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { GroupManagementModule } from '@kbru/spielwille/core/group-management';
 import {
@@ -26,6 +27,7 @@ import { AddGameFormComponent } from './add-game-form/add-game-form.component';
     GroupManagementModule,
     AddGameFormComponent,
     IonicHistoryBackComponent,
+    GameTypePipe,
   ],
   templateUrl: './list-page.component.html',
   styleUrls: ['./list-page.component.scss'],
