@@ -6,12 +6,14 @@ import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted
 import { updateStatus } from '../rules/update-status.rule';
 
 export const skatListsReducer = createCoreReducer<SkatListsState>(
-  on(skatGameFormSubmittedAction, (state, action) => ({
-    ...state,
-    [action.listId]: {
-      ...state[action.listId],
-      gameIds: [...state[action.listId].gameIds, action.game.id],
-      status: updateStatus(state[action.listId], action.game),
-    },
-  }))
+  on(skatGameFormSubmittedAction, (state, action) => {
+    return {
+      ...state,
+      [action.listId]: {
+        ...state[action.listId],
+        gameIds: [...state[action.listId].gameIds, action.game.id],
+        status: updateStatus(state[action.listId], action.game),
+      },
+    };
+  })
 );

@@ -7,8 +7,37 @@
       <ion-title>{{ list.description }}</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
-    <pre>{{ list$ | async | json }}</pre>
+  <ion-content class="ion-padding">
+    <ion-accordion-group>
+      <ion-accordion>
+        <ion-item slot="header" color="light">
+          <ion-label>List Status</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <pre>{{ list.status | json }}</pre>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <ion-accordion-group>
+      <ion-accordion>
+        <ion-item slot="header" color="light">
+          <ion-label>List Rules</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <pre>{{ list.rules | json }}</pre>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let game of list.games">
+        <ion-item slot="header" color="light">
+          <ion-label>{{ game.gameType }}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <pre>{{ game | json }}</pre>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
