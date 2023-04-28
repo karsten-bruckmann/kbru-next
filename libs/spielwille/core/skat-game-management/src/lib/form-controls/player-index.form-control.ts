@@ -21,6 +21,11 @@ export class PlayerIndexFormControl extends FormControl<number | null> {
         tap((list) => {
           form.controls.playerIndex.possibleValues =
             list?.status?.activePlayers || [];
+          if (list?.rules.addOn === 'romanow') {
+            form.controls.playerIndex.setValue(
+              form.controls.playerIndex.possibleValues[0]
+            );
+          }
         }),
         toVoid()
       );

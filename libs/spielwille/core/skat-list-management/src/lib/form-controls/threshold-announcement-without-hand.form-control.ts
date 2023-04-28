@@ -12,13 +12,11 @@ export class ThresholdAnnouncementWithoutHandControl extends FormControl<
   boolean | null
 > {
   constructor() {
-    super(null, requiredBooleanValidatorFunction);
+    super(false, requiredBooleanValidatorFunction);
   }
 
   public formEffect(): FormEffect<SkatListFormGroup> {
     return (form) => {
-      form.controls.thresholdAnnouncementWithoutHand.setValue(false);
-
       return form.controls.addOn.valueChanges.pipe(
         startWith(form.controls.addOn.value),
         tap((addOn) => {

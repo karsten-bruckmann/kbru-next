@@ -8,11 +8,20 @@ import {
   skatListsCoreReducerRegistry,
   SkatListsModule,
 } from '@kbru/spielwille/data-access/skat-lists';
+import { EffectsModule } from '@ngrx/effects';
 
+import { UpdateListStatusEffect } from './effects/update-list-status.effect';
 import { skatGamesReducer } from './reducers/skat-games.reducer';
 import { skatListsReducer } from './reducers/skat-lists.reducer';
 
-@NgModule({ imports: [GroupsModule, SkatListsModule, SkatGamesModule] })
+@NgModule({
+  imports: [
+    GroupsModule,
+    SkatListsModule,
+    SkatGamesModule,
+    EffectsModule.forFeature([UpdateListStatusEffect]),
+  ],
+})
 export class SkatGameManagementModule {
   constructor() {
     skatGamesCoreReducerRegistry.add(skatGamesReducer, 'game-management');

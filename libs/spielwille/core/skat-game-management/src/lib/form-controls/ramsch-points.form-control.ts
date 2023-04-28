@@ -8,7 +8,7 @@ import { GameType } from '../models/game-type.model';
 
 export class RamschPointsFormControl extends FormControl<number | null> {
   constructor() {
-    super(null);
+    super(40);
   }
 
   public readonly min = 40;

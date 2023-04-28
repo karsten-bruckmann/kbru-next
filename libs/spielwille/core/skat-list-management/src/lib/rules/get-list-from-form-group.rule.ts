@@ -10,8 +10,10 @@ export const getListFromFormGroup = (
     throw new Error('could not create list');
   }
 
-  const calculationType = formGroup.value.calculationType;
-  const spitzen = formGroup.value.spitzen;
+  const formValue = formGroup.getRawValue();
+
+  const calculationType = formValue.calculationType;
+  const spitzen = formValue.spitzen;
   if (!calculationType || !spitzen) {
     throw new Error('could not create list');
   }
@@ -19,38 +21,38 @@ export const getListFromFormGroup = (
   return {
     created: formatISO(new Date()),
     gameIds: [],
-    playerIds: formGroup.value.playerIds ?? [],
+    playerIds: formValue.playerIds ?? [],
     status: null,
     rules: {
-      addOn: formGroup.value.addOn ?? null,
+      addOn: formValue.addOn ?? null,
       calculationType,
       spitzen,
-      maxSets: formGroup.value.maxSets ?? null,
-      centPerPoint: formGroup.value.centPerPoint ?? 0,
-      saechsischeSpitze: formGroup.value.saechsischeSpitze ?? false,
+      maxSets: formValue.maxSets ?? null,
+      centPerPoint: formValue.centPerPoint ?? 0,
+      saechsischeSpitze: formValue.saechsischeSpitze ?? false,
       thresholdAnnouncementWithoutHand:
-        formGroup.value.thresholdAnnouncementWithoutHand ?? false,
-      maxSpritze: formGroup.value.hirsch
+        formValue.thresholdAnnouncementWithoutHand ?? false,
+      maxSpritze: formValue.hirsch
         ? 'hirsch'
-        : formGroup.value.re
+        : formValue.re
         ? 're'
-        : formGroup.value.kontra
+        : formValue.kontra
         ? 'kontra'
         : null,
-      ramsch: formGroup.value.ramsch
+      ramsch: formValue.ramsch
         ? {
-            geschoben: formGroup.value.ramschSchieben ?? false,
-            jungfrau: formGroup.value.ramschJungfrau ?? false,
+            geschoben: formValue.ramschSchieben ?? false,
+            jungfrau: formValue.ramschJungfrau ?? false,
           }
         : false,
-      bockSets: formGroup.value.bockSets
+      bockSets: formValue.bockSets
         ? {
-            kontraRe: formGroup.value.autoBockKontraRe ?? false,
-            kontraLost: formGroup.value.autoBockKontraLost ?? false,
-            ramsch: formGroup.value.ramschSets
+            kontraRe: formValue.autoBockKontraRe ?? false,
+            kontraLost: formValue.autoBockKontraLost ?? false,
+            ramsch: formValue.ramschSets
               ? {
-                  geschoben: formGroup.value.ramschSetsSchieben ?? false,
-                  jungfrau: formGroup.value.ramschSetsJungfrau ?? false,
+                  geschoben: formValue.ramschSetsSchieben ?? false,
+                  jungfrau: formValue.ramschSetsJungfrau ?? false,
                 }
               : false,
           }
