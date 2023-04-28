@@ -7,7 +7,25 @@
       <ion-title>{{ list.description }}</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <ion-content class="ion-padding">
+    <table>
+      <tr>
+        <th *ngFor="let playerName of list.playerNames; let i = index">
+          {{ playerName }}
+        </th>
+      </tr>
+      <tr class="info">
+        <td *ngFor="let playerName of list.playerNames; let i = index">
+          {{ list.status.playerPositions[i] }}
+        </td>
+      </tr>
+      <tr class="info">
+        <td *ngFor="let playerName of list.playerNames; let i = index">
+          {{ list.status.playerInfos[i] }}
+        </td>
+      </tr>
+    </table>
     <ion-accordion-group>
       <ion-accordion>
         <ion-item slot="header" color="light">

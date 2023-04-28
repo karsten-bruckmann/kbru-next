@@ -2,6 +2,7 @@ import { AddOn } from '@kbru/spielwille/data-access/skat-lists';
 
 import { Game } from '../models/game.model';
 import { ListStatus } from '../models/list-status.model';
+import { getPlayerInfos } from './get-player-infos.rule';
 import { getPlayerPositions } from './get-player-positions.rule';
 import { getPossibleGameTypes } from './get-possible-game-types.rule';
 
@@ -29,15 +30,25 @@ export const getListStatus = (
     }
   });
 
+  const playerPositions = getPlayerPositions(numberOfPlayers, games.length);
+  const availableGameTypes = getPossibleGameTypes(
+    addon,
+    listHasRamsch,
+    numberOfPlayers,
+    games,
+    fixedSets
+  );
+  const playerInfos = getPlayerInfos(
+    numberOfPlayers,
+    games.length,
+    availableGameTypes,
+    addon
+  );
+
   return {
     fixedSets,
-    playerPositions: getPlayerPositions(numberOfPlayers, games.length),
-    availableGameTypes: getPossibleGameTypes(
-      addon,
-      listHasRamsch,
-      numberOfPlayers,
-      games,
-      fixedSets
-    ),
+    playerPositions,
+    availableGameTypes,
+    playerInfos,
   };
 };
