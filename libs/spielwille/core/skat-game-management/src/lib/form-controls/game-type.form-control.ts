@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { toVoid } from '@kbru/shared/utils/rxjs-utils';
-import { combineLatest, delay, Observable, startWith, tap } from 'rxjs';
+import { combineLatest, Observable, startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { GameType } from '../models/game-type.model';

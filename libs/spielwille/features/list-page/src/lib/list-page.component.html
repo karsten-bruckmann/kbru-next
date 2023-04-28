@@ -31,7 +31,11 @@
     <ion-accordion-group>
       <ion-accordion *ngFor="let game of list.games">
         <ion-item slot="header" color="light">
-          <ion-label>{{ game.gameType | gameType }}</ion-label>
+          <ion-label
+            >{{ list.playerNames[game.playerIndex] }},
+            {{ game.gameType | gameType }},
+            {{ game.won ? 'gewonnen' : 'verloren' }}</ion-label
+          >
         </ion-item>
         <div class="ion-padding" slot="content">
           <pre>{{ game | json }}</pre>
