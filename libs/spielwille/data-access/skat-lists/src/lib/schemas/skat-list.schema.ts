@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import { ramschSettingsSchema } from './ramsch-settings.schema';
-import { skatListStatusSchema } from './skat-list-status.schema';
 
 export type SkatList = z.infer<typeof skatListSchema>;
 export type AddOn = SkatList['rules']['addOn'];
@@ -10,7 +9,6 @@ export const skatListSchema = z.object({
   created: z.string().datetime({ offset: true }),
   playerIds: z.array(z.string().uuid()),
   gameIds: z.array(z.string().uuid()),
-  status: z.nullable(skatListStatusSchema),
   rules: z.object({
     addOn: z.nullable(z.literal('romanow')),
     calculationType: z.union([

@@ -3,7 +3,6 @@ import { SkatListsState } from '@kbru/spielwille/data-access/skat-lists';
 import { on } from '@ngrx/store';
 
 import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted.action';
-import { skatListStatusUpdatedAction } from '../actions/skat-list-status-updated.action';
 
 export const skatListsReducer = createCoreReducer<SkatListsState>(
   on(skatGameFormSubmittedAction, (state, action) => {
@@ -12,15 +11,6 @@ export const skatListsReducer = createCoreReducer<SkatListsState>(
       [action.listId]: {
         ...state[action.listId],
         gameIds: [...state[action.listId].gameIds, action.game.id],
-      },
-    };
-  }),
-  on(skatListStatusUpdatedAction, (state, action) => {
-    return {
-      ...state,
-      [action.listId]: {
-        ...state[action.listId],
-        status: action.status,
       },
     };
   })

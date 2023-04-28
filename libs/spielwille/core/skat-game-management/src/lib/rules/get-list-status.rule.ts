@@ -36,7 +36,8 @@ export const getListStatus = (
       addon,
       listHasRamsch,
       numberOfPlayers,
-      games
+      games,
+      fixedSets
     ),
   };
 };

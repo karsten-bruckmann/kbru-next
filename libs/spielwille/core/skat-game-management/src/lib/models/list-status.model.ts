@@ -1,9 +1,9 @@
-import { SkatListStatus } from '@kbru/spielwille/data-access/skat-lists';
-
+import { FixedSet } from './fixed-set.model';
 import { GameType } from './game-type.model';
 import { PlayerPosition } from './player-position.model';
 
-export type ListStatus = SkatListStatus & {
+export type ListStatus = {
+  fixedSets: FixedSet[];
   availableGameTypes: GameType[][];
   playerPositions: PlayerPosition[];
 };

@@ -22,7 +22,6 @@ export const getListFromFormGroup = (
     created: formatISO(new Date()),
     gameIds: [],
     playerIds: formValue.playerIds ?? [],
-    status: null,
     rules: {
       addOn: formValue.addOn ?? null,
       calculationType,

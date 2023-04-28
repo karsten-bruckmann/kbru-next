@@ -7,40 +7,40 @@ export const getPlayerPosition = (
 ): PlayerPosition => {
   switch (numberOfPlayers) {
     case 3:
-      switch ((numberOfPlayedGames % numberOfPlayers) + playerIndex) {
-        case 0:
+      switch (playerIndex) {
+        case numberOfPlayedGames % numberOfPlayers:
           return 'hinterhand';
-        case 1:
+        case (numberOfPlayedGames + 1) % numberOfPlayers:
           return 'vorhand';
-        case 2:
+        case (numberOfPlayedGames + 2) % numberOfPlayers:
           return 'mittelhand';
         default:
           throw new Error(`invalid player index: ${playerIndex}`);
       }
     case 4:
-      switch ((numberOfPlayedGames % numberOfPlayers) + playerIndex) {
-        case 0:
+      switch (playerIndex) {
+        case numberOfPlayedGames % numberOfPlayers:
           return 'inactive';
-        case 1:
+        case (numberOfPlayedGames + 1) % numberOfPlayers:
           return 'vorhand';
-        case 2:
+        case (numberOfPlayedGames + 2) % numberOfPlayers:
           return 'mittelhand';
-        case 3:
+        case (numberOfPlayedGames + 3) % numberOfPlayers:
           return 'mittelhand';
         default:
           throw new Error(`invalid player index: ${playerIndex}`);
       }
     case 5:
-      switch ((numberOfPlayedGames % numberOfPlayers) + playerIndex) {
-        case 0:
+      switch (playerIndex) {
+        case numberOfPlayedGames % numberOfPlayers:
           return 'inactive';
-        case 1:
+        case (numberOfPlayedGames + 1) % numberOfPlayers:
           return 'vorhand';
-        case 2:
+        case (numberOfPlayedGames + 2) % numberOfPlayers:
           return 'inactive';
-        case 3:
+        case (numberOfPlayedGames + 3) % numberOfPlayers:
           return 'mittelhand';
-        case 4:
+        case (numberOfPlayedGames + 4) % numberOfPlayers:
           return 'hinterhand';
         default:
           throw new Error(`invalid player index: ${playerIndex}`);

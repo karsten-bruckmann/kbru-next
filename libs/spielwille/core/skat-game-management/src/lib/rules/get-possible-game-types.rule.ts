@@ -1,5 +1,6 @@
 import { AddOn } from '@kbru/spielwille/data-access/skat-lists';
 
+import { FixedSet } from '../models/fixed-set.model';
 import {
   DurchmarschGame,
   Game,
@@ -28,7 +29,8 @@ export const getPossibleGameTypes = (
   addOn: AddOn,
   listHasRamsch: boolean,
   numberOfPlayers: number,
-  listGames: Game[]
+  listGames: Game[],
+  fixedSets: FixedSet[]
 ): GameType[][] => {
   if (addOn === 'romanow') {
     let result: GameType[][] = [];
@@ -64,6 +66,10 @@ export const getPossibleGameTypes = (
     }
 
     return result;
+  }
+
+  if (fixedSets[0]?.type === 'ramsch') {
+    return new Array(numberOfPlayers).fill(['ramsch', 'durchmarsch', 'grand']);
   }
 
   let types: GameType[] = [
