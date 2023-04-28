@@ -5,6 +5,9 @@ import { combineLatest, delay, Observable, startWith, tap } from 'rxjs';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
 import { List } from '../models/list.model';
+import { PlayerPosition } from '../models/player-position.model';
+
+const order: PlayerPosition[] = ['vorhand', 'mittelhand', 'hinterhand'];
 
 export class PlayerIndexFormControl extends FormControl<number | null> {
   constructor() {
@@ -23,11 +26,17 @@ export class PlayerIndexFormControl extends FormControl<number | null> {
       ]).pipe(
         delay(1),
         tap(([list]) => {
-          form.controls.playerIndex.possibleValues =
-            list?.status?.activePlayers.filter(
-              (playerIndex) =>
-                list.status.availableGameTypes[playerIndex].length > 0
-            ) || [];
+          form.controls.playerIndex.possibleValues = list?.status
+            .playerPositions
+            ? list.status.playerPositions
+                .map((position, i) => ({ index: i, position }))
+                .filter((p) => p.position !== 'inactive')
+                .sort(
+                  (a, b) =>
+                    order.indexOf(a.position) - order.indexOf(b.position)
+                )
+                .map((p) => p.index)
+            : [];
           if (list?.rules.addOn === 'romanow' && !form.value.playerIndex) {
             form.controls.playerIndex.setValue(
               form.controls.playerIndex.possibleValues[0]

@@ -6,7 +6,7 @@ import { map } from 'rxjs';
 import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted.action';
 import { skatListStatusUpdatedAction } from '../actions/skat-list-status-updated.action';
 import { FixedSet } from '../models/fixed-set.model';
-import { getActivePlayers } from '../rules/get-active-players.rule';
+import { getPlayerPositions } from '../rules/get-player-positions.rule';
 import { getPossibleGameTypes } from '../rules/get-possible-game-types.rule';
 import { listSelector } from '../selectors/list.selector';
 
@@ -57,12 +57,15 @@ export class UpdateListStatusEffect {
         return skatListStatusUpdatedAction({
           listId: action.listId,
           status: {
-            activePlayers: getActivePlayers(numPlayers, list.games.length),
             availableGameTypes: getPossibleGameTypes(
               list.rules.addOn,
               list.rules.ramsch !== false,
               numPlayers,
               list.games
+            ),
+            playerPositions: getPlayerPositions(
+              list.playerNames.length,
+              list.games.length
             ),
             fixedSets,
           },

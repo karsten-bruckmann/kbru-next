@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Status } from '../models/status.model';
+import { ListStatus } from '../models/list-status.model';
 
 export const skatListStatusUpdatedAction = createAction(
   'skat-game-management/skat-list-status-updated',
-  props<{ listId: string; status: Status }>()
+  props<{ listId: string; status: ListStatus }>()
 );

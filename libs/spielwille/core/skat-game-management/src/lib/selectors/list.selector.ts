@@ -6,8 +6,7 @@ import { createSelector } from '@ngrx/store';
 
 import { Game } from '../models/game.model';
 import { List } from '../models/list.model';
-import { getInitialStatus } from '../rules/get-initial-status.rule';
-import { listStatusFromData } from '../rules/list-status-from-data.rule';
+import { getListStatus } from '../rules/get-list-status.rule';
 import { listGamesSelector } from './list-games.selector';
 import { listPlayersSelector } from './list-players.selector';
 
@@ -23,7 +22,7 @@ export const listSelector = (listId: string) =>
         return list;
       }
 
-      const listWithoutStatus = {
+      return {
         id: listId,
         description:
           list.rules.addOn !== null
@@ -33,13 +32,14 @@ export const listSelector = (listId: string) =>
         games,
         created: list.created,
         rules: list.rules,
-      };
-
-      return {
-        ...listWithoutStatus,
-        status: list.status
-          ? listStatusFromData(list.status)
-          : getInitialStatus(listWithoutStatus),
+        infos: {},
+        status: getListStatus(
+          list.playerIds.length,
+          list.rules.ramsch !== false,
+          list.rules.addOn,
+          games,
+          list.rules.bockSets !== false && list.rules.bockSets.ramsch !== false
+        ),
       };
     }
   );
