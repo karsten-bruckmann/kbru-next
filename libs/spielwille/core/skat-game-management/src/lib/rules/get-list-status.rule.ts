@@ -34,7 +34,7 @@ export const getListStatus = (
   const availableGameTypes = getPossibleGameTypes(
     addon,
     listHasRamsch,
-    numberOfPlayers,
+    playerPositions,
     games,
     fixedSets
   );

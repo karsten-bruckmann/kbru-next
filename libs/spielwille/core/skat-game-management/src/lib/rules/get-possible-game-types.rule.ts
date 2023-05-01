@@ -8,6 +8,7 @@ import {
   StandardGame,
 } from '../models/game.model';
 import { GameType } from '../models/game-type.model';
+import { PlayerPosition } from '../models/player-position.model';
 
 type RomanowGameType = (
   | StandardGame
@@ -28,10 +29,12 @@ const romanowCategoryMap: Record<RomanowGameType, RomanowGameType[]> = {
 export const getPossibleGameTypes = (
   addOn: AddOn,
   listHasRamsch: boolean,
-  numberOfPlayers: number,
+  playerPositions: PlayerPosition[],
   listGames: Game[],
   fixedSets: FixedSet[]
 ): GameType[][] => {
+  const numberOfPlayers = playerPositions.length;
+
   if (addOn === 'romanow') {
     let result: GameType[][] = [];
     const allPlayerTypes: GameType[] = ['ramsch', 'durchmarsch'];
@@ -47,7 +50,7 @@ export const getPossibleGameTypes = (
         ...(i === (listGames.length + 1) % numberOfPlayers
           ? nextPlayerTypes
           : []),
-        ...allPlayerTypes,
+        ...(playerPositions[i] !== 'inactive' ? allPlayerTypes : []),
       ];
     }
 
@@ -86,5 +89,7 @@ export const getPossibleGameTypes = (
     types = [...types, 'ramsch', 'durchmarsch'];
   }
 
-  return new Array(numberOfPlayers).fill(types);
+  return new Array(numberOfPlayers)
+    .fill(null)
+    .map((_, i) => (playerPositions[i] === 'inactive' ? [] : types));
 };
