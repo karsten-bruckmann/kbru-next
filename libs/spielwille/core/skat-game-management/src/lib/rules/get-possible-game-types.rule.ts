@@ -39,6 +39,7 @@ export const getPossibleGameTypes = (
       'diamonds',
       'hearts',
       'spades',
+      'clubs',
       'grand',
     ];
     for (let i = 0; i < numberOfPlayers; i++) {
