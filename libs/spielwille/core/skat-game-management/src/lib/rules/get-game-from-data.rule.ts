@@ -19,6 +19,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
   const threshold = skatGame.threshold;
   const thresholdAnnounced = skatGame.thresholdAnnounced;
   const spritze = skatGame.spritze;
+  const result = skatGame.result;
 
   switch (gameType) {
     case 'diamonds':
@@ -46,6 +47,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         thresholdAnnounced,
         spritze,
         won,
+        result,
       };
       return standardGame;
 
@@ -61,6 +63,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         addsBockSet,
         nullType,
         won,
+        result,
       };
       return nullGame;
 
@@ -76,6 +79,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         addsBockSet,
         ramschPoints,
         won: false,
+        result,
       };
       return ramschGame;
 
@@ -86,6 +90,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         playerIndex,
         addsBockSet,
         won: true,
+        result,
       };
       return durchmarschGame;
 

@@ -17,7 +17,10 @@ import { ThresholdFormControl } from '../form-controls/threshold.form-control';
 import { ThresholdAnnouncedFormControl } from '../form-controls/threshold-announced.form-control';
 import { WonFormControl } from '../form-controls/won.form-control';
 import { List } from '../models/list.model';
-import { getGameFromFormGroup } from '../rules/get-game-from-form-group.rule';
+import {
+  getGameFromFormGroup,
+  InvalidFormDataError,
+} from '../rules/get-game-from-form-group.rule';
 import { listSelector } from '../selectors/list.selector';
 
 export const LIST_ID$ = new InjectionToken<Observable<string>>('LIST_ID$');
@@ -83,16 +86,31 @@ export class SkatGameFormGroup extends FormGroup<{
         ramschPoints: ramschPointsFormControl,
         won: wonFormControl,
       },
-      (group) => {
-        try {
-          if (!(group instanceof SkatGameFormGroup)) {
-            return { invalidFormType: true };
-          }
-          getGameFromFormGroup(group);
-        } catch (e: unknown) {
-          return { invalid: e instanceof Error ? e.message : e };
-        }
-        return null;
+      {
+        asyncValidators: [
+          async (group) => {
+            try {
+              if (!(group instanceof SkatGameFormGroup)) {
+                return { invalidFormType: true };
+              }
+              const list = await firstValueFrom(
+                listId$.pipe(
+                  switchMap((listId) => store$.select(listSelector(listId)))
+                )
+              );
+              if (!list) {
+                throw new Error('no list');
+              }
+              getGameFromFormGroup(group, list);
+            } catch (e: unknown) {
+              if (e instanceof InvalidFormDataError) {
+                return { invalid: e instanceof Error ? e.message : e };
+              }
+              throw e;
+            }
+            return null;
+          },
+        ],
       }
     );
 
@@ -139,7 +157,7 @@ export class SkatGameFormGroup extends FormGroup<{
       throw new Error('no list id');
     }
 
-    const game = getGameFromFormGroup(form);
+    const game = getGameFromFormGroup(form, list);
 
     this.store$.dispatch(
       skatGameFormSubmittedAction({

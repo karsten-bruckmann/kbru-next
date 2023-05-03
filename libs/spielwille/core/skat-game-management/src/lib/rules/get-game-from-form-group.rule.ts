@@ -2,11 +2,22 @@
 import { v4 as uuid } from 'uuid';
 
 import { SkatGameFormGroup } from '../form-groups/skat-game.form-group';
-import { DurchmarschGame, Game, RamschGame } from '../models/game.model';
-import { StandardGame } from '../models/game.model';
-import { NullGame } from '../models/game.model';
+import {
+  DurchmarschGame,
+  Game,
+  NullGame,
+  RamschGame,
+  StandardGame,
+} from '../models/game.model';
+import { List } from '../models/list.model';
+import { calculateResult } from './calulate-result.rule';
 
-export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
+export class InvalidFormDataError extends Error {}
+
+export const getGameFromFormGroup = (
+  formGroup: SkatGameFormGroup,
+  list: List
+): Game => {
   const value = formGroup.getRawValue();
 
   const gameType = value.gameType;
@@ -14,7 +25,7 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
   const addsBockSet = value.addsBockSet ?? false;
 
   if (typeof playerIndex !== 'number' || !gameType) {
-    throw new Error('error getting game value');
+    throw new InvalidFormDataError('error getting game value');
   }
 
   switch (gameType) {
@@ -26,9 +37,9 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
       const spitzen = value.spitzen;
       const spritze = value.spritze;
       if (typeof spitzen !== 'number') {
-        throw new Error('error getting game value');
+        throw new InvalidFormDataError('error getting game value');
       }
-      const standardGame: StandardGame = {
+      const standardGame: Omit<StandardGame, 'result'> = {
         id: uuid(),
         gameType: gameType,
         playerIndex: playerIndex,
@@ -39,14 +50,14 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         spritze: spritze ?? null,
         won: value.won ?? false,
       };
-      return standardGame;
+      return { ...standardGame, result: calculateResult(standardGame, list) };
 
     case 'null':
       const nullType = value.nullType;
       if (!nullType) {
-        throw new Error('error getting game value');
+        throw new InvalidFormDataError('error getting game value');
       }
-      const nullGame: NullGame = {
+      const nullGame: Omit<NullGame, 'result'> = {
         id: uuid(),
         gameType,
         playerIndex,
@@ -54,14 +65,14 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         nullType,
         won: value.won ?? false,
       };
-      return nullGame;
+      return { ...nullGame, result: calculateResult(nullGame, list) };
 
     case 'ramsch':
       const ramschPoints = value.ramschPoints;
       if (!ramschPoints) {
-        throw new Error('error getting game value');
+        throw new InvalidFormDataError('error getting game value');
       }
-      const ramschGame: RamschGame = {
+      const ramschGame: Omit<RamschGame, 'result'> = {
         id: uuid(),
         gameType,
         playerIndex,
@@ -69,16 +80,19 @@ export const getGameFromFormGroup = (formGroup: SkatGameFormGroup): Game => {
         ramschPoints,
         won: false,
       };
-      return ramschGame;
+      return { ...ramschGame, result: calculateResult(ramschGame, list) };
 
     case 'durchmarsch':
-      const durchmarschGame: DurchmarschGame = {
+      const durchmarschGame: Omit<DurchmarschGame, 'result'> = {
         id: uuid(),
         gameType,
         playerIndex,
         addsBockSet,
         won: true,
       };
-      return durchmarschGame;
+      return {
+        ...durchmarschGame,
+        result: calculateResult(durchmarschGame, list),
+      };
   }
 };
