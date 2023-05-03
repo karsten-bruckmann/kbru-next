@@ -40,6 +40,7 @@ export const listSelector = (listId: string) =>
           games,
           list.rules.bockSets !== false && list.rules.bockSets.ramsch !== false
         ),
+        points: list.points,
       };
     }
   );

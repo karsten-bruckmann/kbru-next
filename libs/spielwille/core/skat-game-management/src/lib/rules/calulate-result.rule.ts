@@ -5,7 +5,6 @@ import {
   RamschGame,
   StandardGame,
 } from '../models/game.model';
-import { GameType } from '../models/game-type.model';
 import { List } from '../models/list.model';
 
 const baseWorth: Record<StandardGame['gameType'], number> = {

@@ -57,5 +57,6 @@ export const getListFromFormGroup = (
           }
         : false,
     },
+    points: new Array(formValue.playerIds?.length).fill(0),
   };
 };

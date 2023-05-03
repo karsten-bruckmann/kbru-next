@@ -33,4 +33,5 @@ export const skatListSchema = z.object({
       }),
     ]),
   }),
+  points: z.array(z.number()).default([0, 0, 0, 0, 0]),
 });

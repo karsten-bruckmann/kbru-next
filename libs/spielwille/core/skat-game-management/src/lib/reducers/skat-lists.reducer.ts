@@ -11,6 +11,9 @@ export const skatListsReducer = createCoreReducer<SkatListsState>(
       [action.listId]: {
         ...state[action.listId],
         gameIds: [...state[action.listId].gameIds, action.game.id],
+        points: [...state[action.listId].points].map(
+          (p, i) => p + action.game.result[i]
+        ),
       },
     };
   })

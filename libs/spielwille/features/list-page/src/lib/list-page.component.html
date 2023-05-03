@@ -60,6 +60,14 @@
         </div>
       </ion-accordion>
     </ion-accordion-group>
+
+    <table>
+      <tr>
+        <td *ngFor="let points of list.points">
+          {{ points }}
+        </td>
+      </tr>
+    </table>
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
