@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
@@ -16,7 +15,9 @@ import {
   SkatListFormGroup,
   SkatListManagementModule,
 } from '@kbru/spielwille/core/skat-list-management';
-import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
+import { firstValueFrom, shareReplay, switchMap } from 'rxjs';
+
+import { GroupPageComponent } from '../group-page.component';
 
 @Component({
   selector: 'spielwille-group-page-add-list-form',
@@ -38,18 +39,15 @@ import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
 })
 export class AddListFormComponent {
   constructor(
+    private groupPageComponent: GroupPageComponent,
     private skatListFormGroup: SkatListFormGroup,
-    private activatedRoute: ActivatedRoute,
     private playerFormService: PlayerFormService,
     private alertController: AlertController
   ) {}
 
   public open = false;
 
-  private groupId$ = this.activatedRoute.paramMap.pipe(
-    map((paramMap) => paramMap.get('groupId')),
-    filter((groupId): groupId is string => !!groupId)
-  );
+  private groupId$ = this.groupPageComponent.groupId$;
 
   protected form$ = this.groupId$.pipe(
     switchMap((groupId) => this.skatListFormGroup.forGroup$(groupId)),

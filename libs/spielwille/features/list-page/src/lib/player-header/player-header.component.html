@@ -1,0 +1,19 @@
+<ng-container *ngIf="status$ | async as status">
+  <table *ngIf="playerNames$ | async as playerNames">
+    <tr>
+      <th *ngFor="let playerName of playerNames; let i = index">
+        {{ playerName }}
+      </th>
+    </tr>
+    <tr class="info">
+      <td *ngFor="let playerName of playerNames; let i = index">
+        {{ status.playerPositions[i] }}
+      </td>
+    </tr>
+    <tr class="info">
+      <td *ngFor="let playerName of playerNames; let i = index">
+        {{ status.playerInfos[i] }}
+      </td>
+    </tr>
+  </table>
+</ng-container>

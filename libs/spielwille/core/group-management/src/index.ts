@@ -6,3 +6,4 @@ export * from './lib/selectors/group.selector';
 export * from './lib/selectors/groups-list.selector';
 export * from './lib/services/group-form.service';
 export * from './lib/services/player-form.service';
+export * from './lib/models/group.model';

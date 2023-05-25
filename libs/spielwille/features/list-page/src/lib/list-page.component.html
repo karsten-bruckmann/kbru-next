@@ -9,65 +9,16 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    <table>
-      <tr>
-        <th *ngFor="let playerName of list.playerNames; let i = index">
-          {{ playerName }}
-        </th>
-      </tr>
-      <tr class="info">
-        <td *ngFor="let playerName of list.playerNames; let i = index">
-          {{ list.status.playerPositions[i] }}
-        </td>
-      </tr>
-      <tr class="info">
-        <td *ngFor="let playerName of list.playerNames; let i = index">
-          {{ list.status.playerInfos[i] }}
-        </td>
-      </tr>
-    </table>
-    <ion-accordion-group>
-      <ion-accordion>
-        <ion-item slot="header" color="light">
-          <ion-label>List Status</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          <pre>{{ list.status | json }}</pre>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-    <ion-accordion-group>
-      <ion-accordion>
-        <ion-item slot="header" color="light">
-          <ion-label>List Rules</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          <pre>{{ list.rules | json }}</pre>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-    <ion-accordion-group>
-      <ion-accordion *ngFor="let game of list.games">
-        <ion-item slot="header" color="light">
-          <ion-label
-            >{{ list.playerNames[game.playerIndex] }},
-            {{ game.gameType | gameType }},
-            {{ game.won ? 'gewonnen' : 'verloren' }}</ion-label
-          >
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          <pre>{{ game | json }}</pre>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
+    <spielwille-list-page-player-header></spielwille-list-page-player-header>
 
-    <table>
-      <tr>
-        <td *ngFor="let points of list.points">
-          {{ points }}
-        </td>
-      </tr>
-    </table>
+    <spielwille-list-page-debug></spielwille-list-page-debug>
+
+    <spielwille-list-page-game-row
+      *ngFor="let game of list.games; let i = index"
+      [row]="i"
+    ></spielwille-list-page-game-row>
+
+    <spielwille-list-page-points-row></spielwille-list-page-points-row>
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">

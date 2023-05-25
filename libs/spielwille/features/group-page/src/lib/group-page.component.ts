@@ -5,6 +5,7 @@ import { AlertController, IonicModule } from '@ionic/angular';
 import { RelativeDatePipe } from '@kbru/shared/ui/date-pipes';
 import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
 import { CalculationTypePipe } from '@kbru/shared/ui/skat-naming';
+import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
   groupDeletedAction,
@@ -48,9 +49,9 @@ export class GroupPageComponent {
   protected popoverMenuOpen = false;
   protected addListModalOpen = false;
 
-  protected group$ = this.activatedRoute.paramMap.pipe(
-    map((paramMap) => paramMap.get('groupId')),
-    filter((groupId): groupId is string => !!groupId),
+  public readonly groupId$ = routeParam('groupId', this.activatedRoute);
+
+  public readonly group$ = this.groupId$.pipe(
     switchMap((groupId) => this.store$.select(groupSelector(groupId))),
     filterNullish(),
     shareReplay({ bufferSize: 1, refCount: true })

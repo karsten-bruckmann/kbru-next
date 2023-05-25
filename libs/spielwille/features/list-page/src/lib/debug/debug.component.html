@@ -1,0 +1,23 @@
+<ng-container *ngIf="list$ | async as list">
+  <ion-accordion-group>
+    <ion-accordion>
+      <ion-item slot="header" color="light">
+        <ion-label>List Status</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <pre>{{ list.status | json }}</pre>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <ion-accordion-group>
+    <ion-accordion>
+      <ion-item slot="header" color="light">
+        <ion-label>List Rules</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <pre>{{ list.rules | json }}</pre>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ng-container>

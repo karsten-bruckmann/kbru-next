@@ -6,7 +6,8 @@
             "request": "launch",
             "name": "Served App",
             "url": "http://127.0.0.1:4200",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "canary"
         }
     ]
 }

@@ -1,0 +1,13 @@
+<ion-accordion-group *ngIf="playerNames$ | async as playerNames">
+  <ion-accordion *ngIf="game$ | async as game">
+    <ion-item slot="header" color="light">
+      <ion-label
+        >{{ playerNames[game.playerIndex] }}, {{ game.gameType | gameType }},
+        {{ game.won ? 'gewonnen' : 'verloren' }}</ion-label
+      >
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <pre>{{ game | json }}</pre>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>

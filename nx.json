@@ -49,7 +49,10 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "css"
+      "style": "scss",
+      "standalone": true,
+      "skipTests": true,
+      "displayBlock": true
     }
   }
 }

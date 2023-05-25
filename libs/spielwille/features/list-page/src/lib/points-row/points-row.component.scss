@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+table {
+  width: 100%;
+
+  th,
+  td {
+    width: 10px;
+    overflow: hidden;
+  }
+
+  .info {
+    td {
+      font-size: 75%;
+    }
+  }
+}
