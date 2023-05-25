@@ -4,10 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { RelativeDatePipe } from '@kbru/shared/ui/date-pipes';
 import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
-import {
-  CalculationTypePipe,
-  ListSummaryPipe,
-} from '@kbru/shared/ui/skat-naming';
+import { ListSummaryPipe } from '@kbru/shared/ui/skat-naming';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {

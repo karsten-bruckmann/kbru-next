@@ -7,11 +7,12 @@
 }
 
 span {
+  display: block;
   align-self: center;
   font-size: 11px;
-  line-height: 11px;
   font-family: serif;
   font-style: italic;
+  margin: 0 1px;
 
   &.symbol {
     font-weight: bold;

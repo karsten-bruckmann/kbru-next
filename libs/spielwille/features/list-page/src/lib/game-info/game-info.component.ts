@@ -44,7 +44,9 @@ export class GameInfoComponent {
             : game.spritze === 'hirsch'
             ? ' KRH'
             : '';
-        const infos = [`${game.spitzen}`];
+        const infos = [
+          `${game.spitzen > 0 ? 'm' : 'o'}${Math.abs(game.spitzen)}`,
+        ];
         if (spritzen) {
           infos.push(spritzen);
         }
