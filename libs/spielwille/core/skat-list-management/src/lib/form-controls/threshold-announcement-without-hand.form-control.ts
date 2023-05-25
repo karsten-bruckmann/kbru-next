@@ -23,6 +23,8 @@ export class ThresholdAnnouncementWithoutHandControl extends FormControl<
           if (addOn === 'romanow') {
             this.setValue(true);
             this.disable();
+          } else {
+            this.enable();
           }
         }),
         toVoid()

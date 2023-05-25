@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
 import { Store } from '@ngrx/store';
-import { first, Observable, switchMap } from 'rxjs';
+import { firstValueFrom, Observable, ReplaySubject, switchMap } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
+import { listStandardSavedAction } from '../actions/list-standard-saved.action';
 import { skatListFormSubmittedAction } from '../actions/skat-list-form-submitted.action';
 import { AddOnFormControl } from '../form-controls/add-on.form-control';
 import { AutoBockKontraLostFormControl } from '../form-controls/auto-bock-kontra-lost.form-control';
@@ -26,10 +27,11 @@ import { RamschSetsSchiebenFormControl } from '../form-controls/ramsch-sets-schi
 import { ReFormControl } from '../form-controls/re.form-control';
 import { SaechsischeSpitzeFormControl } from '../form-controls/saechsische-spitze.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
-import { StandardNameFormControl } from '../form-controls/standard-name.form-control';
 import { ThresholdAnnouncementWithoutHandControl } from '../form-controls/threshold-announcement-without-hand.form-control';
 import { getListFromFormGroup } from '../rules/get-list-from-form-group.rule';
+import { getRulesFromFormGroup } from '../rules/get-rules-from-form-group.rule';
 import { listStandardSelector } from '../selectors/list-standard.selector';
+import { listStandardNamesSelector } from '../selectors/list-standard-names.selector';
 
 @Injectable({ providedIn: 'root' })
 export class SkatListFormGroup extends FormGroup<{
@@ -54,7 +56,6 @@ export class SkatListFormGroup extends FormGroup<{
   autoBockKontraRe: AutoBockKontraReFormControl;
   autoBockKontraLost: AutoBockKontraLostFormControl;
   thresholdAnnouncementWithoutHand: ThresholdAnnouncementWithoutHandControl;
-  standardName: StandardNameFormControl;
 }> {
   constructor(
     private store$: Store,
@@ -78,8 +79,7 @@ export class SkatListFormGroup extends FormGroup<{
     private ramschSetsJungfrauFormControl: RamschSetsJungfrauFormControl,
     private autoBockKontraReFormControl: AutoBockKontraReFormControl,
     private autoBockKontraLostFormControl: AutoBockKontraLostFormControl,
-    private thresholdAnnouncementWithoutHandFormControl: ThresholdAnnouncementWithoutHandControl,
-    private standardNameFormControl: StandardNameFormControl
+    private thresholdAnnouncementWithoutHandFormControl: ThresholdAnnouncementWithoutHandControl
   ) {
     super({
       groupId: groupIdFormControl,
@@ -104,27 +104,43 @@ export class SkatListFormGroup extends FormGroup<{
       autoBockKontraLost: autoBockKontraLostFormControl,
       thresholdAnnouncementWithoutHand:
         thresholdAnnouncementWithoutHandFormControl,
-      standardName: standardNameFormControl,
     });
   }
 
-  public submit(form: SkatListFormGroup): void {
-    if (!form.valid) {
+  private groupId$ = new ReplaySubject<string>(1);
+
+  public submit(): void {
+    if (!this.valid) {
       throw new Error('invalid form');
     }
 
-    if (!form.value.groupId) {
+    if (!this.value.groupId) {
       throw new Error('no group id');
     }
 
-    const skatList = getListFromFormGroup(form);
+    const skatList = getListFromFormGroup(this);
 
     this.store$.dispatch(
       skatListFormSubmittedAction({
         skatList,
         uuid: uuid(),
-        groupId: form.value.groupId,
-        standardName: form.value.standardName || null,
+        groupId: this.value.groupId,
+      })
+    );
+  }
+
+  public saveStandard(name: string): void {
+    if (!this.value.groupId) {
+      throw new Error('no group id');
+    }
+
+    const rules = getRulesFromFormGroup(this);
+
+    this.store$.dispatch(
+      listStandardSavedAction({
+        rules,
+        groupId: this.value.groupId,
+        name,
       })
     );
   }
@@ -152,12 +168,66 @@ export class SkatListFormGroup extends FormGroup<{
       this.autoBockKontraReFormControl.formEffect(),
       this.autoBockKontraLostFormControl.formEffect(),
       this.thresholdAnnouncementWithoutHandFormControl.formEffect(),
-      this.standardNameFormControl.formEffect(),
     ]);
   }
 
   public forGroup$(groupId: string): Observable<SkatListFormGroup> {
     this.patchValue({ groupId });
+    this.groupId$.next(groupId);
     return this.effectAware$;
+  }
+
+  public get standards$(): Observable<string[]> {
+    return this.groupId$.pipe(
+      switchMap((groupId) =>
+        this.store$.select(listStandardNamesSelector(groupId))
+      )
+    );
+  }
+
+  public async load(standardName: string): Promise<void> {
+    const groupId = await firstValueFrom(this.groupId$);
+    const standard = await firstValueFrom(
+      this.store$.select(listStandardSelector(groupId, standardName))
+    );
+    if (!standard) {
+      throw new Error('invalid standard');
+    }
+
+    this.patchValue({
+      groupId: groupId,
+      addOn: standard.addOn,
+      bockSets: !!standard.bockSets,
+      autoBockKontraLost: standard.bockSets
+        ? standard.bockSets.kontraLost
+        : false,
+      autoBockKontraRe: standard.bockSets ? standard.bockSets.kontraRe : false,
+      ramschSets: standard.bockSets ? !!standard.bockSets.ramsch : false,
+      ramschSetsJungfrau:
+        standard.bockSets && standard.bockSets.ramsch
+          ? standard.bockSets.ramsch.jungfrau
+          : false,
+      ramschSetsSchieben:
+        standard.bockSets && standard.bockSets.ramsch
+          ? standard.bockSets.ramsch.geschoben
+          : false,
+      calculationType: standard.calculationType,
+      centPerPoint: standard.centPerPoint,
+      kontra:
+        standard.maxSpritze === 'kontra' ||
+        standard.maxSpritze === 're' ||
+        standard.maxSpritze === 'hirsch',
+      re: standard.maxSpritze === 're' || standard.maxSpritze === 'hirsch',
+      hirsch: standard.maxSpritze === 'hirsch',
+      maxSets: standard.maxSets,
+      playerIds: [],
+      ramsch: !!standard.ramsch,
+      ramschJungfrau: standard.ramsch ? standard.ramsch.jungfrau : false,
+      ramschSchieben: standard.ramsch ? standard.ramsch.geschoben : false,
+      saechsischeSpitze: standard.saechsischeSpitze,
+      spitzen: standard.spitzen,
+      thresholdAnnouncementWithoutHand:
+        standard.thresholdAnnouncementWithoutHand,
+    });
   }
 }

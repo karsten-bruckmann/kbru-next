@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AlertController, IonicModule } from '@ionic/angular';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  AlertController,
+  IonicModule,
+} from '@ionic/angular';
 import { IonicListInputComponent } from '@kbru/shared/ui/ionic-list-input';
 import {
   AddOnPipe,
@@ -12,9 +17,11 @@ import {
 } from '@kbru/shared/ui/skat-naming';
 import { PlayerFormService } from '@kbru/spielwille/core/group-management';
 import {
+  listStadardDeletedAction,
   SkatListFormGroup,
   SkatListManagementModule,
 } from '@kbru/spielwille/core/skat-list-management';
+import { Store } from '@ngrx/store';
 import { firstValueFrom, shareReplay, switchMap } from 'rxjs';
 
 import { GroupPageComponent } from '../group-page.component';
@@ -39,10 +46,12 @@ import { GroupPageComponent } from '../group-page.component';
 })
 export class AddListFormComponent {
   constructor(
+    private store$: Store,
     private groupPageComponent: GroupPageComponent,
     private skatListFormGroup: SkatListFormGroup,
     private playerFormService: PlayerFormService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController
   ) {}
 
   public open = false;
@@ -54,8 +63,8 @@ export class AddListFormComponent {
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  protected submit(form: SkatListFormGroup): void {
-    this.skatListFormGroup.submit(form);
+  protected submit(): void {
+    this.skatListFormGroup.submit();
     this.open = false;
   }
 
@@ -127,5 +136,59 @@ export class AddListFormComponent {
         });
         alert.present();
       });
+  }
+
+  protected async loadStandard(): Promise<void> {
+    const form = await firstValueFrom(this.form$);
+    const standards = await firstValueFrom(form.standards$);
+    const sheet = await this.actionSheetController.create({
+      buttons: [
+        ...standards.map(
+          (stdName): ActionSheetButton => ({
+            text: stdName,
+            handler: () => {
+              form.load(stdName);
+            },
+          })
+        ),
+        {
+          text: 'abbrechen',
+          role: 'cancel',
+        },
+      ],
+    });
+    sheet.present();
+  }
+
+  protected async saveStandard(): Promise<void> {
+    const form = await firstValueFrom(this.form$);
+    const alert = await this.alertController.create({
+      inputs: [
+        {
+          type: 'text',
+          min: 5,
+          max: 3,
+        },
+      ],
+      buttons: [
+        {
+          text: 'abbrechen',
+          role: 'cancel',
+        },
+        {
+          text: 'speichern',
+        },
+      ],
+    });
+    await alert.present();
+    const data = await alert.onDidDismiss();
+    const name = data.data.values[0];
+    if (data.role !== 'cancel' && name) {
+      form.saveStandard(name);
+    }
+  }
+
+  protected deleteStandard(groupId: string, name: string): void {
+    this.store$.dispatch(listStadardDeletedAction({ groupId, name }));
   }
 }

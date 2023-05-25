@@ -36,26 +36,15 @@
 
         <ion-list inset>
           <ion-item-divider color="primary">
-            <ion-label>Standard laden</ion-label>
-          </ion-item-divider>
-          <ion-item>
-            <ion-select
-              #existing
-              interface="popover"
-              (ionChange)="form.controls.standardName.setValue(existing.value)"
-            >
-              <ion-select-option
-                *ngFor="let name of form.controls.standardName.existingNames"
-                [value]="name"
-                >{{ name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-        </ion-list>
-
-        <ion-list inset>
-          <ion-item-divider color="primary">
             <ion-label>Optionen</ion-label>
+            <ion-buttons slot="end" (click)="saveStandard()">
+              <ion-button><ion-icon name="save-outline"></ion-icon></ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button (click)="loadStandard()"
+                ><ion-icon name="download-outline"></ion-icon
+              ></ion-button>
+            </ion-buttons>
           </ion-item-divider>
           <ion-item color="light" *ngIf="form.controls.addOn">
             <ion-label>Spezialregeln</ion-label>
@@ -212,18 +201,11 @@
 
       <ion-footer color="light">
         <ion-toolbar color="light">
-          <ion-item [lines]="false">
-            <ion-input
-              placeholder="Als Standard speichern (Name)"
-              formControlName="standardName"
-              [clearInput]="true"
-            ></ion-input>
-          </ion-item>
           <ion-button
             expand="block"
             fill="solid"
             [disabled]="form.invalid"
-            (click)="submit(form)"
+            (click)="submit()"
             >Liste erstellen</ion-button
           >
         </ion-toolbar>

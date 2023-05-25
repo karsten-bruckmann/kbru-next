@@ -1,11 +1,11 @@
 import { SkatList } from '@kbru/spielwille/data-access/skat-lists';
 import { createAction, props } from '@ngrx/store';
 
-export const skatListFormSubmittedAction = createAction(
-  'skat-list-management/skat-list-form-submitted',
+export const listStandardSavedAction = createAction(
+  'skat-list-management/list-standard-saved',
   props<{
-    skatList: SkatList;
-    uuid: string;
     groupId: string;
+    rules: SkatList['rules'];
+    name: string;
   }>()
 );
