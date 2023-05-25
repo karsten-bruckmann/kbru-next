@@ -12,6 +12,12 @@ export const groupsReducer = createCoreReducer<GroupsState>(
       [action.groupId]: {
         ...state[action.groupId],
         listIds: [...state[action.groupId].listIds, action.uuid],
+        standards: {
+          ...state[action.groupId].standards,
+          ...(action.standardName
+            ? { [action.standardName]: action.skatList.rules }
+            : {}),
+        },
       },
     })
   )

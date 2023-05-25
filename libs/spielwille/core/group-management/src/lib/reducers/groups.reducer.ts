@@ -19,6 +19,7 @@ export const groupsReducer = createCoreReducer<GroupsState>(
         playerIds: [],
         listIds: [],
         created: formatISO(new Date(action.created)),
+        standards: {},
       },
     };
   }),

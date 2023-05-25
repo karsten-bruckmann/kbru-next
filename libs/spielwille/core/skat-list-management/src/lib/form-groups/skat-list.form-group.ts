@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { first, Observable, switchMap } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { skatListFormSubmittedAction } from '../actions/skat-list-form-submitted.action';
@@ -26,8 +26,10 @@ import { RamschSetsSchiebenFormControl } from '../form-controls/ramsch-sets-schi
 import { ReFormControl } from '../form-controls/re.form-control';
 import { SaechsischeSpitzeFormControl } from '../form-controls/saechsische-spitze.form-control';
 import { SpitzenFormControl } from '../form-controls/spitzen.form-control';
+import { StandardNameFormControl } from '../form-controls/standard-name.form-control';
 import { ThresholdAnnouncementWithoutHandControl } from '../form-controls/threshold-announcement-without-hand.form-control';
 import { getListFromFormGroup } from '../rules/get-list-from-form-group.rule';
+import { listStandardSelector } from '../selectors/list-standard.selector';
 
 @Injectable({ providedIn: 'root' })
 export class SkatListFormGroup extends FormGroup<{
@@ -52,6 +54,7 @@ export class SkatListFormGroup extends FormGroup<{
   autoBockKontraRe: AutoBockKontraReFormControl;
   autoBockKontraLost: AutoBockKontraLostFormControl;
   thresholdAnnouncementWithoutHand: ThresholdAnnouncementWithoutHandControl;
+  standardName: StandardNameFormControl;
 }> {
   constructor(
     private store$: Store,
@@ -75,7 +78,8 @@ export class SkatListFormGroup extends FormGroup<{
     private ramschSetsJungfrauFormControl: RamschSetsJungfrauFormControl,
     private autoBockKontraReFormControl: AutoBockKontraReFormControl,
     private autoBockKontraLostFormControl: AutoBockKontraLostFormControl,
-    private thresholdAnnouncementWithoutHandFormControl: ThresholdAnnouncementWithoutHandControl
+    private thresholdAnnouncementWithoutHandFormControl: ThresholdAnnouncementWithoutHandControl,
+    private standardNameFormControl: StandardNameFormControl
   ) {
     super({
       groupId: groupIdFormControl,
@@ -100,6 +104,7 @@ export class SkatListFormGroup extends FormGroup<{
       autoBockKontraLost: autoBockKontraLostFormControl,
       thresholdAnnouncementWithoutHand:
         thresholdAnnouncementWithoutHandFormControl,
+      standardName: standardNameFormControl,
     });
   }
 
@@ -119,6 +124,7 @@ export class SkatListFormGroup extends FormGroup<{
         skatList,
         uuid: uuid(),
         groupId: form.value.groupId,
+        standardName: form.value.standardName || null,
       })
     );
   }
@@ -146,6 +152,7 @@ export class SkatListFormGroup extends FormGroup<{
       this.autoBockKontraReFormControl.formEffect(),
       this.autoBockKontraLostFormControl.formEffect(),
       this.thresholdAnnouncementWithoutHandFormControl.formEffect(),
+      this.standardNameFormControl.formEffect(),
     ]);
   }
 

@@ -36,6 +36,25 @@
 
         <ion-list inset>
           <ion-item-divider color="primary">
+            <ion-label>Standard laden</ion-label>
+          </ion-item-divider>
+          <ion-item>
+            <ion-select
+              #existing
+              interface="popover"
+              (ionChange)="form.controls.standardName.setValue(existing.value)"
+            >
+              <ion-select-option
+                *ngFor="let name of form.controls.standardName.existingNames"
+                [value]="name"
+                >{{ name }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list inset>
+          <ion-item-divider color="primary">
             <ion-label>Optionen</ion-label>
           </ion-item-divider>
           <ion-item color="light" *ngIf="form.controls.addOn">
@@ -193,6 +212,13 @@
 
       <ion-footer color="light">
         <ion-toolbar color="light">
+          <ion-item [lines]="false">
+            <ion-input
+              placeholder="Als Standard speichern (Name)"
+              formControlName="standardName"
+              [clearInput]="true"
+            ></ion-input>
+          </ion-item>
           <ion-button
             expand="block"
             fill="solid"
