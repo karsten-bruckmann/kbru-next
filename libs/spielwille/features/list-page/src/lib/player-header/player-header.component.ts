@@ -6,6 +6,8 @@ import { SkatListManagementModule } from '@kbru/spielwille/core/skat-list-manage
 import { map } from 'rxjs';
 
 import { ListPageComponent } from '../list-page.component';
+import { PlayerInfosComponent } from './player-infos/player-infos.component';
+import { PlayerPositionComponent } from './player-position/player-position.component';
 
 @Component({
   selector: 'spielwille-list-page-player-header',
@@ -15,6 +17,8 @@ import { ListPageComponent } from '../list-page.component';
     SkatGameManagementModule,
     SkatListManagementModule,
     RouterModule,
+    PlayerPositionComponent,
+    PlayerInfosComponent,
   ],
   templateUrl: './player-header.component.html',
   styleUrls: ['./player-header.component.scss'],
@@ -26,5 +30,7 @@ export class PlayerHeaderComponent {
 
   protected playerNames$ = this.listPageComponent.playerNames$;
 
-  protected status$ = this.list$.pipe(map((list) => list?.status || null));
+  public readonly status$ = this.list$.pipe(
+    map((list) => list?.status || null)
+  );
 }

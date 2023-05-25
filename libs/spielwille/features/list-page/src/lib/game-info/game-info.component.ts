@@ -1,0 +1,72 @@
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import {
+  Game,
+  isNullGame,
+  isStandardGame,
+} from '@kbru/spielwille/core/skat-game-management';
+import { combineLatest, map, Observable, ReplaySubject } from 'rxjs';
+
+import { ListPageComponent } from '../list-page.component';
+
+@Component({
+  selector: 'spielwille-list-page-game-info',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './game-info.component.html',
+  styleUrls: ['./game-info.component.scss'],
+})
+export class GameInfoComponent {
+  constructor(private readonly listPageComponent: ListPageComponent) {}
+
+  private readonly row$ = new ReplaySubject<number>();
+  @Input() public set row(row: number) {
+    this.row$.next(row);
+  }
+
+  private readonly game$: Observable<Game | null> = combineLatest([
+    this.listPageComponent.list$,
+    this.row$,
+  ]).pipe(map(([list, row]) => list.games[row] ?? null));
+
+  protected readonly infos$: Observable<string[]> = this.game$.pipe(
+    map((game): string[] => {
+      if (!game) {
+        return [];
+      }
+
+      if (isStandardGame(game)) {
+        const spritzen =
+          game.spritze === 'kontra'
+            ? ' K'
+            : game.spritze === 're'
+            ? ' KR'
+            : game.spritze === 'hirsch'
+            ? ' KRH'
+            : '';
+        const infos = [`${game.spitzen}`];
+        if (spritzen) {
+          infos.push(spritzen);
+        }
+        return infos;
+      }
+
+      if (isNullGame(game)) {
+        if (game.nullType === 'einfach') {
+          return [''];
+        }
+        if (game.nullType === 'hand') {
+          return ['H'];
+        }
+        if (game.nullType === 'ouvert') {
+          return ['O'];
+        }
+        if (game.nullType === 'hand-ouvert') {
+          return ['HO'];
+        }
+      }
+
+      return [];
+    })
+  );
+}

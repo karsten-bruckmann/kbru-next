@@ -1,3 +1,43 @@
 :host {
-  display: block;
+  display: flex;
+  width: 100%;
+  justify-content: stretch;
+}
+
+div {
+  width: 100%;
+  font-family: monospace;
+  padding: 5px;
+  text-align: right;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+
+  &:not(:last-child) {
+    border-right: 1px solid var(--ion-color-light);
+  }
+
+  &.lost {
+    background: rgba(var(--ion-color-danger-rgb), 0.1);
+  }
+
+  &.won {
+    background: rgba(var(--ion-color-success-rgb), 0.2);
+  }
+}
+
+.symbol {
+  font-weight: bold;
+}
+
+.diamonds,
+.hearts {
+  font-style: normal;
+  color: rgb(177, 85, 85);
+}
+
+.spades,
+.clubs {
+  font-style: normal;
+  color: black;
 }

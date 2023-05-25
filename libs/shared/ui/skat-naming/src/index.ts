@@ -2,6 +2,7 @@ export * from './lib/add-on.pipe';
 export * from './lib/calculation-type.pipe';
 export * from './lib/cent-per-point.pipe';
 export * from './lib/game-type.pipe';
+export * from './lib/list-summary.pipe';
 export * from './lib/max-sets.pipe';
 export * from './lib/null-type.pipe';
 export * from './lib/spitze.pipe';

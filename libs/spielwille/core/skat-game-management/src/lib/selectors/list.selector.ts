@@ -24,9 +24,9 @@ export const listSelector = (listId: string) =>
 
       return {
         id: listId,
-        description:
+        summary:
           list.rules.addOn !== null
-            ? `${list.rules.addOn}`
+            ? list.rules.addOn
             : list.rules.calculationType,
         playerNames: players,
         games,

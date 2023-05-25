@@ -1,13 +1,47 @@
-<ion-accordion-group *ngIf="playerNames$ | async as playerNames">
-  <ion-accordion *ngIf="game$ | async as game">
-    <ion-item slot="header" color="light">
-      <ion-label
-        >{{ playerNames[game.playerIndex] }}, {{ game.gameType | gameType }},
-        {{ game.won ? 'gewonnen' : 'verloren' }}</ion-label
-      >
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      <pre>{{ game | json }}</pre>
+<ng-container *ngIf="playerNames$ | async as playerNames">
+  <ng-container *ngIf="game$ | async as game">
+    <div
+      *ngFor="let points of game.result; let i = index"
+      [ngClass]="{
+        lost: i === game.playerIndex && !game.won,
+        won: i === game.playerIndex && game.won
+      }"
+    >
+      <ng-container *ngIf="game$ | async as game">
+        <ng-container
+          [ngSwitch]="game.gameType"
+          *ngIf="game.playerIndex === i; else nonPlayer"
+        >
+          <ng-template ngSwitchCase="diamonds">
+            <span class="symbol hearts">♦</span>
+          </ng-template>
+          <ng-template ngSwitchCase="hearts">
+            <span class="symbol hearts">♥</span>
+          </ng-template>
+          <ng-template ngSwitchCase="spades">
+            <span class="symbol spades">♠</span>
+          </ng-template>
+          <ng-template ngSwitchCase="clubs">
+            <span class="symbol clubs">♣</span>
+          </ng-template>
+          <ng-template ngSwitchCase="grand">
+            <span class="symbol">G</span>
+          </ng-template>
+          <ng-template ngSwitchCase="null">
+            <span class="symbol">N</span>
+          </ng-template>
+          <ng-template ngSwitchCase="ramsch">
+            <span class="symbol">R</span>
+          </ng-template>
+          <ng-template ngSwitchCase="durchmarsch">
+            <span class="symbol">D</span>
+          </ng-template>
+        </ng-container>
+        <ng-template #nonPlayer>
+          <span></span>
+        </ng-template>
+      </ng-container>
+      {{ points }}
     </div>
-  </ion-accordion>
-</ion-accordion-group>
+  </ng-container>
+</ng-container>

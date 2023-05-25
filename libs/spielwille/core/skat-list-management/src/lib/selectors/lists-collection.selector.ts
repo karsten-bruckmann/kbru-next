@@ -4,6 +4,8 @@ import { createSelector } from '@ngrx/store';
 import { parseISO } from 'date-fns';
 
 import { ListCollectionItem } from '../models/list-collection-item.model';
+import { getListPlayerNames } from '../rules/get-list-player-names.rule';
+import { getListSummary } from '../rules/get-list-summary.rule';
 import { groupPlayersSelector } from './group-players.selector';
 
 export const listsCollectionSelector = (groupId: string) =>
@@ -16,17 +18,9 @@ export const listsCollectionSelector = (groupId: string) =>
         ? group.listIds.map((id) => {
             return {
               id,
-              summary:
-                lists[id].rules.addOn !== null
-                  ? `${lists[id].rules.addOn}`
-                  : lists[id].rules.calculationType,
+              summary: getListSummary(lists[id]),
               lastUpdate: parseISO(lists[id].created),
-              playerNames: lists[id].playerIds
-                .map(
-                  (playerId) =>
-                    players.find((player) => player.id === playerId)?.name
-                )
-                .filter((p): p is string => !!p),
+              playerNames: getListPlayerNames(lists[id], players),
             };
           })
         : []

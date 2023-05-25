@@ -4,21 +4,23 @@
       <ion-buttons slot="start">
         <ui-ionic-history-back></ui-ionic-history-back>
       </ion-buttons>
-      <ion-title>{{ list.description }}</ion-title>
+      <ion-title>{{ list.summary | listSummary }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
     <spielwille-list-page-player-header></spielwille-list-page-player-header>
 
-    <spielwille-list-page-debug></spielwille-list-page-debug>
-
-    <spielwille-list-page-game-row
-      *ngFor="let game of list.games; let i = index"
-      [row]="i"
-    ></spielwille-list-page-game-row>
+    <div class="rows" *ngFor="let game of list.games; let i = index">
+      <spielwille-list-page-game-info
+        [row]="i"
+      ></spielwille-list-page-game-info>
+      <spielwille-list-page-game-row [row]="i"></spielwille-list-page-game-row>
+    </div>
 
     <spielwille-list-page-points-row></spielwille-list-page-points-row>
+
+    <spielwille-list-page-debug></spielwille-list-page-debug>
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">

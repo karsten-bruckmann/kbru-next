@@ -32,3 +32,15 @@ export interface DurchmarschGame extends BaseGame {
 }
 
 export type Game = StandardGame | NullGame | RamschGame | DurchmarschGame;
+
+export const isStandardGame = (game: Game): game is StandardGame =>
+  ['diamonds', 'hearts', 'spades', 'clubs', 'grand'].includes(game.gameType);
+
+export const isNullGame = (game: Game): game is NullGame =>
+  ['null'].includes(game.gameType);
+
+export const isRamschGame = (game: Game): game is RamschGame =>
+  ['ramsch'].includes(game.gameType);
+
+export const isDurchmarschGame = (game: Game): game is DurchmarschGame =>
+  ['durchmarsch'].includes(game.gameType);

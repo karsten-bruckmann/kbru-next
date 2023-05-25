@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+span {
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--ion-color-dark);
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  padding-right: 1px;
+
+  &:not(:last-of-type) {
+    margin-right: 2px;
+  }
+
+  &.played {
+    color: var(--ion-color-medium);
+    border-color: var(--ion-color-medium);
+  }
+
+  ion-icon {
+    margin-top: 1px;
+  }
+}

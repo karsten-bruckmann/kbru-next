@@ -5,7 +5,9 @@ import { ListStatus } from './list-status.model';
 
 export type List = Omit<SkatList, 'playerIds' | 'gameIds' | 'status'> & {
   id: string;
-  description: string;
+  summary: NonNullable<
+    SkatList['rules']['addOn'] | SkatList['rules']['calculationType']
+  >;
   playerNames: string[];
   games: Game[];
   status: ListStatus;

@@ -38,7 +38,7 @@
           *ngFor="let list of lists$ | async"
           [routerLink]="[list.id]"
         >
-          <ion-label>{{ list.summary | calculationType }}</ion-label>
+          <ion-label>{{ list.summary | listSummary }}</ion-label>
           <ion-note slot="end" outline>{{
             list.lastUpdate | relativeDate
           }}</ion-note>

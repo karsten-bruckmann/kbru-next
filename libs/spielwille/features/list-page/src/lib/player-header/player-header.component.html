@@ -1,19 +1,15 @@
 <ng-container *ngIf="status$ | async as status">
-  <table *ngIf="playerNames$ | async as playerNames">
-    <tr>
-      <th *ngFor="let playerName of playerNames; let i = index">
+  <ng-container *ngFor="let playerName of playerNames$ | async; let i = index">
+    <div>
+      <spielwille-list-page-player-position
+        [position]="status.playerPositions[i]"
+      ></spielwille-list-page-player-position>
+      <span [class.inactive]="status.playerPositions[i] === 'inactive'">
         {{ playerName }}
-      </th>
-    </tr>
-    <tr class="info">
-      <td *ngFor="let playerName of playerNames; let i = index">
-        {{ status.playerPositions[i] }}
-      </td>
-    </tr>
-    <tr class="info">
-      <td *ngFor="let playerName of playerNames; let i = index">
-        {{ status.playerInfos[i] }}
-      </td>
-    </tr>
-  </table>
+      </span>
+      <spielwille-list-page-player-infos
+        [infos]="status.playerInfos[i]"
+      ></spielwille-list-page-player-infos>
+    </div>
+  </ng-container>
 </ng-container>

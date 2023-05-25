@@ -4,7 +4,10 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { RelativeDatePipe } from '@kbru/shared/ui/date-pipes';
 import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
-import { CalculationTypePipe } from '@kbru/shared/ui/skat-naming';
+import {
+  CalculationTypePipe,
+  ListSummaryPipe,
+} from '@kbru/shared/ui/skat-naming';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
@@ -17,7 +20,7 @@ import {
   SkatListManagementModule,
 } from '@kbru/spielwille/core/skat-list-management';
 import { Store } from '@ngrx/store';
-import { filter, firstValueFrom, map, shareReplay, switchMap } from 'rxjs';
+import { firstValueFrom, shareReplay, switchMap } from 'rxjs';
 
 import { AddListFormComponent } from './add-list-form/add-list-form.component';
 
@@ -31,7 +34,7 @@ import { AddListFormComponent } from './add-list-form/add-list-form.component';
     GroupManagementModule,
     SkatListManagementModule,
     AddListFormComponent,
-    CalculationTypePipe,
+    ListSummaryPipe,
     RelativeDatePipe,
     IonicHistoryBackComponent,
   ],

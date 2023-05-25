@@ -64,9 +64,9 @@ export class PlayerIdsFormControl extends FormControl<string[] | null> {
           this.store$.select(groupPlayersSelector(groupId))
         ),
         map((players) => {
-          form.controls.playerIds.possibleValues = players.map(
-            (player) => player.id
-          );
+          form.controls.playerIds.possibleValues = players
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((player) => player.id);
           form.controls.playerIds.getPlayerName = (id) =>
             players.find((player) => player.id === id)?.name ||
             '[Unbekannter Spieler]';

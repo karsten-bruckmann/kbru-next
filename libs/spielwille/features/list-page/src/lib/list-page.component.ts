@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicHistoryBackComponent } from '@kbru/shared/ui/ionic-history-back';
-import { GameTypePipe } from '@kbru/shared/ui/skat-naming';
+import { GameTypePipe, ListSummaryPipe } from '@kbru/shared/ui/skat-naming';
 import { routeParam } from '@kbru/shared/utils/angular-utils';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import { GroupManagementModule } from '@kbru/spielwille/core/group-management';
@@ -17,6 +17,7 @@ import { map, shareReplay, switchMap } from 'rxjs';
 
 import { AddGameFormComponent } from './add-game-form/add-game-form.component';
 import { DebugComponent } from './debug/debug.component';
+import { GameInfoComponent } from './game-info/game-info.component';
 import { GameRowComponent } from './game-row/game-row.component';
 import { PlayerHeaderComponent } from './player-header/player-header.component';
 import { PointsRowComponent } from './points-row/points-row.component';
@@ -38,6 +39,8 @@ import { PointsRowComponent } from './points-row/points-row.component';
     DebugComponent,
     GameRowComponent,
     PointsRowComponent,
+    GameInfoComponent,
+    ListSummaryPipe,
   ],
   templateUrl: './list-page.component.html',
   styleUrls: ['./list-page.component.scss'],

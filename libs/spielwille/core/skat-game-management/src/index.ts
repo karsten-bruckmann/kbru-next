@@ -4,3 +4,5 @@ export * from './lib/selectors/list.selector';
 export * from './lib/selectors/list-players.selector';
 export * from './lib/models/list.model';
 export * from './lib/models/game.model';
+export * from './lib/models/player-position.model';
+export * from './lib/models/player-info.model';

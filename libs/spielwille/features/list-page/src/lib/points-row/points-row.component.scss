@@ -1,19 +1,14 @@
 :host {
-  display: block;
+  display: flex;
+  width: 100%;
+  justify-content: stretch;
 }
 
-table {
+div {
   width: 100%;
-
-  th,
-  td {
-    width: 10px;
-    overflow: hidden;
-  }
-
-  .info {
-    td {
-      font-size: 75%;
-    }
-  }
+  font-family: monospace;
+  padding: 5px;
+  text-align: right;
+  font-weight: bold;
+  font-size: 15px;
 }

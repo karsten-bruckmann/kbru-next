@@ -1,0 +1,9 @@
+<ng-container *ngIf="romanowPlayerInfos">
+  <span [class.played]="!romanowPlayerInfos.farbe">F</span>
+  <span [class.played]="!romanowPlayerInfos.grand">G</span>
+  <span [class.played]="!romanowPlayerInfos.ramsch">R</span>
+</ng-container>
+
+<ng-container *ngIf="dealer">
+  <ion-icon name="hand-right-outline"></ion-icon>
+</ng-container>

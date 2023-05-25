@@ -1,5 +1,5 @@
 import { groupSelector } from '@kbru/spielwille/data-access/groups';
-import { playersSelector as basePlayersSelector } from '@kbru/spielwille/data-access/players';
+import { playersSelector } from '@kbru/spielwille/data-access/players';
 import { createSelector } from '@ngrx/store';
 
 import { Player } from '../models/player.model';
@@ -7,7 +7,7 @@ import { Player } from '../models/player.model';
 export const groupPlayersSelector = (groupId: string) =>
   createSelector(
     groupSelector(groupId),
-    basePlayersSelector,
+    playersSelector,
     (group, players): Player[] =>
       group
         ? group.playerIds.map((id) => ({
