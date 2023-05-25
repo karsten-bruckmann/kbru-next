@@ -20,6 +20,7 @@ export class CalculationTypeFormControl extends FormControl<
       if (
         typeof control.value !== 'string' &&
         control.value !== 'seger-fabian' &&
+        control.value !== 'classic' &&
         control.value !== 'bierlachs'
       ) {
         return { type: true };
@@ -42,7 +43,7 @@ export class CalculationTypeFormControl extends FormControl<
             control.possibleValues = ['bierlachs'];
             control.disable();
           } else {
-            control.possibleValues = ['seger-fabian', 'bierlachs'];
+            control.possibleValues = ['seger-fabian', 'classic', 'bierlachs'];
             control.enable();
           }
         }),

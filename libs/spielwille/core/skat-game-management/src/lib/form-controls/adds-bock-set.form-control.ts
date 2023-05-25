@@ -34,10 +34,14 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
           }
 
           return form.valueChanges.pipe(
-            map((value) => [value.spritze, value.won]),
-            startWith([form.value.spritze, form.value.won]),
+            map((value) => [value.spritze, value.won, value.gameType]),
+            startWith([
+              form.value.spritze,
+              form.value.won,
+              form.value.gameType,
+            ]),
             distinctUntilContentChanged(),
-            tap(([spritze, won]) => {
+            tap(([spritze, won, gameType]) => {
               const control = form.controls.addsBockSet;
 
               if (!control) {
@@ -49,6 +53,8 @@ export class AddsBockSetControl extends FormControl<boolean | null> {
                   bockSetsSettings.kontraRe) ||
                 (spritze !== null &&
                   won === false &&
+                  gameType !== 'ramsch' &&
+                  gameType !== 'durchmarsch' &&
                   bockSetsSettings.kontraLost)
               ) {
                 control.value !== true && control.setValue(true);

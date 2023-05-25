@@ -22,6 +22,12 @@ const nullWorth: Record<NullGame['nullType'], number> = {
   'hand-ouvert': 59,
 };
 
+const spritzeModifier: Record<NonNullable<StandardGame['spritze']>, number> = {
+  kontra: 2,
+  re: 4,
+  hirsch: 8,
+};
+
 function isStandardGame(
   game: Omit<Game, 'result'>
 ): game is Omit<StandardGame, 'result'> {
@@ -68,22 +74,42 @@ export const calculateResult = (
     worth = 120;
   }
 
-  if (game.won && list.rules.calculationType === 'seger-fabian') {
-    playerPoints = worth + (50 - (list.playerNames.length - 3) * 10);
+  if (isStandardGame(game) || isNullGame(game)) {
+    const spritze = game.spritze;
+
+    if (spritze) {
+      worth *= spritzeModifier[spritze];
+    }
   }
 
-  if (!game.won && list.rules.calculationType === 'seger-fabian') {
-    opponentPoints = worth * -2;
-    opponentPoints = 50 - (list.playerNames.length - 3) * 10;
-    inactivePoints = 50 - (list.playerNames.length - 3) * 10;
+  if (game.bock) {
+    worth *= 2;
   }
 
-  if (game.won && list.rules.calculationType === 'bierlachs') {
-    opponentPoints = worth * -1;
-  }
-
-  if (!game.won && list.rules.calculationType === 'bierlachs') {
-    playerPoints = worth * -2;
+  switch (list.rules.calculationType) {
+    case 'seger-fabian':
+      if (game.won) {
+        playerPoints = worth + 50;
+      } else {
+        playerPoints = worth * -2 - 50;
+        opponentPoints = 40 - (list.playerNames.length - 3) * 10;
+        inactivePoints = 40 - (list.playerNames.length - 3) * 10;
+      }
+      break;
+    case 'classic':
+      if (game.won) {
+        playerPoints = worth;
+      } else {
+        playerPoints = worth * -2;
+      }
+      break;
+    case 'bierlachs':
+      if (game.won) {
+        opponentPoints = worth * -1;
+      } else {
+        playerPoints = worth * -2;
+      }
+      break;
   }
 
   return new Array(list.playerNames.length).fill(null).map((_, i) => {

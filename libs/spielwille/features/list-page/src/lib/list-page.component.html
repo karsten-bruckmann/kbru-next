@@ -5,6 +5,14 @@
         <ui-ionic-history-back></ui-ionic-history-back>
       </ion-buttons>
       <ion-title>{{ list.summary | listSummary }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button
+          [color]="debug ? 'light' : 'primary'"
+          (click)="debug = !debug"
+        >
+          <ion-icon name="bug-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
@@ -20,7 +28,7 @@
 
     <spielwille-list-page-points-row></spielwille-list-page-points-row>
 
-    <spielwille-list-page-debug></spielwille-list-page-debug>
+    <spielwille-list-page-debug *ngIf="debug"></spielwille-list-page-debug>
   </ion-content>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">

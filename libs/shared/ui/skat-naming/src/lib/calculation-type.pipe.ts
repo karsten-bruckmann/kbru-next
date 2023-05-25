@@ -8,7 +8,9 @@ export class CalculationTypePipe implements PipeTransform {
   transform<T = unknown>(value: T): T | string {
     switch (value) {
       case 'seger-fabian':
-        return 'Seger Fabian';
+        return 'Turnier';
+      case 'classic':
+        return 'Klassisch';
       case 'bierlachs':
         return 'Bierlachs';
       default:

@@ -13,6 +13,7 @@ export const skatListSchema = z.object({
     addOn: z.nullable(z.literal('romanow')),
     calculationType: z.union([
       z.literal('seger-fabian'),
+      z.literal('classic'),
       z.literal('bierlachs'),
     ]),
     maxSets: z.nullable(z.number()),

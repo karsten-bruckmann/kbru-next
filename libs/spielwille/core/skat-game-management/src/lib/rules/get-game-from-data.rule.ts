@@ -20,6 +20,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
   const thresholdAnnounced = skatGame.thresholdAnnounced;
   const spritze = skatGame.spritze;
   const result = skatGame.result;
+  const bock = skatGame.bock;
 
   switch (gameType) {
     case 'diamonds':
@@ -48,12 +49,13 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         spritze,
         won,
         result,
+        bock,
       };
       return standardGame;
 
     case 'null':
       const nullType = skatGame.nullType;
-      if (!nullType || won === undefined) {
+      if (!nullType || won === undefined || spritze === undefined) {
         return null;
       }
       const nullGame: NullGame = {
@@ -62,8 +64,10 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         playerIndex,
         addsBockSet,
         nullType,
+        spritze,
         won,
         result,
+        bock,
       };
       return nullGame;
 
@@ -80,6 +84,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         ramschPoints,
         won: false,
         result,
+        bock,
       };
       return ramschGame;
 
@@ -91,6 +96,7 @@ export const getGameFromData = (skatGame: SkatGame): Game | null => {
         addsBockSet,
         won: true,
         result,
+        bock,
       };
       return durchmarschGame;
 

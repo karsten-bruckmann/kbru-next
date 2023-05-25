@@ -8,7 +8,9 @@ export class ListSummaryPipe implements PipeTransform {
   transform<T = unknown>(value: T): T | string {
     switch (value) {
       case 'seger-fabian':
-        return 'Seger Fabian';
+        return 'Turnier-Abrechnung';
+      case 'classic':
+        return 'Klassisch';
       case 'bierlachs':
         return 'Bierlachs';
       case 'romanow':

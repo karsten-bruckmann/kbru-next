@@ -31,8 +31,14 @@ export class GameInfoComponent {
 
   protected readonly infos$: Observable<string[]> = this.game$.pipe(
     map((game): string[] => {
+      const infos: string[] = [];
+
       if (!game) {
         return [];
+      }
+
+      if (game.bock) {
+        infos.push('B');
       }
 
       if (isStandardGame(game)) {
@@ -44,31 +50,28 @@ export class GameInfoComponent {
             : game.spritze === 'hirsch'
             ? ' KRH'
             : '';
-        const infos = [
-          `${game.spitzen > 0 ? 'm' : 'o'}${Math.abs(game.spitzen)}`,
-        ];
+        infos.push(`${game.spitzen > 0 ? 'm' : 'o'}${Math.abs(game.spitzen)}`);
         if (spritzen) {
           infos.push(spritzen);
         }
-        return infos;
       }
 
       if (isNullGame(game)) {
         if (game.nullType === 'einfach') {
-          return [''];
+          infos.push('');
         }
         if (game.nullType === 'hand') {
-          return ['H'];
+          infos.push('H');
         }
         if (game.nullType === 'ouvert') {
-          return ['O'];
+          infos.push('O');
         }
         if (game.nullType === 'hand-ouvert') {
-          return ['HO'];
+          infos.push('HO');
         }
       }
 
-      return [];
+      return infos;
     })
   );
 }

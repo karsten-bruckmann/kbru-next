@@ -59,4 +59,6 @@ export class ListPageComponent {
   public readonly playerNames$ = this.list$.pipe(
     map((list) => list?.playerNames || null)
   );
+
+  protected debug = false;
 }

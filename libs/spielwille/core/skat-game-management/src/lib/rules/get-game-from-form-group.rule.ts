@@ -28,6 +28,10 @@ export const getGameFromFormGroup = (
     throw new InvalidFormDataError('error getting game value');
   }
 
+  const bock =
+    list.status.fixedSets[0].type === 'bock' &&
+    list.status.fixedSets[0].remainingGames > 0;
+
   switch (gameType) {
     case 'diamonds':
     case 'hearts':
@@ -35,7 +39,6 @@ export const getGameFromFormGroup = (
     case 'clubs':
     case 'grand':
       const spitzen = value.spitzen;
-      const spritze = value.spritze;
       if (typeof spitzen !== 'number') {
         throw new InvalidFormDataError('error getting game value');
       }
@@ -47,8 +50,9 @@ export const getGameFromFormGroup = (
         spitzen: spitzen,
         threshold: value.threshold ?? null,
         thresholdAnnounced: value.thresholdAnnounced ?? null,
-        spritze: spritze ?? null,
+        spritze: value.spritze ?? null,
         won: value.won ?? false,
+        bock,
       };
       return { ...standardGame, result: calculateResult(standardGame, list) };
 
@@ -63,7 +67,9 @@ export const getGameFromFormGroup = (
         playerIndex,
         addsBockSet,
         nullType,
+        spritze: value.spritze ?? null,
         won: value.won ?? false,
+        bock,
       };
       return { ...nullGame, result: calculateResult(nullGame, list) };
 
@@ -79,6 +85,7 @@ export const getGameFromFormGroup = (
         addsBockSet,
         ramschPoints,
         won: false,
+        bock,
       };
       return { ...ramschGame, result: calculateResult(ramschGame, list) };
 
@@ -89,6 +96,7 @@ export const getGameFromFormGroup = (
         playerIndex,
         addsBockSet,
         won: true,
+        bock,
       };
       return {
         ...durchmarschGame,

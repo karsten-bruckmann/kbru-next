@@ -12,7 +12,7 @@ export class SpritzePipe implements PipeTransform {
       case 're':
         return 'Re';
       case 'hirsch':
-        return 'hirsch';
+        return 'Hirsch';
       default:
         return value;
     }

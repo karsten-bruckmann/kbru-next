@@ -2,6 +2,7 @@ export interface BaseGame {
   id: string;
   playerIndex: number;
   addsBockSet: boolean;
+  bock: boolean;
   result: number[];
 }
 
@@ -17,6 +18,7 @@ export interface StandardGame extends BaseGame {
 export interface NullGame extends BaseGame {
   gameType: 'null';
   nullType: 'einfach' | 'hand' | 'ouvert' | 'hand-ouvert';
+  spritze: null | 'kontra' | 're' | 'hirsch';
   won: boolean;
 }
 
