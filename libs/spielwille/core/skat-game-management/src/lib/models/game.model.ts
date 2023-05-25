@@ -25,11 +25,14 @@ export interface NullGame extends BaseGame {
 export interface RamschGame extends BaseGame {
   gameType: 'ramsch';
   ramschPoints: number;
+  jungfrau: boolean;
+  geschoben: number;
   won: false;
 }
 
 export interface DurchmarschGame extends BaseGame {
   gameType: 'durchmarsch';
+  geschoben: number;
   won: true;
 }
 

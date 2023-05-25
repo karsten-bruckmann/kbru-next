@@ -7,7 +7,9 @@ import { firstValueFrom, Observable, switchMap } from 'rxjs';
 import { skatGameFormSubmittedAction } from '../actions/skat-game-form-submitted.action';
 import { AddsBockSetControl } from '../form-controls/adds-bock-set.form-control';
 import { GameTypeFormControl } from '../form-controls/game-type.form-control';
+import { GeschobenFormControl } from '../form-controls/geschoben.form-control';
 import { HandFormControl } from '../form-controls/hand.form-control';
+import { JungfrauFormControl } from '../form-controls/jungfrau.form-control';
 import { NullTypeFormControl } from '../form-controls/null-game-type.form-control';
 import { PlayerIndexFormControl } from '../form-controls/player-index.form-control';
 import { RamschPointsFormControl } from '../form-controls/ramsch-points.form-control';
@@ -40,6 +42,8 @@ export class SkatGameFormGroup extends FormGroup<{
   nullType?: NullTypeFormControl;
   // Ramsch
   ramschPoints?: RamschPointsFormControl;
+  jungfrau?: JungfrauFormControl;
+  geschoben?: GeschobenFormControl;
   // Misc
   won?: WonFormControl;
 }> {
@@ -54,6 +58,8 @@ export class SkatGameFormGroup extends FormGroup<{
   private spritzeFormControl: SpritzeFormControl;
   private nullTypeFormControl: NullTypeFormControl;
   private ramschPointsFormControl: RamschPointsFormControl;
+  private jungfrauFormControl: JungfrauFormControl;
+  private geschobenFormControl: GeschobenFormControl;
   private wonFormControl: WonFormControl;
 
   constructor(
@@ -70,6 +76,8 @@ export class SkatGameFormGroup extends FormGroup<{
     const spritzeFormControl = new SpritzeFormControl();
     const nullTypeFormControl = new NullTypeFormControl();
     const ramschPointsFormControl = new RamschPointsFormControl();
+    const jungfrauFormControl = new JungfrauFormControl();
+    const geschobenFormControl = new GeschobenFormControl();
     const wonFormControl = new WonFormControl();
 
     super(
@@ -83,7 +91,6 @@ export class SkatGameFormGroup extends FormGroup<{
         thresholdAnnounced: thresholdAnnouncedFormControl,
         spritze: spritzeFormControl,
         nullType: nullTypeFormControl,
-        ramschPoints: ramschPointsFormControl,
         won: wonFormControl,
       },
       {
@@ -124,6 +131,8 @@ export class SkatGameFormGroup extends FormGroup<{
     this.spritzeFormControl = spritzeFormControl;
     this.nullTypeFormControl = nullTypeFormControl;
     this.ramschPointsFormControl = ramschPointsFormControl;
+    this.jungfrauFormControl = jungfrauFormControl;
+    this.geschobenFormControl = geschobenFormControl;
     this.wonFormControl = wonFormControl;
 
     this.list$ = listId$.pipe(
@@ -143,6 +152,8 @@ export class SkatGameFormGroup extends FormGroup<{
       this.spritzeFormControl.formEffect(this.list$),
       this.nullTypeFormControl.formEffect(),
       this.ramschPointsFormControl.formEffect(),
+      this.jungfrauFormControl.formEffect(this.list$),
+      this.geschobenFormControl.formEffect(this.list$),
       this.wonFormControl.formEffect(),
     ]);
   }

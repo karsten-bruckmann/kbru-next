@@ -29,6 +29,8 @@ export const skatGameSchema = z.object({
     )
   ),
   ramschPoints: z.optional(z.number()),
+  jungfrau: z.optional(z.boolean()),
+  geschoben: z.optional(z.number()),
   won: z.optional(z.boolean()),
   result: z.array(z.number()).default([]),
   bock: z.boolean().default(false),

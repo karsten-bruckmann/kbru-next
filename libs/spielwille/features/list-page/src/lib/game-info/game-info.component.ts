@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import {
   Game,
   isNullGame,
+  isRamschGame,
   isStandardGame,
 } from '@kbru/spielwille/core/skat-game-management';
 import { combineLatest, map, Observable, ReplaySubject } from 'rxjs';
@@ -68,6 +69,18 @@ export class GameInfoComponent {
         }
         if (game.nullType === 'hand-ouvert') {
           infos.push('HO');
+        }
+      }
+
+      if (isRamschGame(game)) {
+        if (game.jungfrau) {
+          infos.push('J');
+        }
+        if (game.geschoben === 1) {
+          infos.push('G');
+        }
+        if (game.geschoben === 2) {
+          infos.push('2xG');
         }
       }
 

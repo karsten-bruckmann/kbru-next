@@ -82,6 +82,13 @@ export const calculateResult = (
     }
   }
 
+  if (isRamschGame(game)) {
+    worth *= Math.pow(2, game.geschoben);
+    if (game.jungfrau) {
+      worth *= 2;
+    }
+  }
+
   if (game.bock) {
     worth *= 2;
   }

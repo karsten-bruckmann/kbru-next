@@ -31,6 +31,4 @@ export class RamschPointsFormControl extends FormControl<number | null> {
       );
     };
   }
-
-  public getPlayerName: (index: number) => string = () => '';
 }

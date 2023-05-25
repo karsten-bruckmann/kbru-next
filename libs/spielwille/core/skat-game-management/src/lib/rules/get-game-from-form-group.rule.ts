@@ -29,8 +29,8 @@ export const getGameFromFormGroup = (
   }
 
   const bock =
-    list.status.fixedSets[0].type === 'bock' &&
-    list.status.fixedSets[0].remainingGames > 0;
+    list.status.fixedSets[0]?.type === 'bock' &&
+    list.status.fixedSets[0]?.remainingGames > 0;
 
   switch (gameType) {
     case 'diamonds':
@@ -84,6 +84,8 @@ export const getGameFromFormGroup = (
         playerIndex,
         addsBockSet,
         ramschPoints,
+        jungfrau: formGroup.value.jungfrau || false,
+        geschoben: formGroup.value.geschoben || 0,
         won: false,
         bock,
       };
@@ -95,6 +97,7 @@ export const getGameFromFormGroup = (
         gameType,
         playerIndex,
         addsBockSet,
+        geschoben: formGroup.value.geschoben || 0,
         won: true,
         bock,
       };
