@@ -127,6 +127,12 @@
       "@kbru/spielwille/features/start-page": [
         "libs/spielwille/features/start-page/src/index.ts"
       ],
+      "@kbru/war-game-companion/features/build/data-source": [
+        "libs/war-game-companion/features/build/data-source/src/index.ts"
+      ],
+      "@kbru/war-game-companion/features/build/main": [
+        "libs/war-game-companion/features/build/main/src/index.ts"
+      ],
       "stream": ["node_modules/stream-browserify"],
       "timers": ["node_modules/timers-browserify"]
     }

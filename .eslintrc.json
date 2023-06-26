@@ -28,6 +28,13 @@
                 ]
               },
               {
+                "sourceTag": "scope:war-game-companion",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:scope:war-game-companion"
+                ]
+              },
+              {
                 "sourceTag": "type:ui",
                 "onlyDependOnLibsWithTags": ["type:ui"]
               },
