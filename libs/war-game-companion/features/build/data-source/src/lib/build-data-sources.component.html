@@ -3,3 +3,16 @@
     <ion-icon name="close"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Download file...</ion-label>
+      <ion-input
+        value="https://battlescribedata.appspot.com/repos/wh40k/index.bsi"
+        #url
+      ></ion-input>
+    </ion-item>
+    <ion-button (click)="download(url.value?.toString())">Download</ion-button>
+  </ion-list>
+</ion-content>
