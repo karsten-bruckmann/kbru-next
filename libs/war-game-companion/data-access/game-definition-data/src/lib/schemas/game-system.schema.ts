@@ -13,7 +13,7 @@ import { rulesSchema } from './rules.schema';
 import { selectionEntriesSchema } from './selection-entries.schema';
 import { selectionEntryGroupsSchema } from './selection-entry-groups.schema';
 
-export type GameSystem = z.infer<typeof gameSystemSchema>;
+export type GameSystemSchema = z.infer<typeof gameSystemSchema>;
 
 export const gameSystemSchema = z
   .object({

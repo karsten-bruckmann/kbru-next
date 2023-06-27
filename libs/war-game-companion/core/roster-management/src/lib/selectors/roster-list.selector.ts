@@ -9,26 +9,14 @@ import {
 } from '@kbru/war-game-companion/data-access/rosters';
 import { createSelector } from '@ngrx/store';
 
-export const rosterListSelector = createSelector<
-  any,
-  RostersState,
-  GameDefinitionDataState['gameSystems'],
-  GameDefinitionDataState['catalogues'],
-  {
-    gameSystemName: string;
-    catalogues: {
-      name: string;
-      rosters: { name: string; id: string }[];
-    }[];
-  }[]
->(
+export const rosterListSelector = createSelector(
   rostersSelector,
   gameSystemsSelector,
   cataloguesSelector,
   (
-    rosters,
-    gameSystems,
-    catalogues
+    rosters: RostersState,
+    gameSystems: GameDefinitionDataState['gameSystems'],
+    catalogues: GameDefinitionDataState['catalogues']
   ): {
     gameSystemName: string;
     catalogues: {

@@ -15,7 +15,7 @@ import { booleanSchema } from './scalar/boolean.schema';
 import { selectionEntriesSchema } from './selection-entries.schema';
 import { selectionEntryGroupsSchema } from './selection-entry-groups.schema';
 
-export type Catalogue = z.infer<typeof catalogueSchema>;
+export type CatalogueSchema = z.infer<typeof catalogueSchema>;
 
 export const catalogueSchema = z
   .object({

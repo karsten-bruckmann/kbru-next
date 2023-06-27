@@ -1,0 +1,45 @@
+<ion-content>
+  <ion-accordion-group #ag>
+    <ion-list inset *ngIf="addForceForm$ | async as form" [formGroup]="form">
+      <ion-accordion value="form">
+        <ion-item color="light" slot="header">
+          <ion-label>Add Force...</ion-label>
+        </ion-item>
+        <ion-item
+          color="light"
+          slot="content"
+          *ngIf="form.controls.forceId as control"
+        >
+          <ion-label>Force</ion-label>
+          <ion-select [formControl]="control">
+            <ion-select-option
+              *ngFor="let option of control.options$ | async"
+              [value]="option.id"
+              >{{ option.name }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item color="light" slot="content">
+          <ion-button
+            slot="end"
+            fill="clear"
+            [disabled]="form.invalid"
+            (click)="
+              ag.value = 'none';
+              rosterEditingService.submitAddForceForm(form);
+              form.reset()
+            "
+          >
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-accordion>
+    </ion-list>
+  </ion-accordion-group>
+
+  <ion-list inset *ngIf="forces$ | async as forces">
+    <ion-item color="light" *ngFor="let force of forces">
+      <ion-label>{{ force.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { buildStartPageRoutes } from '@kbru/war-game-companion/features/build/main';
+import { buildStartPageRoutes } from '@kbru/war-game-companion/features/build';
 import { dataSourcesRoutes } from '@kbru/war-game-companion/features/data-sources';
 
 import { AppNavigationComponent } from './app-navigation.component';

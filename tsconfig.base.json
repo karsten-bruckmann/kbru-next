@@ -139,8 +139,8 @@
       "@kbru/war-game-companion/data-access/rosters": [
         "libs/war-game-companion/data-access/rosters/src/index.ts"
       ],
-      "@kbru/war-game-companion/features/build/main": [
-        "libs/war-game-companion/features/build/main/src/index.ts"
+      "@kbru/war-game-companion/features/build": [
+        "libs/war-game-companion/features/build/src/index.ts"
       ],
       "@kbru/war-game-companion/features/data-sources": [
         "libs/war-game-companion/features/data-sources/src/index.ts"

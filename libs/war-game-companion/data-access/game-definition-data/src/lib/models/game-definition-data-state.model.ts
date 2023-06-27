@@ -1,7 +1,7 @@
-import { Catalogue } from '../schemas/catalogue.schema';
-import { GameSystem } from '../schemas/game-system.schema';
+import { CatalogueSchema } from '../schemas/catalogue.schema';
+import { GameSystemSchema } from '../schemas/game-system.schema';
 
 export interface GameDefinitionDataState {
-  gameSystems: Record<string, GameSystem['gameSystem']>;
-  catalogues: Record<string, Catalogue['catalogue']>;
+  gameSystems: Record<string, GameSystemSchema['gameSystem']>;
+  catalogues: Record<string, CatalogueSchema['catalogue']>;
 }

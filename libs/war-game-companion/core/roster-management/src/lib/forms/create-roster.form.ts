@@ -28,12 +28,12 @@ export class CreateRosterForm extends FormGroup<{
       },
       {
         asyncValidators: [
-          async () => {
+          async (form) => {
             if (
-              !this.value.name ||
-              !this.value.gameSystemId ||
-              !this.value.catalogueId ||
-              !this.value.forceId
+              !form.value.name ||
+              !form.value.gameSystemId ||
+              !form.value.catalogueId ||
+              !form.value.forceId
             ) {
               return { invalid: true };
             }

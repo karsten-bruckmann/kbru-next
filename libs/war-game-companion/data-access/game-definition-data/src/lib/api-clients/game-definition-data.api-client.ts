@@ -11,16 +11,19 @@ import {
   switchMap,
 } from 'rxjs';
 
-import { Catalogue, catalogueSchema } from '../schemas/catalogue.schema';
+import { CatalogueSchema, catalogueSchema } from '../schemas/catalogue.schema';
 import {
   CatalogueIndex,
   catalogueIndexSchema,
 } from '../schemas/catalogue-index.schema';
-import { GameSystem, gameSystemSchema } from '../schemas/game-system.schema';
+import {
+  GameSystemSchema,
+  gameSystemSchema,
+} from '../schemas/game-system.schema';
 
 export interface GameDefinitionDataResponse {
-  gameSystems: Record<string, GameSystem['gameSystem']>;
-  catalogues: Record<string, Catalogue['catalogue']>;
+  gameSystems: Record<string, GameSystemSchema['gameSystem']>;
+  catalogues: Record<string, CatalogueSchema['catalogue']>;
 }
 
 export const unzipSingleFileContainer = async (file: File): Promise<File> => {
@@ -88,7 +91,7 @@ export const loadDataSource = async (
 export const loadGameSystem = async (
   get: (url: string) => Promise<ArrayBuffer>,
   url: string
-): Promise<GameSystem> => {
+): Promise<GameSystemSchema> => {
   const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
   const zipData = await get(proxyUrl);
   const blob = new Blob([zipData], { type: 'text/plain' });
@@ -108,7 +111,7 @@ export const loadGameSystem = async (
 export const loadCatalogue = async (
   get: (url: string) => Promise<ArrayBuffer>,
   url: string
-): Promise<Catalogue> => {
+): Promise<CatalogueSchema> => {
   const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
   const zipData = await get(proxyUrl);
   const blob = new Blob([zipData], { type: 'text/plain' });
@@ -175,7 +178,7 @@ export class GameDefinitionDataApiClient {
       map(
         ([gameSystems, catalogues]): GameDefinitionDataResponse => ({
           gameSystems: gameSystems.reduce<
-            Record<string, GameSystem['gameSystem']>
+            Record<string, GameSystemSchema['gameSystem']>
           >(
             (record, gameSystem) => ({
               ...record,
@@ -183,7 +186,9 @@ export class GameDefinitionDataApiClient {
             }),
             {}
           ),
-          catalogues: catalogues.reduce<Record<string, Catalogue['catalogue']>>(
+          catalogues: catalogues.reduce<
+            Record<string, CatalogueSchema['catalogue']>
+          >(
             (record, catalogue) => ({
               ...record,
               [catalogue.catalogue['@_id']]: catalogue.catalogue,

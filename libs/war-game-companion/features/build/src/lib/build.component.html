@@ -7,7 +7,7 @@
     >
       <ion-accordion value="form">
         <ion-item color="light" slot="header">
-          <ion-label><h1>Neuer Roster</h1></ion-label>
+          <ion-label><h1>New Roster</h1></ion-label>
         </ion-item>
         <ion-item
           color="light"
@@ -93,6 +93,7 @@
             <ion-item
               color="light"
               slot="content"
+              [routerLink]="['..', 'root', roster.id]"
               *ngFor="let roster of cat.rosters"
             >
               <ion-label>{{ roster.name }}</ion-label>

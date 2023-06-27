@@ -11,8 +11,11 @@ import {
 
 import { gameDefinitionDataSlice } from '../game-definition-data.slice';
 import { GameDefinitionDataState } from '../models/game-definition-data-state.model';
-import { Catalogue, catalogueSchema } from '../schemas/catalogue.schema';
-import { GameSystem, gameSystemSchema } from '../schemas/game-system.schema';
+import { CatalogueSchema, catalogueSchema } from '../schemas/catalogue.schema';
+import {
+  GameSystemSchema,
+  gameSystemSchema,
+} from '../schemas/game-system.schema';
 
 @Injectable({ providedIn: 'root' })
 export class StorageApiClient {
@@ -23,7 +26,7 @@ export class StorageApiClient {
   }
 
   public getGameSystems(): Observable<
-    Record<string, GameSystem['gameSystem']>
+    Record<string, GameSystemSchema['gameSystem']>
   > {
     return from(this.gameSystemsDb).pipe(
       switchMap((db: IDBPDatabase) => {
@@ -33,7 +36,7 @@ export class StorageApiClient {
               Promise.all(keys.map((key) => db.get(this.gameSystemsKey, key)))
             ).pipe(
               map((values) =>
-                values.reduce<Record<string, GameSystem['gameSystem']>>(
+                values.reduce<Record<string, GameSystemSchema['gameSystem']>>(
                   (record, value, index) => ({
                     ...record,
                     [`${keys[index]}`]: gameSystemSchema.parse({
@@ -50,7 +53,9 @@ export class StorageApiClient {
     );
   }
 
-  public getCatalogues(): Observable<Record<string, Catalogue['catalogue']>> {
+  public getCatalogues(): Observable<
+    Record<string, CatalogueSchema['catalogue']>
+  > {
     return from(this.cataloguesDb).pipe(
       switchMap((db: IDBPDatabase) => {
         return from(db.getAllKeys(this.cataloguesKey)).pipe(
@@ -59,7 +64,7 @@ export class StorageApiClient {
               Promise.all(keys.map((key) => db.get(this.cataloguesKey, key)))
             ).pipe(
               map((values) =>
-                values.reduce<Record<string, Catalogue['catalogue']>>(
+                values.reduce<Record<string, CatalogueSchema['catalogue']>>(
                   (record, value, index) => ({
                     ...record,
                     [`${keys[index]}`]: catalogueSchema.parse({
