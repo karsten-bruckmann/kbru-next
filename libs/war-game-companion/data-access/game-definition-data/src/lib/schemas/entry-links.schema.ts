@@ -1,67 +1,88 @@
 import { z, ZodType } from 'zod';
 
-import { categoryLinksSchema } from './category-links.schema';
-import { constraintsSchema } from './constraints.schema';
-import { costsSchema } from './costs.schema';
-import { infoGroupsSchema } from './info.groups.schema';
-import { infoLinksSchema } from './info-links.schema';
-import { modifierGroupsSchema } from './modifier-groups.schema';
-import { modifiersSchema } from './modifiers-schema';
-import { profilesSchema } from './profiles.schema';
-import { rulesSchema } from './rules.schema';
-import { booleanSchema } from './scalar/boolean.schema';
-import { selectionEntriesSchema } from './selection-entries.schema';
-import { selectionEntryGroupsSchema } from './selection-entry-groups.schema';
-
-const entryLinkBaseSchema = z.object({
-  '@_hidden': booleanSchema,
-  '@_id': z.string(),
-  '@_name': z.string(),
-  '@_collective': booleanSchema,
-  '@_import': booleanSchema,
-  '@_targetId': z.string(),
-  '@_type': z.enum(['selectionEntry', 'selectionEntryGroup']),
-  '@_publicationId': z.string().optional(),
-  '@_page': z.string().optional(),
-  comment: z.string().optional(),
-  categoryLinks: categoryLinksSchema.optional(),
-  modifiers: modifiersSchema.optional(),
-  modifierGroups: modifierGroupsSchema.optional(),
-  constraints: constraintsSchema.optional(),
-  costs: costsSchema.optional(),
-  profiles: profilesSchema.optional(),
-  infoLinks: infoLinksSchema.optional(),
-  infoGroups: infoGroupsSchema.optional(),
-  selectionEntryGroups: selectionEntryGroupsSchema.optional(),
-  rules: rulesSchema.optional(),
-});
-
-type EntryLink = z.infer<typeof entryLinkBaseSchema> & {
-  entryLinks?: { entryLink: EntryLink[] };
-  selectionEntries?: z.infer<typeof selectionEntriesSchema>;
-};
-
-const selectionEntrySchema: z.ZodType<EntryLink> = entryLinkBaseSchema
-  .extend({
-    entryLinks: z
-      .lazy(() =>
-        z
-          .object({
-            entryLink: z.array(selectionEntrySchema),
-          })
-          .strict()
-      )
-      .optional(),
-    selectionEntries: z.lazy(() => selectionEntriesSchema).optional(),
-  })
-  .strict();
+import {
+  CategoryLinksAware,
+  categoryLinksSchema,
+} from './category-links.schema';
+import { ConstraintsAware, constraintsSchema } from './constraints.schema';
+import { CostsAware, costsSchema } from './costs.schema';
+import { InfoGroupsAware, infoGroupsSchema } from './info.groups.schema';
+import { InfoLinksAware, infoLinksSchema } from './info-links.schema';
+import {
+  ModifierGroupsAware,
+  modifierGroupsSchema,
+} from './modifier-groups.schema';
+import { ModifiersAware, modifiersSchema } from './modifiers-schema';
+import { ProfilesAware, profilesSchema } from './profiles.schema';
+import { RulesAware, rulesSchema } from './rules.schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
+import {
+  SelectionEntriesAware,
+  selectionEntriesSchema,
+} from './selection-entries.schema';
+import {
+  SelectionEntryGroupsAware,
+  selectionEntryGroupsSchema,
+} from './selection-entry-groups.schema';
 
 export interface EntryLinksAware {
   entryLink: EntryLink[];
 }
 
+interface EntryLink {
+  '@_hidden': BooleanEnum;
+  '@_id': string;
+  '@_name': string;
+  '@_collective': BooleanEnum;
+  '@_import'?: BooleanEnum;
+  '@_targetId': string;
+  '@_type': 'selectionEntry' | 'selectionEntryGroup';
+  '@_publicationId'?: string;
+  '@_page'?: string;
+  comment?: string;
+  categoryLinks?: CategoryLinksAware;
+  modifiers?: ModifiersAware;
+  modifierGroups?: ModifierGroupsAware;
+  constraints?: ConstraintsAware;
+  costs?: CostsAware;
+  profiles?: ProfilesAware;
+  infoLinks?: InfoLinksAware;
+  infoGroups?: InfoGroupsAware;
+  selectionEntryGroups?: SelectionEntryGroupsAware;
+  rules?: RulesAware;
+  entryLinks?: EntryLinksAware;
+  selectionEntries?: SelectionEntriesAware;
+}
+
 export const entryLinksSchema: ZodType<EntryLinksAware> = z
   .object({
-    entryLink: z.array(selectionEntrySchema),
+    entryLink: z.array(
+      z
+        .object({
+          '@_hidden': booleanSchema,
+          '@_id': z.string(),
+          '@_name': z.string(),
+          '@_collective': booleanSchema,
+          '@_import': booleanSchema.optional(),
+          '@_targetId': z.string(),
+          '@_type': z.enum(['selectionEntry', 'selectionEntryGroup']),
+          '@_publicationId': z.string().optional(),
+          '@_page': z.string().optional(),
+          comment: z.string().optional(),
+          categoryLinks: categoryLinksSchema.optional(),
+          modifiers: modifiersSchema.optional(),
+          modifierGroups: modifierGroupsSchema.optional(),
+          constraints: constraintsSchema.optional(),
+          costs: costsSchema.optional(),
+          profiles: profilesSchema.optional(),
+          infoLinks: infoLinksSchema.optional(),
+          infoGroups: infoGroupsSchema.optional(),
+          selectionEntryGroups: selectionEntryGroupsSchema.optional(),
+          rules: rulesSchema.optional(),
+          entryLinks: z.lazy(() => entryLinksSchema).optional(),
+          selectionEntries: z.lazy(() => selectionEntriesSchema).optional(),
+        })
+        .strict()
+    ),
   })
   .strict();

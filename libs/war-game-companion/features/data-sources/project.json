@@ -1,15 +1,15 @@
 {
-  "name": "war-game-companion-features-build-data-sources",
-  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "war-game-companion-features-data-sources",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/war-game-companion/features/build/data-sources/src",
+  "sourceRoot": "libs/war-game-companion/features/data-sources/src",
   "prefix": "war-game-companion-build-data-sources",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/war-game-companion/features/build/data-sources/jest.config.ts",
+        "jestConfig": "libs/war-game-companion/features/data-sources/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -24,8 +24,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/war-game-companion/features/build/data-sources/**/*.ts",
-          "libs/war-game-companion/features/build/data-sources/**/*.html"
+          "libs/war-game-companion/features/data-sources/**/*.ts",
+          "libs/war-game-companion/features/data-sources/**/*.html"
         ]
       }
     }

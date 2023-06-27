@@ -6,6 +6,7 @@ import {
 } from './category-links.schema';
 import { ConstraintsAware, constraintsSchema } from './constraints.schema';
 import { EntryLinksAware, entryLinksSchema } from './entry-links.schema';
+import { InfoLinksAware, infoLinksSchema } from './info-links.schema';
 import {
   ModifierGroupsAware,
   modifierGroupsSchema,
@@ -18,7 +19,7 @@ import {
   selectionEntriesSchema,
 } from './selection-entries.schema';
 
-type SelectionEntryGroup = z.infer<typeof selectionEntryGroupBaseSchema> & {
+type SelectionEntryGroup = {
   '@_id': string;
   '@_name': string;
   '@_hidden': BooleanEnum;
@@ -33,6 +34,7 @@ type SelectionEntryGroup = z.infer<typeof selectionEntryGroupBaseSchema> & {
   modifierGroups?: ModifierGroupsAware;
   profiles?: ProfilesAware;
   categoryLinks?: CategoryLinksAware;
+  infoLinks?: InfoLinksAware;
   selectionEntryGroups?: SelectionEntryGroupsAware;
   selectionEntries?: SelectionEntriesAware;
   entryLinks?: EntryLinksAware;
@@ -42,55 +44,33 @@ export interface SelectionEntryGroupsAware {
   selectionEntryGroup: SelectionEntryGroup[];
 }
 
-const selectionEntryGroupBaseSchema = z.object({
-  '@_id': z.string(),
-  '@_name': z.string(),
-  '@_hidden': booleanSchema,
-  '@_collective': booleanSchema,
-  '@_import': booleanSchema,
-  '@_defaultSelectionEntryId': z.string().optional(),
-  '@_publicationId': z.string().optional(),
-  '@_page': z.string().optional(),
-  comment: z.string().optional(),
-  modifiers: modifiersSchema.optional(),
-  constraints: constraintsSchema.optional(),
-  modifierGroups: modifierGroupsSchema.optional(),
-  profiles: profilesSchema.optional(),
-  categoryLinks: categoryLinksSchema.optional(),
-});
-
-const selectionEntryGroupSchema: z.ZodType<SelectionEntryGroup> = z
-  .object({
-    '@_id': z.string(),
-    '@_name': z.string(),
-    '@_hidden': booleanSchema,
-    '@_collective': booleanSchema,
-    '@_import': booleanSchema,
-    '@_defaultSelectionEntryId': z.string().optional(),
-    '@_publicationId': z.string().optional(),
-    '@_page': z.string().optional(),
-    comment: z.string().optional(),
-    modifiers: modifiersSchema.optional(),
-    constraints: constraintsSchema.optional(),
-    modifierGroups: modifierGroupsSchema.optional(),
-    profiles: profilesSchema.optional(),
-    categoryLinks: categoryLinksSchema.optional(),
-    selectionEntryGroups: z
-      .lazy(() =>
-        z
-          .object({
-            selectionEntryGroup: z.array(selectionEntryGroupSchema),
-          })
-          .strict()
-      )
-      .optional(),
-    selectionEntries: z.lazy(() => selectionEntriesSchema).optional(),
-    entryLinks: z.lazy(() => entryLinksSchema).optional(),
-  })
-  .strict();
-
 export const selectionEntryGroupsSchema: ZodType<SelectionEntryGroupsAware> = z
   .object({
-    selectionEntryGroup: z.array(selectionEntryGroupSchema),
+    selectionEntryGroup: z.array(
+      z
+        .object({
+          '@_id': z.string(),
+          '@_name': z.string(),
+          '@_hidden': booleanSchema,
+          '@_collective': booleanSchema,
+          '@_import': booleanSchema,
+          '@_defaultSelectionEntryId': z.string().optional(),
+          '@_publicationId': z.string().optional(),
+          '@_page': z.string().optional(),
+          comment: z.string().optional(),
+          modifiers: modifiersSchema.optional(),
+          constraints: constraintsSchema.optional(),
+          modifierGroups: modifierGroupsSchema.optional(),
+          profiles: profilesSchema.optional(),
+          categoryLinks: categoryLinksSchema.optional(),
+          infoLinks: infoLinksSchema.optional(),
+          selectionEntryGroups: z
+            .lazy(() => selectionEntryGroupsSchema)
+            .optional(),
+          selectionEntries: z.lazy(() => selectionEntriesSchema).optional(),
+          entryLinks: z.lazy(() => entryLinksSchema).optional(),
+        })
+        .strict()
+    ),
   })
   .strict();

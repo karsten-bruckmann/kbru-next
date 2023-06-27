@@ -5,9 +5,11 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { FileInputComponent } from '@kbru/shared/ui/ionic-file-input';
 import {
   DataSourceManagementModule,
+  gameSystemListItemsSelector,
   LoadGameDefinitionForm,
   LoadGameDefinitionService,
 } from '@kbru/war-game-companion/core/data-source-management';
+import { Store } from '@ngrx/store';
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js';
 
 export const unzipSingleFileContainer = async (file: File): Promise<File> => {
@@ -27,7 +29,7 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
 };
 
 @Component({
-  selector: 'war-game-companion-build-data-sources',
+  selector: 'war-game-companion-data-sources',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,15 +43,13 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
 })
 export class DataSourcesComponent {
   constructor(
-    private nav: NavController,
-    private loadGameDefinitionService: LoadGameDefinitionService
+    private loadGameDefinitionService: LoadGameDefinitionService,
+    private store$: Store
   ) {}
 
   protected form$ = this.loadGameDefinitionService.form$;
 
-  protected close(): void {
-    this.nav.back();
-  }
+  protected gameSystems$ = this.store$.select(gameSystemListItemsSelector);
 
   protected async submit(form: LoadGameDefinitionForm): Promise<void> {
     this.loadGameDefinitionService.submit(form);

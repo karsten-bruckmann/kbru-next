@@ -1,6 +1,6 @@
 import { z, ZodType } from 'zod';
 
-import { conditionsSchema } from './conditions-schema';
+import { ConditionsAware, conditionsSchema } from './conditions-schema';
 
 const conditionGroupBaseSchema = z
   .object({
@@ -10,14 +10,22 @@ const conditionGroupBaseSchema = z
   })
   .strict();
 
+export interface ConditionGroupsAware {
+  conditionGroup: ConditionGroup[];
+}
+
 type ConditionGroup = z.infer<typeof conditionGroupBaseSchema> & {
-  conditionGroups?: {
-    conditionGroup: ConditionGroup[];
-  };
+  '@_type': 'or' | 'and';
+  comment?: string;
+  conditions?: ConditionsAware;
+  conditionGroups?: ConditionGroupsAware;
 };
 
-const conditionGroupSchema: z.ZodType<ConditionGroup> =
-  conditionGroupBaseSchema.extend({
+const conditionGroupSchema: z.ZodType<ConditionGroup> = z
+  .object({
+    '@_type': z.enum(['or', 'and']),
+    comment: z.string().optional(),
+    conditions: conditionsSchema.optional(),
     conditionGroups: z
       .lazy(() =>
         z
@@ -27,11 +35,8 @@ const conditionGroupSchema: z.ZodType<ConditionGroup> =
           .strict()
       )
       .optional(),
-  });
-
-export interface ConditionGroupsAware {
-  conditionGroup: ConditionGroup[];
-}
+  })
+  .strict();
 
 export const conditionGroupsSchema: ZodType<ConditionGroupsAware> = z
   .object({

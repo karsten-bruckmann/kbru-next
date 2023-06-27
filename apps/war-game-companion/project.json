@@ -26,6 +26,7 @@
         ],
         "styles": [
           "apps/war-game-companion/src/styles.scss",
+          "apps/war-game-companion/src/theme/variables.scss",
           {
             "input": "node_modules/@ionic/angular/css/core.css"
           },

@@ -133,11 +133,11 @@
       "@kbru/war-game-companion/data-access/game-definition-data": [
         "libs/war-game-companion/data-access/game-definition-data/src/index.ts"
       ],
-      "@kbru/war-game-companion/features/build/data-sources": [
-        "libs/war-game-companion/features/build/data-sources/src/index.ts"
-      ],
       "@kbru/war-game-companion/features/build/main": [
         "libs/war-game-companion/features/build/main/src/index.ts"
+      ],
+      "@kbru/war-game-companion/features/data-sources": [
+        "libs/war-game-companion/features/data-sources/src/index.ts"
       ],
       "stream": ["node_modules/stream-browserify"],
       "timers": ["node_modules/timers-browserify"]

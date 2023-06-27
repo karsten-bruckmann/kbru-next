@@ -5,7 +5,7 @@ import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 export interface ConstraintsAware {
   constraint: {
     '@_id': string;
-    '@_field': 'selections' | 'forces';
+    '@_field': 'selections' | 'forces' | string;
     '@_scope': 'roster' | 'force' | 'parent' | string;
     '@_value': string;
     '@_percentValue': BooleanEnum;
@@ -22,7 +22,7 @@ export const constraintsSchema: ZodType<ConstraintsAware> = z
       z
         .object({
           '@_id': z.string(),
-          '@_field': z.enum(['selections', 'forces']),
+          '@_field': z.union([z.enum(['selections', 'forces']), z.string()]),
           '@_scope': z.union([
             z.enum(['roster', 'force', 'parent']),
             z.string(),

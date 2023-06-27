@@ -4,7 +4,7 @@ import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
 export interface RepeatsAware {
   repeat: {
-    '@_field': 'selections';
+    '@_field': 'selections' | string;
     '@_scope': 'force' | 'roster' | string;
     '@_value': string;
     '@_percentValue': BooleanEnum;
@@ -22,7 +22,7 @@ export const repeatsSchema: ZodType<RepeatsAware> = z
     repeat: z.array(
       z
         .object({
-          '@_field': z.enum(['selections']),
+          '@_field': z.union([z.enum(['selections']), z.string()]),
           '@_scope': z.union([z.enum(['force', 'roster']), z.string()]),
           '@_value': z.string(),
           '@_percentValue': booleanSchema,

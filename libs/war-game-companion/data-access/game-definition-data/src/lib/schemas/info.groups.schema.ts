@@ -1,6 +1,7 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
 import { InfoLinksAware, infoLinksSchema } from './info-links.schema';
+import { ModifiersAware, modifiersSchema } from './modifiers-schema';
 import { ProfilesAware, profilesSchema } from './profiles.schema';
 import { RulesAware, rulesSchema } from './rules.schema';
 import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
@@ -15,10 +16,12 @@ export interface InfoGroupsAware {
     infoLinks?: InfoLinksAware;
     rules?: RulesAware;
     profiles?: ProfilesAware;
+    modifiers?: ModifiersAware;
+    infoGroups?: InfoGroupsAware;
   }[];
 }
 
-export const infoGroupsSchema = z
+export const infoGroupsSchema: ZodType<InfoGroupsAware> = z
   .object({
     infoGroup: z.array(
       z
@@ -31,6 +34,8 @@ export const infoGroupsSchema = z
           infoLinks: infoLinksSchema.optional(),
           rules: rulesSchema.optional(),
           profiles: profilesSchema.optional(),
+          modifiers: modifiersSchema.optional(),
+          infoGroups: z.lazy(() => infoGroupsSchema).optional(),
         })
         .strict()
     ),
