@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { buildDataSourcesRoutes } from '@kbru/war-game-companion/features/build/data-source';
+import { dataSourcesRoutes } from '@kbru/war-game-companion/features/build/data-sources';
 
 export const buildStartPageRoutes = (buildPath: string): Routes => [
   {
@@ -7,5 +7,5 @@ export const buildStartPageRoutes = (buildPath: string): Routes => [
     loadComponent: () =>
       import('./build-main.component').then((m) => m.BuildStartPageComponent),
   },
-  ...buildDataSourcesRoutes(`${buildPath}/data-sources`),
+  ...dataSourcesRoutes(`${buildPath}/data-sources`),
 ];

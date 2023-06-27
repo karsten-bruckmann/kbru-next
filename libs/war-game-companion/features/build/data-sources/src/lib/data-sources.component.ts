@@ -36,10 +36,10 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
     FileInputComponent,
     DataSourceManagementModule,
   ],
-  templateUrl: './build-data-sources.component.html',
-  styleUrls: ['./build-data-sources.component.scss'],
+  templateUrl: './data-sources.component.html',
+  styleUrls: ['./data-sources.component.scss'],
 })
-export class BuildDataSourcesComponent {
+export class DataSourcesComponent {
   constructor(
     private nav: NavController,
     private loadGameDefinitionService: LoadGameDefinitionService
