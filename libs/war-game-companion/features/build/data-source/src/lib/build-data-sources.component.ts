@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { FileInputComponent } from '@kbru/shared/ui/ionic-file-input';
 import {
   DataSourceManagementModule,
-  dataSourceUrlAddedAction,
+  LoadGameDefinitionForm,
+  LoadGameDefinitionService,
 } from '@kbru/war-game-companion/core/data-source-management';
-import { Store } from '@ngrx/store';
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js';
 
 export const unzipSingleFileContainer = async (file: File): Promise<File> => {
@@ -31,6 +32,7 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
   imports: [
     CommonModule,
     IonicModule,
+    ReactiveFormsModule,
     FileInputComponent,
     DataSourceManagementModule,
   ],
@@ -38,16 +40,18 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
   styleUrls: ['./build-data-sources.component.scss'],
 })
 export class BuildDataSourcesComponent {
-  constructor(private nav: NavController, private store$: Store) {}
+  constructor(
+    private nav: NavController,
+    private loadGameDefinitionService: LoadGameDefinitionService
+  ) {}
+
+  protected form$ = this.loadGameDefinitionService.form$;
 
   protected close(): void {
     this.nav.back();
   }
 
-  protected async download(url?: string): Promise<void> {
-    if (!url) {
-      return;
-    }
-    this.store$.dispatch(dataSourceUrlAddedAction({ url }));
+  protected async submit(form: LoadGameDefinitionForm): Promise<void> {
+    this.loadGameDefinitionService.submit(form);
   }
 }

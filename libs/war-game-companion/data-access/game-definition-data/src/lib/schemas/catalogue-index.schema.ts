@@ -4,11 +4,7 @@ export type CatalogueIndex = z.infer<typeof catalogueIndexSchema>;
 
 export const catalogueIndexSchema = z
   .object({
-    '?xml': z.object({
-      '@_encoding': z.literal('UTF-8'),
-      '@_standalone': z.literal('yes'),
-      '@_version': z.literal('1.0'),
-    }),
+    '?xml': z.any(),
     dataIndex: z
       .object({
         '@_battleScribeVersion': z.string(),

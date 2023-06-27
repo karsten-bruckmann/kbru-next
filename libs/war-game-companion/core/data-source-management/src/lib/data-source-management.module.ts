@@ -1,9 +1,18 @@
 import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
+import {
+  GameDefinitionDataModule,
+  gameDefinitionDataRefreshActionRegistry,
+} from '@kbru/war-game-companion/data-access/game-definition-data';
 
-import { LoadDataSourceFromUrlEffect } from './effects/load-data-source-from-url.effect';
+import { loadGameDefinitionFormSubmittedAction } from './actions/load-game-definition-form-submitted.action';
 
 @NgModule({
-  imports: [EffectsModule.forFeature([LoadDataSourceFromUrlEffect])],
+  imports: [GameDefinitionDataModule],
 })
-export class DataSourceManagementModule {}
+export class DataSourceManagementModule {
+  constructor() {
+    gameDefinitionDataRefreshActionRegistry.add(
+      loadGameDefinitionFormSubmittedAction
+    );
+  }
+}

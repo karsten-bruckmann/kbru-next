@@ -5,14 +5,11 @@
 </ion-fab>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="form$ | async as form" [formGroup]="form">
     <ion-item>
       <ion-label>Download file...</ion-label>
-      <ion-input
-        value="https://battlescribedata.appspot.com/repos/wh40k/index.bsi"
-        #url
-      ></ion-input>
+      <ion-input formControlName="indexUrl"></ion-input>
     </ion-item>
-    <ion-button (click)="download(url.value?.toString())">Download</ion-button>
+    <ion-button (click)="submit(form)">Download</ion-button>
   </ion-list>
 </ion-content>

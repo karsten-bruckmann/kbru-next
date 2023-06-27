@@ -15,13 +15,7 @@ export type GameSystem = z.infer<typeof gameSystemSchema>;
 
 export const gameSystemSchema = z
   .object({
-    '?xml': z
-      .object({
-        '@_encoding': z.literal('UTF-8'),
-        '@_standalone': z.literal('yes'),
-        '@_version': z.literal('1.0'),
-      })
-      .strict(),
+    '?xml': z.any(),
     gameSystem: z
       .object({
         '@_authorContact': z.string(),
