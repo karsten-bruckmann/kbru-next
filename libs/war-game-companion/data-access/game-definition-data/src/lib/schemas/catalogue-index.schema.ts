@@ -1,36 +1,32 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-export type CatalogueIndex = z.infer<typeof catalogueIndexSchema>;
+import {
+  DataIndexEntriesAware,
+  dataIndexEntriesSchema,
+} from './data-index-entries.schema';
 
-export const catalogueIndexSchema = z
+export interface CatalogueIndex {
+  '?xml': unknown;
+  dataIndex: {
+    '@_battleScribeVersion': string;
+    '@_indexUrl': string;
+    '@_name': string;
+    '@_xmlns': string;
+    repositoryUrls: string;
+    dataIndexEntries: DataIndexEntriesAware;
+  };
+}
+
+export const catalogueIndexSchema: ZodType<CatalogueIndex> = z
   .object({
-    '?xml': z.any(),
-    dataIndex: z
-      .object({
-        '@_battleScribeVersion': z.string(),
-        '@_indexUrl': z.string().url(),
-        '@_name': z.string(),
-        '@_xmlns': z.literal(
-          'http://www.battlescribe.net/schema/dataIndexSchema'
-        ),
-        repositoryUrls: z.string(),
-        dataIndexEntries: z
-          .object({
-            dataIndexEntry: z.array(
-              z
-                .object({
-                  '@_dataBattleScribeVersion': z.string(),
-                  '@_dataId': z.string(),
-                  '@_dataName': z.string(),
-                  '@_dataRevision': z.string(),
-                  '@_dataType': z.enum(['catalogue', 'gamesystem']),
-                  '@_filePath': z.string(),
-                })
-                .strict()
-            ),
-          })
-          .strict(),
-      })
-      .strict(),
+    '?xml': z.object({}),
+    dataIndex: z.object({
+      '@_battleScribeVersion': z.string(),
+      '@_indexUrl': z.string().url(),
+      '@_name': z.string(),
+      '@_xmlns': z.string(),
+      repositoryUrls: z.string(),
+      dataIndexEntries: dataIndexEntriesSchema,
+    }),
   })
   .strict();

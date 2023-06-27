@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
 import { conditionGroupsSchema } from './condition-groups.schema';
 import { conditionsSchema } from './conditions-schema';
@@ -31,7 +31,11 @@ const modifierGroupSchema: z.ZodType<ModifierGroup> = modifierGroupBaseSchema
   })
   .strict();
 
-export const modifierGroupsSchema = z
+export interface ModifierGroupsAware {
+  modifierGroup: ModifierGroup[];
+}
+
+export const modifierGroupsSchema: ZodType<ModifierGroupsAware> = z
   .object({
     modifierGroup: z.array(modifierGroupSchema),
   })

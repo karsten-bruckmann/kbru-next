@@ -1,8 +1,22 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
-export const constraintsSchema = z
+export interface ConstraintsAware {
+  constraint: {
+    '@_id': string;
+    '@_field': 'selections' | 'forces';
+    '@_scope': 'roster' | 'force' | 'parent' | string;
+    '@_value': string;
+    '@_percentValue': BooleanEnum;
+    '@_shared': BooleanEnum;
+    '@_includeChildSelections': BooleanEnum;
+    '@_includeChildForces': BooleanEnum;
+    '@_type': 'max' | 'min';
+  }[];
+}
+
+export const constraintsSchema: ZodType<ConstraintsAware> = z
   .object({
     constraint: z.array(
       z

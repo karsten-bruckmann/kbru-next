@@ -1,6 +1,5 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
 import { categoryLinksSchema } from './category-links.schema';
 import { constraintsSchema } from './constraints.schema';
 import { costsSchema } from './costs.schema';
@@ -10,6 +9,7 @@ import { modifierGroupsSchema } from './modifier-groups.schema';
 import { modifiersSchema } from './modifiers-schema';
 import { profilesSchema } from './profiles.schema';
 import { rulesSchema } from './rules.schema';
+import { booleanSchema } from './scalar/boolean.schema';
 import { selectionEntriesSchema } from './selection-entries.schema';
 import { selectionEntryGroupsSchema } from './selection-entry-groups.schema';
 
@@ -56,7 +56,11 @@ const selectionEntrySchema: z.ZodType<EntryLink> = entryLinkBaseSchema
   })
   .strict();
 
-export const entryLinksSchema = z
+export interface EntryLinksAware {
+  entryLink: EntryLink[];
+}
+
+export const entryLinksSchema: ZodType<EntryLinksAware> = z
   .object({
     entryLink: z.array(selectionEntrySchema),
   })

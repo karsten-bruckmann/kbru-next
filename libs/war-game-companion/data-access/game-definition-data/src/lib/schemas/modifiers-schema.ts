@@ -1,10 +1,32 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { conditionGroupsSchema } from './condition-groups.schema';
-import { conditionsSchema } from './conditions-schema';
-import { repeatsSchema } from './repeats.schema';
+import {
+  ConditionGroupsAware,
+  conditionGroupsSchema,
+} from './condition-groups.schema';
+import { ConditionsAware, conditionsSchema } from './conditions-schema';
+import { RepeatsAware, repeatsSchema } from './repeats.schema';
 
-export const modifiersSchema = z
+export interface ModifiersAware {
+  modifier: {
+    '@_type':
+      | 'set'
+      | 'increment'
+      | 'decrement'
+      | 'append'
+      | 'add'
+      | 'remove'
+      | 'set-primary';
+    '@_field': 'hidden' | string;
+    '@_value': string;
+    comment?: string;
+    conditions?: ConditionsAware;
+    repeats?: RepeatsAware;
+    conditionGroups?: ConditionGroupsAware;
+  }[];
+}
+
+export const modifiersSchema: ZodType<ModifiersAware> = z
   .object({
     modifier: z.array(
       z

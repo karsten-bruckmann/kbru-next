@@ -1,6 +1,14 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-export const costsSchema = z
+export interface CostsAware {
+  cost: {
+    '@_name': string;
+    '@_typeId': string;
+    '@_value': string;
+  }[];
+}
+
+export const costsSchema: ZodType<CostsAware> = z
   .object({
     cost: z.array(
       z

@@ -37,7 +37,6 @@ export class StorageApiClient {
                   (record, value, index) => ({
                     ...record,
                     [`${keys[index]}`]: gameSystemSchema.parse({
-                      // '?xml': {},
                       gameSystem: value,
                     }).gameSystem,
                   }),
@@ -64,7 +63,6 @@ export class StorageApiClient {
                   (record, value, index) => ({
                     ...record,
                     [`${keys[index]}`]: catalogueSchema.parse({
-                      // '?xml': {},
                       catalogue: value,
                     }).catalogue,
                   }),

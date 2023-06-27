@@ -1,8 +1,37 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
-export const conditionsSchema = z
+export interface ConditionsAware {
+  condition: {
+    '@_field': 'selections' | 'forces' | string;
+    '@_scope':
+      | 'roster'
+      | 'force'
+      | 'primary-catalogue'
+      | 'parent'
+      | 'ancestor'
+      | string;
+    '@_value': string;
+    '@_percentValue': BooleanEnum;
+    '@_shared': BooleanEnum;
+    '@_includeChildSelections': BooleanEnum;
+    '@_includeChildForces': BooleanEnum;
+    '@_childId': string;
+    '@_type':
+      | 'greaterThan'
+      | 'lessThan'
+      | 'notEqualTo'
+      | 'atLeast'
+      | 'equalTo'
+      | 'instanceOf'
+      | 'notInstanceOf'
+      | 'atMost';
+    comment?: string;
+  }[];
+}
+
+export const conditionsSchema: ZodType<ConditionsAware> = z
   .object({
     condition: z.array(
       z

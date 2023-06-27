@@ -1,12 +1,30 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
-import { constraintsSchema } from './constraints.schema';
-import { infoLinksSchema } from './info-links.schema';
-import { modifierGroupsSchema } from './modifier-groups.schema';
-import { modifiersSchema } from './modifiers-schema';
+import { ConstraintsAware, constraintsSchema } from './constraints.schema';
+import { InfoLinksAware, infoLinksSchema } from './info-links.schema';
+import {
+  ModifierGroupsAware,
+  modifierGroupsSchema,
+} from './modifier-groups.schema';
+import { ModifiersAware, modifiersSchema } from './modifiers-schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
-export const categoryEntriesSchema = z
+export interface CategoryEntriesAware {
+  categoryEntry: {
+    '@_hidden': BooleanEnum;
+    '@_id': string;
+    '@_name': string;
+    '@_publicationId'?: string;
+    '@_page'?: string;
+    comment?: string;
+    modifiers?: ModifiersAware;
+    modifierGroups?: ModifierGroupsAware;
+    constraints?: ConstraintsAware;
+    infoLinks?: InfoLinksAware;
+  }[];
+}
+
+export const categoryEntriesSchema: ZodType<CategoryEntriesAware> = z
   .object({
     categoryEntry: z.array(
       z

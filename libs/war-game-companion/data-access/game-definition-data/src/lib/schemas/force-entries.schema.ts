@@ -1,10 +1,10 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
 import { categoryLinksSchema } from './category-links.schema';
 import { constraintsSchema } from './constraints.schema';
 import { modifiersSchema } from './modifiers-schema';
 import { rulesSchema } from './rules.schema';
+import { booleanSchema } from './scalar/boolean.schema';
 
 const forceEntryBaseSchema = z.object({
   '@_hidden': booleanSchema,
@@ -28,7 +28,11 @@ const forceEntrySchema: z.ZodType<ForceEntry> = forceEntryBaseSchema
   })
   .strict();
 
-export const forceEntriesSchema = z
+export interface ForceEntriesAware {
+  forceEntry: ForceEntry[];
+}
+
+export const forceEntriesSchema: ZodType<ForceEntriesAware> = z
   .object({
     forceEntry: z.array(forceEntrySchema),
   })

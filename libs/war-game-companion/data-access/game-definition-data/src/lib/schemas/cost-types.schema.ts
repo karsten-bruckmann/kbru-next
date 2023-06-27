@@ -1,8 +1,17 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
-export const costTypesSchema = z
+export interface CostTypesAware {
+  costType: {
+    '@_hidden': BooleanEnum;
+    '@_id': string;
+    '@_name': string;
+    '@_defaultCostLimit': string;
+  }[];
+}
+
+export const costTypesSchema: ZodType<CostTypesAware> = z
   .object({
     costType: z.array(
       z

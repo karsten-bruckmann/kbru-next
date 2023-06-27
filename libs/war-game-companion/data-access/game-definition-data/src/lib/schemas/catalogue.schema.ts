@@ -1,22 +1,67 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
-import { categoryEntriesSchema } from './category-entries.schema';
-import { costTypesSchema } from './cost-types.schema';
-import { entryLinksSchema } from './entry-links.schema';
-import { forceEntriesSchema } from './force-entries.schema';
-import { infoGroupsSchema } from './info.groups.schema';
-import { infoLinksSchema } from './info-links.schema';
-import { profileTypesSchema } from './profile-types.schema';
-import { profilesSchema } from './profiles.schema';
-import { publicationsSchema } from './publications.schema';
-import { rulesSchema } from './rules.schema';
-import { selectionEntriesSchema } from './selection-entries.schema';
-import { selectionEntryGroupsSchema } from './selection-entry-groups.schema';
+import {
+  CatalogueLinksAware,
+  catalogueLinksSchema,
+} from './catalogue-links.schema';
+import {
+  CategoryEntriesAware,
+  categoryEntriesSchema,
+} from './category-entries.schema';
+import { CostTypesAware, costTypesSchema } from './cost-types.schema';
+import { EntryLinksAware, entryLinksSchema } from './entry-links.schema';
+import { ForceEntriesAware, forceEntriesSchema } from './force-entries.schema';
+import { InfoGroupsAware, infoGroupsSchema } from './info.groups.schema';
+import { InfoLinksAware, infoLinksSchema } from './info-links.schema';
+import { ProfileTypesAware, profileTypesSchema } from './profile-types.schema';
+import { ProfilesAware, profilesSchema } from './profiles.schema';
+import { PublicationsAware, publicationsSchema } from './publications.schema';
+import { RulesAware, rulesSchema } from './rules.schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
+import {
+  SelectionEntriesAware,
+  selectionEntriesSchema,
+} from './selection-entries.schema';
+import {
+  SelectionEntryGroupsAware,
+  selectionEntryGroupsSchema,
+} from './selection-entry-groups.schema';
 
-export type Catalogue = z.infer<typeof catalogueSchema>;
+export interface Catalogue {
+  xml?: unknown;
+  catalogue: {
+    '@_battleScribeVersion': string;
+    '@_id': string;
+    '@_name': string;
+    '@_xmlns': string;
+    '@_revision': string;
+    '@_authorContact'?: string;
+    '@_authorName'?: string;
+    '@_authorUrl'?: string;
+    '@_library'?: BooleanEnum;
+    '@_gameSystemId'?: string;
+    '@_gameSystemRevision'?: string;
+    readme?: string;
+    comment?: string;
+    rules?: RulesAware;
+    categoryEntries?: CategoryEntriesAware;
+    costTypes?: CostTypesAware;
+    entryLinks?: EntryLinksAware;
+    publications?: PublicationsAware;
+    profileTypes?: ProfileTypesAware;
+    selectionEntries?: SelectionEntriesAware;
+    sharedSelectionEntries?: SelectionEntriesAware;
+    sharedSelectionEntryGroups?: SelectionEntryGroupsAware;
+    sharedRules?: RulesAware;
+    sharedProfiles?: ProfilesAware;
+    infoLinks?: InfoLinksAware;
+    forceEntries?: ForceEntriesAware;
+    sharedInfoGroups?: InfoGroupsAware;
+    catalogueLinks?: CatalogueLinksAware;
+  };
+}
 
-export const catalogueSchema = z
+export const catalogueSchema: ZodType<Catalogue> = z
   .object({
     '?xml': z.any(),
     catalogue: z
@@ -28,9 +73,7 @@ export const catalogueSchema = z
         '@_id': z.string(),
         '@_name': z.string(),
         '@_revision': z.string(),
-        '@_xmlns': z.literal(
-          'http://www.battlescribe.net/schema/catalogueSchema'
-        ),
+        '@_xmlns': z.string(),
         '@_library': booleanSchema,
         '@_gameSystemId': z.string(),
         '@_gameSystemRevision': z.string(),
@@ -49,8 +92,8 @@ export const catalogueSchema = z
         sharedProfiles: profilesSchema.optional(),
         infoLinks: infoLinksSchema.optional(),
         forceEntries: forceEntriesSchema.optional(),
-        sharedInfoGroups: infoGroupsSchema,
-        catalogueLinks: z.any(),
+        sharedInfoGroups: infoGroupsSchema.optional(),
+        catalogueLinks: catalogueLinksSchema.optional(),
       })
       .strict(),
   })

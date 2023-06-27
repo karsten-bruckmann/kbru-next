@@ -52,6 +52,7 @@ const xmlArrayKeys = [
   'entryLink',
   'forceEntry',
   'infoLink',
+  'infoGroup',
   'modifier',
   'modifierGroup',
   'profile',
@@ -61,6 +62,8 @@ const xmlArrayKeys = [
   'rule',
   'selectionEntry',
   'selectionEntryGroup',
+  'characteristic',
+  'catalogueLink',
 ];
 
 export const loadDataSource = async (

@@ -1,6 +1,17 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-export const publicationsSchema = z
+export interface PublicationsAware {
+  publication: {
+    '@_id': string;
+    '@_name': string;
+    '@_shortName'?: string;
+    '@_publisher'?: string;
+    '@_publicationDate'?: string;
+    '@_publisherUrl'?: string;
+  }[];
+}
+
+export const publicationsSchema: ZodType<PublicationsAware> = z
   .object({
     publication: z.array(
       z

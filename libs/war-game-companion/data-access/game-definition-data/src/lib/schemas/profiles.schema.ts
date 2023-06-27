@@ -1,15 +1,36 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
-import { modifierGroupsSchema } from './modifier-groups.schema';
-import { modifiersSchema } from './modifiers-schema';
+import {
+  CharacteristicsAware,
+  characteristicsSchema,
+} from './characteristics.schema';
+import {
+  ModifierGroupsAware,
+  modifierGroupsSchema,
+} from './modifier-groups.schema';
+import { ModifiersAware, modifiersSchema } from './modifiers-schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
-export const profilesSchema = z
+export interface ProfilesAware {
+  profile: {
+    '@_id': string;
+    '@_name': string;
+    '@_hidden': BooleanEnum;
+    '@_typeId': string;
+    '@_typeName': string;
+    '@_publicationId'?: string;
+    '@_page'?: string;
+    characteristics?: CharacteristicsAware;
+    modifiers?: ModifiersAware;
+    modifierGroups?: ModifierGroupsAware;
+  }[];
+}
+
+export const profilesSchema: ZodType<ProfilesAware> = z
   .object({
     profile: z.array(
       z
         .object({
-          characteristics: z.any(),
           '@_id': z.string(),
           '@_name': z.string(),
           '@_hidden': booleanSchema,
@@ -17,6 +38,7 @@ export const profilesSchema = z
           '@_typeName': z.string(),
           '@_publicationId': z.string().optional(),
           '@_page': z.string().optional(),
+          characteristics: characteristicsSchema,
           modifiers: modifiersSchema.optional(),
           modifierGroups: modifierGroupsSchema.optional(),
         })

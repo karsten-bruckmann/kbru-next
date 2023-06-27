@@ -1,8 +1,23 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
-import { booleanSchema } from './boolean.schema';
+import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 
-export const repeatsSchema = z
+export interface RepeatsAware {
+  repeat: {
+    '@_field': 'selections';
+    '@_scope': 'force' | 'roster' | string;
+    '@_value': string;
+    '@_percentValue': BooleanEnum;
+    '@_shared': BooleanEnum;
+    '@_includeChildSelections': BooleanEnum;
+    '@_includeChildForces': BooleanEnum;
+    '@_childId': string;
+    '@_repeats': '1' | '2';
+    '@_roundUp': BooleanEnum;
+  }[];
+}
+
+export const repeatsSchema: ZodType<RepeatsAware> = z
   .object({
     repeat: z.array(
       z

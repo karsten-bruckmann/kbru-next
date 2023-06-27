@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
 
 import { conditionsSchema } from './conditions-schema';
 
@@ -29,7 +29,11 @@ const conditionGroupSchema: z.ZodType<ConditionGroup> =
       .optional(),
   });
 
-export const conditionGroupsSchema = z
+export interface ConditionGroupsAware {
+  conditionGroup: ConditionGroup[];
+}
+
+export const conditionGroupsSchema: ZodType<ConditionGroupsAware> = z
   .object({
     conditionGroup: z.array(conditionGroupSchema),
   })
