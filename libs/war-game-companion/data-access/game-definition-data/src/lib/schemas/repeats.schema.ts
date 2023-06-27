@@ -12,7 +12,7 @@ export interface RepeatsAware {
     '@_includeChildSelections': BooleanEnum;
     '@_includeChildForces': BooleanEnum;
     '@_childId': string;
-    '@_repeats': '1' | '2';
+    '@_repeats': '1' | '2' | '3' | '4';
     '@_roundUp': BooleanEnum;
   }[];
 }
@@ -30,7 +30,7 @@ export const repeatsSchema: ZodType<RepeatsAware> = z
           '@_includeChildSelections': booleanSchema,
           '@_includeChildForces': booleanSchema,
           '@_childId': z.string(),
-          '@_repeats': z.enum(['1', '2']),
+          '@_repeats': z.enum(['1', '2', '3', '4']),
           '@_roundUp': booleanSchema,
         })
         .strict()

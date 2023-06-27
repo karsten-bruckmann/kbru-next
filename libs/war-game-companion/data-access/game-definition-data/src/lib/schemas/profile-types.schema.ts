@@ -9,7 +9,7 @@ export interface ProfileTypesAware {
   profileType: {
     '@_id': string;
     '@_name': string;
-    characteristicTypes: CharacteristicTypesAware;
+    characteristicTypes?: CharacteristicTypesAware;
   }[];
 }
 
@@ -19,7 +19,7 @@ export const profileTypesSchema: ZodType<ProfileTypesAware> = z
       z.object({
         '@_id': z.string(),
         '@_name': z.string(),
-        characteristicTypes: characteristicTypesSchema,
+        characteristicTypes: characteristicTypesSchema.optional(),
       })
     ),
   })

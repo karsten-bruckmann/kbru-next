@@ -8,6 +8,7 @@ export interface PublicationsAware {
     '@_publisher'?: string;
     '@_publicationDate'?: string;
     '@_publisherUrl'?: string;
+    comment?: string;
   }[];
 }
 
@@ -22,6 +23,7 @@ export const publicationsSchema: ZodType<PublicationsAware> = z
           '@_publisher': z.string().optional(),
           '@_publicationDate': z.string().optional(),
           '@_publisherUrl': z.string().optional(),
+          comment: z.string().optional(),
         })
         .strict()
     ),

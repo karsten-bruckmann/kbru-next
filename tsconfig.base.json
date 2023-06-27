@@ -130,8 +130,14 @@
       "@kbru/war-game-companion/core/data-source-management": [
         "libs/war-game-companion/core/data-source-management/src/index.ts"
       ],
+      "@kbru/war-game-companion/core/roster-management": [
+        "libs/war-game-companion/core/roster-management/src/index.ts"
+      ],
       "@kbru/war-game-companion/data-access/game-definition-data": [
         "libs/war-game-companion/data-access/game-definition-data/src/index.ts"
+      ],
+      "@kbru/war-game-companion/data-access/rosters": [
+        "libs/war-game-companion/data-access/rosters/src/index.ts"
       ],
       "@kbru/war-game-companion/features/build/main": [
         "libs/war-game-companion/features/build/main/src/index.ts"

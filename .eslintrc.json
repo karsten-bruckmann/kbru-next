@@ -31,7 +31,7 @@
                 "sourceTag": "scope:war-game-companion",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared",
-                  "scope:scope:war-game-companion"
+                  "scope:war-game-companion"
                 ]
               },
               {

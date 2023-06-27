@@ -32,7 +32,7 @@ export interface EntryLinksAware {
 interface EntryLink {
   '@_hidden': BooleanEnum;
   '@_id': string;
-  '@_name': string;
+  '@_name'?: string;
   '@_collective': BooleanEnum;
   '@_import'?: BooleanEnum;
   '@_targetId': string;
@@ -61,7 +61,7 @@ export const entryLinksSchema: ZodType<EntryLinksAware> = z
         .object({
           '@_hidden': booleanSchema,
           '@_id': z.string(),
-          '@_name': z.string(),
+          '@_name': z.string().optional(),
           '@_collective': booleanSchema,
           '@_import': booleanSchema.optional(),
           '@_targetId': z.string(),

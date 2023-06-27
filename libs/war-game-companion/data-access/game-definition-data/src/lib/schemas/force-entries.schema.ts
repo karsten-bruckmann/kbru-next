@@ -16,7 +16,7 @@ const forceEntryBaseSchema = z.object({
   rules: rulesSchema.optional(),
 });
 
-type ForceEntry = z.infer<typeof forceEntryBaseSchema> & {
+export type ForceEntry = z.infer<typeof forceEntryBaseSchema> & {
   forceEntries?: { forceEntry: ForceEntry[] };
 };
 
