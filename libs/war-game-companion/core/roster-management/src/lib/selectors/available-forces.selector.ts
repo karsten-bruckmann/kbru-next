@@ -2,30 +2,23 @@ import {
   cataloguesSelector,
   gameSystemsSelector,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
-import { rosterSelector } from '@kbru/war-game-companion/data-access/rosters';
 import { createSelector } from '@ngrx/store';
 
-export const availableForcesSelector = (rosterId: string) =>
+import { NamedReference } from '../models/named-reference.model';
+
+export const availableForcesSelector = (
+  gameSystemId: string,
+  catalogueId: string
+) =>
   createSelector(
-    rosterSelector(rosterId),
     gameSystemsSelector,
     cataloguesSelector,
-    (
-      roster,
-      gameSystems,
-      catalogues
-    ): {
-      id: string;
-      name: string;
-    }[] =>
-      !roster
-        ? []
-        : [
-            ...(gameSystems[roster.gameSystemId]?.forceEntries.forceEntry ||
-              []),
-            ...(catalogues[roster.catalogueId]?.forceEntries?.forceEntry || []),
-          ].map((force) => ({
-            id: force['@_id'],
-            name: force['@_name'],
-          }))
+    (gameSystems, catalogues): NamedReference[] =>
+      [
+        ...(gameSystems[gameSystemId]?.forceEntries.forceEntry || []),
+        ...(catalogues[catalogueId]?.forceEntries?.forceEntry || []),
+      ].map((force) => ({
+        id: force['@_id'],
+        name: force['@_name'],
+      }))
   );

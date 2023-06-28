@@ -5,6 +5,7 @@ export const addForceFormSubmitted = createAction(
   props<{
     value: {
       rosterId: string;
+      catalogueId: string;
       forceId: string;
     };
   }>()

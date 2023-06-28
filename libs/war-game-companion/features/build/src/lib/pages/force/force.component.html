@@ -1,0 +1,15 @@
+<ng-container *ngIf="force$ | async as force">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ force.name }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content *ngIf="categories$ | async as categories">
+    <ion-list>
+      <ion-item-group *ngFor="let category of categories">
+        <ion-item>{{ category.name }}</ion-item>
+      </ion-item-group>
+    </ion-list>
+  </ion-content>
+</ng-container>

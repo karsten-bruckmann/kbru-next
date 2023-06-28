@@ -6,18 +6,27 @@ export const buildStartPageRoutes = (buildPath: string): Routes => [
     children: [
       {
         path: '',
-        pathMatch: 'full',
-        redirectTo: 'main',
-      },
-      {
-        path: 'main',
         loadComponent: () =>
           import('./build.component').then((m) => m.BuildStartPageComponent),
       },
       {
-        path: 'root/:rosterId',
-        loadComponent: () =>
-          import('./pages/root/root.component').then((m) => m.RootComponent),
+        path: ':rosterId',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/root/root.component').then(
+                (m) => m.RootComponent
+              ),
+          },
+          {
+            path: ':forceIndex',
+            loadComponent: () =>
+              import('./pages/force/force.component').then(
+                (m) => m.ForceComponent
+              ),
+          },
+        ],
       },
     ],
   },

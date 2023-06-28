@@ -4,6 +4,7 @@ export * from './lib/selectors/catalogues.selector';
 export * from './lib/selectors/catalogue.selector';
 export * from './lib/selectors/game-systems.selector';
 export * from './lib/selectors/game-system.selector';
+export * from './lib/selectors/force.selector';
 export * from './lib/models/game-definition-data-state.model';
 export * from './lib/models/catalogue.model';
 export * from './lib/models/game-system.model';

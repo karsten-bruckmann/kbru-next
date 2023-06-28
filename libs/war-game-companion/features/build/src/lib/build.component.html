@@ -31,34 +31,6 @@
             >
           </ion-select>
         </ion-item>
-        <ion-item
-          color="light"
-          slot="content"
-          *ngIf="form.controls.catalogueId as control"
-        >
-          <ion-label position="floating">Catalogue</ion-label>
-          <ion-select [formControl]="control">
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option.id"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
-        <ion-item
-          color="light"
-          slot="content"
-          *ngIf="form.controls.forceId as control"
-        >
-          <ion-label position="floating">Force</ion-label>
-          <ion-select [formControl]="control">
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option.id"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
         <ion-item color="light" slot="content">
           <ion-button
             slot="end"
@@ -84,21 +56,14 @@
               <h1>{{ system.gameSystemName }}</h1>
             </ion-label>
           </ion-item>
-          <ng-container *ngFor="let cat of system.catalogues">
-            <ion-item color="light" slot="content">
-              <ion-label>
-                <h1>{{ cat.name }}</h1>
-              </ion-label>
-            </ion-item>
-            <ion-item
-              color="light"
-              slot="content"
-              [routerLink]="['..', 'root', roster.id]"
-              *ngFor="let roster of cat.rosters"
-            >
-              <ion-label>{{ roster.name }}</ion-label>
-            </ion-item>
-          </ng-container>
+          <ion-item
+            color="light"
+            slot="content"
+            [routerLink]="[roster.id]"
+            *ngFor="let roster of system.rosters"
+          >
+            <ion-label>{{ roster.name }}</ion-label>
+          </ion-item>
         </ion-accordion>
       </ion-list>
     </ng-container>

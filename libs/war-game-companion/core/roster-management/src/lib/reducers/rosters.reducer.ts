@@ -4,19 +4,18 @@ import { on } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 
 import { addForceFormSubmitted } from '../actions/add-force-form-submitted.action';
-import { createRosterFormSubmitted } from '../actions/create-roster-form-submitted.action';
+import { createRosterFormSubmittedAction } from '../actions/create-roster-form-submitted.action';
 
 export const rostersReducer = createCoreReducer<RostersState>(
   on(
-    createRosterFormSubmitted,
+    createRosterFormSubmittedAction,
     (state, action): RostersState => [
       ...state,
       {
         id: uuid(),
         name: action.value.name,
         gameSystemId: action.value.gameSystemId,
-        catalogueId: action.value.catalogueId,
-        forceIds: [action.value.forceId],
+        forces: [],
       },
     ]
   ),
@@ -30,7 +29,10 @@ export const rostersReducer = createCoreReducer<RostersState>(
       ...state.filter((r) => r.id !== roster.id),
       {
         ...roster,
-        forceIds: [...roster.forceIds, action.value.forceId],
+        forces: [
+          ...roster.forces,
+          { id: action.value.forceId, catalogueId: action.value.catalogueId },
+        ],
       },
     ];
   })

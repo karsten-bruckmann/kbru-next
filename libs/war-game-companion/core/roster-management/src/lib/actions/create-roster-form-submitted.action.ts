@@ -1,13 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 
-export const createRosterFormSubmitted = createAction(
+export const createRosterFormSubmittedAction = createAction(
   'roster-management/create-roster-form-submitted',
   props<{
     value: {
       name: string;
       gameSystemId: string;
-      catalogueId: string;
-      forceId: string;
     };
   }>()
 );
