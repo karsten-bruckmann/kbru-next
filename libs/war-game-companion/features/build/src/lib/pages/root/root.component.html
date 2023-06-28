@@ -10,7 +10,7 @@
           slot="content"
           *ngIf="form.controls.forceId as control"
         >
-          <ion-label>Force</ion-label>
+          <ion-label position="floating">Force</ion-label>
           <ion-select [formControl]="control">
             <ion-select-option
               *ngFor="let option of control.options$ | async"

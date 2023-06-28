@@ -14,7 +14,7 @@
           slot="content"
           *ngIf="form.controls.name as control"
         >
-          <ion-label>Name</ion-label>
+          <ion-label position="floating">Name</ion-label>
           <ion-input [formControl]="control"></ion-input>
         </ion-item>
         <ion-item
@@ -22,7 +22,7 @@
           slot="content"
           *ngIf="form.controls.gameSystemId as control"
         >
-          <ion-label>Game System</ion-label>
+          <ion-label position="floating">Game System</ion-label>
           <ion-select [formControl]="control">
             <ion-select-option
               *ngFor="let option of control.options$ | async"
@@ -36,7 +36,7 @@
           slot="content"
           *ngIf="form.controls.catalogueId as control"
         >
-          <ion-label>Catalogue</ion-label>
+          <ion-label position="floating">Catalogue</ion-label>
           <ion-select [formControl]="control">
             <ion-select-option
               *ngFor="let option of control.options$ | async"
@@ -50,7 +50,7 @@
           slot="content"
           *ngIf="form.controls.forceId as control"
         >
-          <ion-label>Force</ion-label>
+          <ion-label position="floating">Force</ion-label>
           <ion-select [formControl]="control">
             <ion-select-option
               *ngFor="let option of control.options$ | async"
