@@ -10,11 +10,11 @@ export class AddForceForm extends FormGroup<{
   catalogueId: CatalogueIdControl;
   forceId: ForceIdControl;
 }> {
-  constructor(store$: Store, public readonly gameSystemId: string) {
+  constructor(store$: Store) {
     super(
       {
-        catalogueId: new CatalogueIdControl(store$, gameSystemId),
-        forceId: new ForceIdControl(store$, gameSystemId),
+        catalogueId: new CatalogueIdControl(store$),
+        forceId: new ForceIdControl(store$),
       },
       {
         asyncValidators: [
@@ -32,17 +32,15 @@ export class AddForceForm extends FormGroup<{
 }
 
 export class CatalogueIdControl extends FormControl<string | null> {
-  constructor(private store$: Store, public readonly gameSystemId: string) {
+  constructor(private store$: Store) {
     super(null);
   }
 
-  public readonly options$ = this.store$.select(
-    availableCataloguesSelector(this.gameSystemId)
-  );
+  public readonly options$ = this.store$.select(availableCataloguesSelector);
 }
 
 export class ForceIdControl extends FormControl<string | null> {
-  constructor(private store$: Store, public readonly gameSystemId: string) {
+  constructor(private store$: Store) {
     super(null);
   }
 
@@ -52,9 +50,7 @@ export class ForceIdControl extends FormControl<string | null> {
     switchMap((catalogueId) =>
       !catalogueId
         ? of([])
-        : this.store$.select(
-            availableForcesSelector(this.gameSystemId, catalogueId)
-          )
+        : this.store$.select(availableForcesSelector(catalogueId))
     )
   );
 

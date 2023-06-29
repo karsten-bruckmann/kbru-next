@@ -3,9 +3,9 @@ import { createSelector } from '@ngrx/store';
 import { Roster } from '../models/roster.model';
 import { rostersSelector } from './rosters.selector';
 
-export const rosterSelector = (id: string) =>
+export const rosterSelector = (repositoryName: string, id: string) =>
   createSelector(
-    rostersSelector,
+    rostersSelector(repositoryName),
     (rosters): Roster | null =>
       rosters.find((roster) => roster.id === id) ?? null
   );

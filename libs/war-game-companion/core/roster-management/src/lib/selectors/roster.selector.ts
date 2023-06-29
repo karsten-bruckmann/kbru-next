@@ -1,29 +1,29 @@
 import {
   cataloguesSelector,
   forceSelector,
-  gameSystemsSelector,
+  gameSystemSelector,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { rosterSelector as rosterDataSelector } from '@kbru/war-game-companion/data-access/rosters';
 import { createSelector } from '@ngrx/store';
 
 import { Roster } from '../models/roster.model';
 
-export const rosterSelector = (rosterId: string) =>
+export const rosterSelector = (repositoryName: string, rosterId: string) =>
   createSelector(
-    rosterDataSelector(rosterId),
-    gameSystemsSelector,
+    rosterDataSelector(repositoryName, rosterId),
+    gameSystemSelector,
     cataloguesSelector,
-    (roster, gameSystems, catalogues): Roster | null =>
+    (roster, gameSystem, catalogues): Roster | null =>
       !roster
         ? null
         : {
+            repositoryName,
             id: roster.id,
             name: roster.name,
-            gameSystemId: roster.gameSystemId,
             forces: roster.forces
               .map((f): Roster['forces'][0] | null => {
                 const force = forceSelector(f.id).projector(
-                  gameSystems,
+                  gameSystem,
                   catalogues
                 );
                 if (!force) {

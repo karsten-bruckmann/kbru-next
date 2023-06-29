@@ -1,3 +1,3 @@
 import { Roster } from './roster.model';
 
-export type RostersState = Roster[];
+export type RostersState = { [repositoryName: string]: Roster[] };

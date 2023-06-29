@@ -6,5 +6,6 @@ import { cataloguesSelector } from './catalogues.selector';
 export const catalogueSelector = (id: string) =>
   createSelector(
     cataloguesSelector,
-    (catalogues): CatalogueSchema['catalogue'] | null => catalogues[id] ?? null
+    (catalogues): CatalogueSchema['catalogue'] | undefined =>
+      catalogues && catalogues[id]
   );

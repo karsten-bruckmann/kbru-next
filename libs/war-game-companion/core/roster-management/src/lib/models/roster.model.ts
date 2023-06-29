@@ -1,7 +1,7 @@
 export interface Roster {
   id: string;
   name: string;
-  gameSystemId: string;
+  repositoryName: string;
   forces: {
     id: string;
     name: string;

@@ -1,33 +1,29 @@
 import { Routes } from '@angular/router';
 
-export const buildStartPageRoutes = (buildPath: string): Routes => [
+import { BuildComponent } from './build.component';
+import { repositoryOpenGuard } from './guards/repository-open.guard';
+import { ForceComponent } from './pages/force/force.component';
+import { RepoComponent } from './pages/repo/repo.component';
+import { RootComponent } from './pages/root/root.component';
+
+export const buildRoutes: Routes = [
   {
-    path: buildPath,
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./build.component').then((m) => m.BuildStartPageComponent),
-      },
-      {
-        path: ':rosterId',
-        children: [
-          {
-            path: '',
-            loadComponent: () =>
-              import('./pages/root/root.component').then(
-                (m) => m.RootComponent
-              ),
-          },
-          {
-            path: ':forceIndex',
-            loadComponent: () =>
-              import('./pages/force/force.component').then(
-                (m) => m.ForceComponent
-              ),
-          },
-        ],
-      },
-    ],
+    path: '',
+    component: BuildComponent,
+  },
+  {
+    path: ':repositoryName',
+    canActivate: [repositoryOpenGuard],
+    component: RepoComponent,
+  },
+  {
+    path: ':repositoryName/:rosterId',
+    canActivate: [repositoryOpenGuard],
+    component: RootComponent,
+  },
+  {
+    path: ':repositoryName/:rosterId/:forceIndex',
+    canActivate: [repositoryOpenGuard],
+    component: ForceComponent,
   },
 ];

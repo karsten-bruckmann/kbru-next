@@ -1,63 +1,69 @@
-<ion-content *ngIf="rosterId$ | async as rosterId">
-  <ion-accordion-group #ag>
-    <ion-list inset *ngIf="addForceForm$ | async as form" [formGroup]="form">
-      <ion-accordion value="form">
-        <ion-item color="light" slot="header">
-          <ion-label>Add Force...</ion-label>
-        </ion-item>
-        <ion-item
-          color="light"
-          slot="content"
-          *ngIf="form.controls.catalogueId as control"
-        >
-          <ion-label position="floating">Catalogue</ion-label>
-          <ion-select [formControl]="control">
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option.id"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
-        <ion-item
-          color="light"
-          slot="content"
-          *ngIf="form.controls.forceId as control"
-        >
-          <ion-label position="floating">Force</ion-label>
-          <ion-select [formControl]="control">
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option.id"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
-        <ion-item color="light" slot="content">
-          <ion-button
-            slot="end"
-            fill="clear"
-            [disabled]="form.invalid"
-            (click)="
-              ag.value = 'none';
-              rosterEditingService.submitAddForceForm(form, rosterId);
-              form.reset()
-            "
+<ion-content *ngIf="repositoryName$ | async as repositoryName">
+  <ion-content *ngIf="rosterId$ | async as rosterId">
+    <ion-accordion-group #ag>
+      <ion-list inset *ngIf="addForceForm$ | async as form" [formGroup]="form">
+        <ion-accordion value="form">
+          <ion-item color="light" slot="header">
+            <ion-label>Add Force...</ion-label>
+          </ion-item>
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.catalogueId as control"
           >
-            <ion-icon name="checkmark"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-accordion>
-    </ion-list>
-  </ion-accordion-group>
+            <ion-label position="floating">Catalogue</ion-label>
+            <ion-select [formControl]="control">
+              <ion-select-option
+                *ngFor="let option of control.options$ | async"
+                [value]="option.id"
+                >{{ option.name }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item
+            color="light"
+            slot="content"
+            *ngIf="form.controls.forceId as control"
+          >
+            <ion-label position="floating">Force</ion-label>
+            <ion-select [formControl]="control">
+              <ion-select-option
+                *ngFor="let option of control.options$ | async"
+                [value]="option.id"
+                >{{ option.name }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item color="light" slot="content">
+            <ion-button
+              slot="end"
+              fill="clear"
+              [disabled]="form.invalid"
+              (click)="
+                ag.value = 'none';
+                rosterEditingService.submitAddForceForm(
+                  form,
+                  repositoryName,
+                  rosterId
+                );
+                form.reset()
+              "
+            >
+              <ion-icon name="checkmark"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-accordion>
+      </ion-list>
+    </ion-accordion-group>
 
-  <ion-list inset *ngIf="forces$ | async as forces">
-    <ion-item
-      color="light"
-      [routerLink]="[i]"
-      *ngFor="let force of forces; let i = index"
-    >
-      <ion-label>{{ force.name }}</ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-list inset *ngIf="forces$ | async as forces">
+      <ion-item
+        color="light"
+        [routerLink]="[i]"
+        *ngFor="let force of forces; let i = index"
+      >
+        <ion-label>{{ force.name }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-content>

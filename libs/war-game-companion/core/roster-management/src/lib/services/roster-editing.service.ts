@@ -1,48 +1,61 @@
 import { Injectable } from '@angular/core';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
-import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
+import {
+  repositoryNameSelector,
+  repositoryOpenedAction,
+} from '@kbru/war-game-companion/data-access/game-definition-data';
 import { Store } from '@ngrx/store';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { addForceFormSubmitted } from '../actions/add-force-form-submitted.action';
 import { createRosterFormSubmittedAction } from '../actions/create-roster-form-submitted.action';
 import { AddForceForm } from '../forms/add-force.form';
+import { AddSelectionEntryForm } from '../forms/add-selection-entry.form';
 import { CreateRosterForm } from '../forms/create-roster.form';
-import { Roster } from '../models/roster.model';
-import { rosterSelector } from '../selectors/roster.selector';
 
 @Injectable({ providedIn: 'root' })
 export class RosterEditingService {
   constructor(private readonly store$: Store) {}
 
-  public get createRosterForm$(): Observable<CreateRosterForm> {
-    return createEffectAwareForm(new CreateRosterForm(this.store$), []);
+  public openRepository(repositoryName: string): void {
+    this.store$.dispatch(repositoryOpenedAction({ repositoryName }));
   }
 
-  public submitCreateForm(form: CreateRosterForm): void {
-    const { name, gameSystemId } = form.value;
-    if (!name || !gameSystemId) {
+  public get repositoryName$() {
+    return this.store$.select(repositoryNameSelector);
+  }
+
+  public getCreateRosterForm$(): Observable<CreateRosterForm> {
+    return createEffectAwareForm(new CreateRosterForm(), []);
+  }
+
+  public submitCreateForm(
+    form: CreateRosterForm,
+    repositoryName: string
+  ): void {
+    const { name } = form.value;
+    if (!name) {
       return;
     }
 
     this.store$.dispatch(
       createRosterFormSubmittedAction({
-        value: { name, gameSystemId },
+        repositoryName,
+        rosterName: name,
       })
     );
   }
 
-  public addForceForm$(rosterId: string): Observable<AddForceForm> {
-    return this.store$.select(rosterSelector(rosterId)).pipe(
-      filterNullish(),
-      switchMap((roster) => {
-        const form = new AddForceForm(this.store$, roster?.gameSystemId);
-        return createEffectAwareForm(form, [...form.controls.forceId.effects]);
-      })
-    );
+  public addForceForm$(): Observable<AddForceForm> {
+    const form = new AddForceForm(this.store$);
+    return createEffectAwareForm(form, [...form.controls.forceId.effects]);
   }
 
-  public submitAddForceForm(form: AddForceForm, rosterId: string): void {
+  public submitAddForceForm(
+    form: AddForceForm,
+    repositoryName: string,
+    rosterId: string
+  ): void {
     const { catalogueId, forceId } = form.value;
     if (!forceId || !catalogueId) {
       return;
@@ -50,8 +63,23 @@ export class RosterEditingService {
 
     this.store$.dispatch(
       addForceFormSubmitted({
+        repositoryName,
         value: { catalogueId, forceId, rosterId: rosterId },
       })
     );
+  }
+
+  public addSelectionEntryForm$(
+    rosterId: string,
+    repositoryName: string,
+    forceIndex: number
+  ): Observable<AddSelectionEntryForm> {
+    const form = new AddSelectionEntryForm(
+      this.store$,
+      repositoryName,
+      rosterId,
+      forceIndex
+    );
+    return createEffectAwareForm(form, [...form.controls.entryLinkId.effects]);
   }
 }

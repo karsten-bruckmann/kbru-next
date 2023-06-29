@@ -1,13 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
-import { FileInputComponent } from '@kbru/shared/ui/ionic-file-input';
 import {
-  DataSourceManagementModule,
-  gameSystemListItemsSelector,
   LoadGameDefinitionForm,
   LoadGameDefinitionService,
+  repositoriesSelector,
 } from '@kbru/war-game-companion/core/data-source-management';
 import { Store } from '@ngrx/store';
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js';
@@ -29,15 +24,6 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
 };
 
 @Component({
-  selector: 'war-game-companion-data-sources',
-  standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule,
-    ReactiveFormsModule,
-    FileInputComponent,
-    DataSourceManagementModule,
-  ],
   templateUrl: './data-sources.component.html',
   styleUrls: ['./data-sources.component.scss'],
 })
@@ -49,7 +35,7 @@ export class DataSourcesComponent {
 
   protected form$ = this.loadGameDefinitionService.form$;
 
-  protected gameSystems$ = this.store$.select(gameSystemListItemsSelector);
+  protected repositories$ = this.store$.select(repositoriesSelector);
 
   protected async submit(form: LoadGameDefinitionForm): Promise<void> {
     this.loadGameDefinitionService.submit(form);

@@ -1,27 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
   RosterEditingService,
-  RosterManagementModule,
   rosterSelector,
 } from '@kbru/war-game-companion/core/roster-management';
 import { Store } from '@ngrx/store';
-import { map, switchMap } from 'rxjs';
+import { combineLatest, map, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'war-game-companion-build-start-page-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterModule,
-    ReactiveFormsModule,
-    RosterManagementModule,
-  ],
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
 })
@@ -32,20 +19,28 @@ export class RootComponent {
     protected readonly rosterEditingService: RosterEditingService
   ) {}
 
+  protected readonly repositoryName$ = this.route.paramMap.pipe(
+    map((map) => map.get('repositoryName')),
+    filterNullish()
+  );
+
   protected readonly rosterId$ = this.route.paramMap.pipe(
     map((map) => map.get('rosterId')),
     filterNullish()
   );
 
-  protected readonly roster$ = this.rosterId$.pipe(
-    switchMap((rosterId) => this.store$.select(rosterSelector(rosterId)))
+  protected readonly roster$ = combineLatest([
+    this.repositoryName$,
+    this.rosterId$,
+  ]).pipe(
+    switchMap(([repositoryName, rosterId]) =>
+      this.store$.select(rosterSelector(repositoryName, rosterId))
+    )
   );
 
   protected readonly forces$ = this.roster$.pipe(
     map((roster) => roster?.forces)
   );
 
-  protected readonly addForceForm$ = this.rosterId$.pipe(
-    switchMap((rosterId) => this.rosterEditingService.addForceForm$(rosterId))
-  );
+  protected readonly addForceForm$ = this.rosterEditingService.addForceForm$();
 }

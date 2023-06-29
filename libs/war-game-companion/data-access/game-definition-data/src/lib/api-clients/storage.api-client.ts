@@ -8,6 +8,7 @@ import {
   Observable,
   switchMap,
 } from 'rxjs';
+import { Md5 } from 'ts-md5';
 
 import { gameDefinitionDataSlice } from '../game-definition-data.slice';
 import { GameDefinitionDataState } from '../models/game-definition-data-state.model';
@@ -19,49 +20,63 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class StorageApiClient {
-  public get(): Observable<GameDefinitionDataState> {
-    return combineLatest([this.getGameSystems(), this.getCatalogues()]).pipe(
-      map(([gameSystems, catalogues]) => ({ gameSystems, catalogues }))
+  public get(
+    repositoryName: string
+  ): Observable<GameDefinitionDataState | null> {
+    return combineLatest([
+      this.getGameSystem(repositoryName),
+      this.getCatalogues(repositoryName),
+    ]).pipe(
+      map(([gameSystem, catalogues]) =>
+        gameSystem
+          ? {
+              gameSystem,
+              catalogues,
+              repositoryName,
+            }
+          : null
+      )
     );
   }
 
-  public getGameSystems(): Observable<
-    Record<string, GameSystemSchema['gameSystem']>
-  > {
-    return from(this.gameSystemsDb).pipe(
+  public getGameSystem(
+    repositoryName: string
+  ): Observable<GameSystemSchema['gameSystem'] | null> {
+    return from(this.gameSystemsDb(repositoryName)).pipe(
       switchMap((db: IDBPDatabase) => {
-        return from(db.getAllKeys(this.gameSystemsKey)).pipe(
-          switchMap((keys) =>
-            from(
-              Promise.all(keys.map((key) => db.get(this.gameSystemsKey, key)))
-            ).pipe(
-              map((values) =>
-                values.reduce<Record<string, GameSystemSchema['gameSystem']>>(
-                  (record, value, index) => ({
-                    ...record,
-                    [`${keys[index]}`]: gameSystemSchema.parse({
-                      gameSystem: value,
-                    }).gameSystem,
-                  }),
-                  {}
-                )
-              )
-            )
+        return from(
+          db.get(
+            this.gameSystemKey(repositoryName),
+            this.gameSystemKey(repositoryName)
           )
+        ).pipe(
+          map((value) => {
+            try {
+              return gameSystemSchema.parse({
+                gameSystem: value,
+              }).gameSystem;
+            } catch (e) {
+              return null;
+            }
+          })
         );
       })
     );
   }
 
-  public getCatalogues(): Observable<
-    Record<string, CatalogueSchema['catalogue']>
-  > {
-    return from(this.cataloguesDb).pipe(
+  public getCatalogues(
+    repositoryName: string
+  ): Observable<Record<string, CatalogueSchema['catalogue']>> {
+    return from(this.cataloguesDb(repositoryName)).pipe(
       switchMap((db: IDBPDatabase) => {
-        return from(db.getAllKeys(this.cataloguesKey)).pipe(
+        return from(db.getAllKeys(this.cataloguesKey(repositoryName))).pipe(
           switchMap((keys) =>
             from(
-              Promise.all(keys.map((key) => db.get(this.cataloguesKey, key)))
+              Promise.all(
+                keys.map((key) =>
+                  db.get(this.cataloguesKey(repositoryName), key)
+                )
+              )
             ).pipe(
               map((values) =>
                 values.reduce<Record<string, CatalogueSchema['catalogue']>>(
@@ -82,54 +97,55 @@ export class StorageApiClient {
   }
 
   public async set(data: GameDefinitionDataState): Promise<void> {
-    const gameSystemsDb = await this.gameSystemsDb;
-    const cataloguesDb = await this.cataloguesDb;
+    console.log(data);
 
-    const current = await firstValueFrom(this.get());
+    const gameSystemsKey = this.gameSystemKey(data.repositoryName);
+    const cataloguesKey = this.cataloguesKey(data.repositoryName);
+    const gameSystemsDb = await this.gameSystemsDb(data.repositoryName);
+    const cataloguesDb = await this.cataloguesDb(data.repositoryName);
 
-    await Promise.all(
-      Object.keys(data.gameSystems).map((key) =>
-        gameSystemsDb.put(this.gameSystemsKey, data.gameSystems[key], key)
-      )
-    );
-    await Promise.all(
-      Object.keys(current.gameSystems)
-        .filter((key) => !data.gameSystems[key])
-        .map((key) => gameSystemsDb.delete(this.gameSystemsKey, key))
-    );
+    const current = await firstValueFrom(this.get(data.repositoryName));
 
-    await Promise.all(
-      Object.keys(data.catalogues).map((key) =>
-        cataloguesDb.put(this.cataloguesKey, data.catalogues[key], key)
-      )
-    );
-    await Promise.all(
-      Object.keys(current.catalogues)
-        .filter((key) => !data.catalogues[key])
-        .map((key) => cataloguesDb.delete(this.cataloguesKey, key))
-    );
+    await gameSystemsDb.put(gameSystemsKey, data.gameSystem, gameSystemsKey);
+
+    if (current) {
+      await Promise.all(
+        Object.keys(data.catalogues).map((key) =>
+          cataloguesDb.put(cataloguesKey, data.catalogues[key], key)
+        )
+      );
+      await Promise.all(
+        Object.keys(current.catalogues)
+          .filter((key) => !data.catalogues[key])
+          .map((key) => cataloguesDb.delete(cataloguesKey, key))
+      );
+    }
   }
 
-  private get gameSystemsKey(): string {
-    return `${gameDefinitionDataSlice}/gameSystems`;
+  private gameSystemKey(repositoryName: string): string {
+    return `${gameDefinitionDataSlice}/${Md5.hashStr(
+      repositoryName
+    )}/gameSystem`;
   }
 
-  private get gameSystemsDb(): Promise<IDBPDatabase> {
-    return openDB(this.gameSystemsKey, 1, {
+  private gameSystemsDb(repositoryName: string): Promise<IDBPDatabase> {
+    return openDB(this.gameSystemKey(repositoryName), 1, {
       upgrade: (db) => {
-        db.createObjectStore(this.gameSystemsKey);
+        db.createObjectStore(this.gameSystemKey(repositoryName));
       },
     });
   }
 
-  private get cataloguesKey(): string {
-    return `${gameDefinitionDataSlice}/catalogues`;
+  private cataloguesKey(repositoryName: string): string {
+    return `${gameDefinitionDataSlice}/${Md5.hashStr(
+      repositoryName
+    )}/catalogues`;
   }
 
-  private get cataloguesDb(): Promise<IDBPDatabase> {
-    return openDB(this.cataloguesKey, 1, {
+  private cataloguesDb(repositoryName: string): Promise<IDBPDatabase> {
+    return openDB(this.cataloguesKey(repositoryName), 1, {
       upgrade: (db) => {
-        db.createObjectStore(this.cataloguesKey);
+        db.createObjectStore(this.cataloguesKey(repositoryName));
       },
     });
   }

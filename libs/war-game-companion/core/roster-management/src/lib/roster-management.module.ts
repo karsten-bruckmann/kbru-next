@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { GameDefinitionDataModule } from '@kbru/war-game-companion/data-access/game-definition-data';
 import {
   rostersCoreReducerRegistry,
@@ -11,7 +11,10 @@ import { rostersReducer } from './reducers/rosters.reducer';
   imports: [GameDefinitionDataModule, RostersModule],
 })
 export class RosterManagementModule {
-  constructor() {
+  public static import(): ModuleWithProviders<RosterManagementModule> {
     rostersCoreReducerRegistry.add(rostersReducer, 'roster-management');
+    return {
+      ngModule: RosterManagementModule,
+    };
   }
 }

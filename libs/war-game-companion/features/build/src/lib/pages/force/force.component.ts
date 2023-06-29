@@ -1,28 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
   availableCategoriesSelector,
   RosterEditingService,
-  RosterManagementModule,
   rosterSelector,
 } from '@kbru/war-game-companion/core/roster-management';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'war-game-companion-build-start-page-force',
-  standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterModule,
-    ReactiveFormsModule,
-    RosterManagementModule,
-  ],
   templateUrl: './force.component.html',
   styleUrls: ['./force.component.scss'],
 })
@@ -32,6 +19,11 @@ export class ForceComponent {
     private readonly store$: Store,
     protected readonly rosterEditingService: RosterEditingService
   ) {}
+
+  protected readonly repositoryName$ = this.route.paramMap.pipe(
+    map((map) => map.get('repositoryName')),
+    filterNullish()
+  );
 
   protected readonly rosterId$ = this.route.paramMap.pipe(
     map((map) => map.get('rosterId')),
@@ -44,8 +36,13 @@ export class ForceComponent {
     map((i) => parseInt(i))
   );
 
-  protected readonly roster$ = this.rosterId$.pipe(
-    switchMap((rosterId) => this.store$.select(rosterSelector(rosterId)))
+  protected readonly roster$ = combineLatest([
+    this.repositoryName$,
+    this.rosterId$,
+  ]).pipe(
+    switchMap(([repositoryName, rosterId]) =>
+      this.store$.select(rosterSelector(repositoryName, rosterId))
+    )
   );
 
   protected readonly force$ = combineLatest([
@@ -54,11 +51,28 @@ export class ForceComponent {
   ]).pipe(map(([roster, forceIndex]) => roster?.forces[forceIndex]));
 
   protected readonly categories$ = combineLatest([
+    this.repositoryName$,
     this.rosterId$,
     this.forceIndex$,
   ]).pipe(
-    switchMap(([rosterId, forceIndex]) =>
-      this.store$.select(availableCategoriesSelector(rosterId, forceIndex))
+    switchMap(([repositoryName, rosterId, forceIndex]) =>
+      this.store$.select(
+        availableCategoriesSelector(repositoryName, rosterId, forceIndex)
+      )
+    )
+  );
+
+  protected readonly form$ = combineLatest([
+    this.repositoryName$,
+    this.rosterId$,
+    this.forceIndex$,
+  ]).pipe(
+    switchMap(([repositoryName, rosterId, forceIndex]) =>
+      this.rosterEditingService.addSelectionEntryForm$(
+        repositoryName,
+        rosterId,
+        forceIndex
+      )
     )
   );
 }

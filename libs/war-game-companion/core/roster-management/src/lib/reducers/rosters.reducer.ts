@@ -9,31 +9,40 @@ import { createRosterFormSubmittedAction } from '../actions/create-roster-form-s
 export const rostersReducer = createCoreReducer<RostersState>(
   on(
     createRosterFormSubmittedAction,
-    (state, action): RostersState => [
+    (state, action): RostersState => ({
       ...state,
-      {
-        id: uuid(),
-        name: action.value.name,
-        gameSystemId: action.value.gameSystemId,
-        forces: [],
-      },
-    ]
+      [action.repositoryName]: [
+        ...(state[action.repositoryName] ?? []),
+        {
+          id: uuid(),
+          name: action.rosterName,
+          forces: [],
+        },
+      ],
+    })
   ),
   on(addForceFormSubmitted, (state, action): RostersState => {
-    const roster = state.find((r) => r.id === action.value.rosterId);
+    const roster = state[action.repositoryName]?.find(
+      (r) => r.id === action.value.rosterId
+    );
     if (!roster) {
       return state;
     }
 
-    return [
-      ...state.filter((r) => r.id !== roster.id),
-      {
-        ...roster,
-        forces: [
-          ...roster.forces,
-          { id: action.value.forceId, catalogueId: action.value.catalogueId },
-        ],
-      },
-    ];
+    return {
+      ...state,
+      [action.repositoryName]: [
+        ...(state[action.repositoryName] ?? []).filter(
+          (r) => r.id !== roster.id
+        ),
+        {
+          ...roster,
+          forces: [
+            ...roster.forces,
+            { id: action.value.forceId, catalogueId: action.value.catalogueId },
+          ],
+        },
+      ],
+    };
   })
 );

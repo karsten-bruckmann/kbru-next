@@ -1,10 +1,6 @@
 import { Route } from '@angular/router';
-import { buildStartPageRoutes } from '@kbru/war-game-companion/features/build';
-import { dataSourcesRoutes } from '@kbru/war-game-companion/features/data-sources';
 
 import { AppNavigationComponent } from './app-navigation.component';
-
-const buildRoutes = buildStartPageRoutes('build');
 
 export const appRoutes: Route[] = [
   {
@@ -12,12 +8,19 @@ export const appRoutes: Route[] = [
     component: AppNavigationComponent,
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: buildRoutes[0].path,
+        path: 'build',
+        loadChildren: () =>
+          import('@kbru/war-game-companion/features/build').then(
+            (m) => m.BuildModule
+          ),
       },
-      ...buildRoutes,
-      ...dataSourcesRoutes('data-sources'),
+      {
+        path: 'data-sources',
+        loadChildren: () =>
+          import('@kbru/war-game-companion/features/data-sources').then(
+            (m) => m.DataSourcesModule
+          ),
+      },
     ],
   },
 ];

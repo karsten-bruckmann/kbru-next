@@ -1,4 +1,4 @@
-<ion-content>
+<!-- <ion-content>
   <ion-accordion-group #ag>
     <ion-list
       inset
@@ -68,4 +68,15 @@
       </ion-list>
     </ng-container>
   </ion-accordion-group>
+</ion-content> -->
+
+<ion-content>
+  <ion-list inset>
+    <ion-item
+      color="light"
+      *ngFor="let repo of repositoryList$ | async"
+      [routerLink]="[repo]"
+      >{{ repo }}</ion-item
+    >
+  </ion-list>
 </ion-content>

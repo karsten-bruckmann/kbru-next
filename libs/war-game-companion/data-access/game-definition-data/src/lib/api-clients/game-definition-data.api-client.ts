@@ -8,9 +8,11 @@ import {
   from,
   map,
   Observable,
+  of,
   switchMap,
 } from 'rxjs';
 
+import { GameDefinitionDataState } from '../models/game-definition-data-state.model';
 import { CatalogueSchema, catalogueSchema } from '../schemas/catalogue.schema';
 import {
   CatalogueIndex,
@@ -20,11 +22,6 @@ import {
   GameSystemSchema,
   gameSystemSchema,
 } from '../schemas/game-system.schema';
-
-export interface GameDefinitionDataResponse {
-  gameSystems: Record<string, GameSystemSchema['gameSystem']>;
-  catalogues: Record<string, CatalogueSchema['catalogue']>;
-}
 
 export const unzipSingleFileContainer = async (file: File): Promise<File> => {
   const zipFileReader = new BlobReader(file);
@@ -84,7 +81,6 @@ export const loadDataSource = async (
     ignoreAttributes: false,
   });
   const data = parser.parse(xmlData);
-  console.log(data);
   return catalogueIndexSchema.parse(data);
 };
 
@@ -105,6 +101,7 @@ export const loadGameSystem = async (
   });
 
   const data = parser.parse(xmlData);
+  console.log(data);
   return gameSystemSchema.parse(data);
 };
 
@@ -133,7 +130,7 @@ export const loadCatalogue = async (
 export class GameDefinitionDataApiClient {
   constructor(private http: HttpClient) {}
 
-  public get(indexFileUrl: string): Observable<GameDefinitionDataResponse> {
+  public get(indexFileUrl: string): Observable<GameDefinitionDataState> {
     return from(
       loadDataSource(
         (url) =>
@@ -141,22 +138,22 @@ export class GameDefinitionDataApiClient {
         indexFileUrl
       )
     ).pipe(
-      switchMap((catalogueIndex) =>
-        combineLatest([
-          combineLatest(
-            catalogueIndex.dataIndex.dataIndexEntries.dataIndexEntry
-              .filter((entry) => entry['@_dataType'] === 'gamesystem')
-              .map((entry) =>
-                loadGameSystem(
-                  (url) =>
-                    firstValueFrom(
-                      this.http.get(url, { responseType: 'arraybuffer' })
-                    ),
-                  `${indexFileUrl.replace(/\/[^/]+$/, '')}/${encodeURIComponent(
-                    entry['@_filePath']
-                  )}`
-                )
-              )
+      switchMap((catalogueIndex) => {
+        const gameSystem =
+          catalogueIndex.dataIndex.dataIndexEntries.dataIndexEntry.find(
+            (entry) => entry['@_dataType'] === 'gamesystem'
+          );
+
+        return combineLatest([
+          of(catalogueIndex.dataIndex['@_name']),
+          loadGameSystem(
+            (url) =>
+              firstValueFrom(
+                this.http.get(url, { responseType: 'arraybuffer' })
+              ),
+            `${indexFileUrl.replace(/\/[^/]+$/, '')}/${encodeURIComponent(
+              (gameSystem && gameSystem['@_filePath']) || '__unknwon__'
+            )}`
           ),
           combineLatest(
             catalogueIndex.dataIndex.dataIndexEntries.dataIndexEntry
@@ -173,19 +170,16 @@ export class GameDefinitionDataApiClient {
                 )
               )
           ),
-        ])
-      ),
+        ]);
+      }),
       map(
-        ([gameSystems, catalogues]): GameDefinitionDataResponse => ({
-          gameSystems: gameSystems.reduce<
-            Record<string, GameSystemSchema['gameSystem']>
-          >(
-            (record, gameSystem) => ({
-              ...record,
-              [gameSystem.gameSystem['@_id']]: gameSystem.gameSystem,
-            }),
-            {}
-          ),
+        ([
+          repositoryName,
+          gameSystem,
+          catalogues,
+        ]): GameDefinitionDataState => ({
+          repositoryName: gameSystem.gameSystem['@_name'] ?? repositoryName,
+          gameSystem: gameSystem.gameSystem,
           catalogues: catalogues.reduce<
             Record<string, CatalogueSchema['catalogue']>
           >(

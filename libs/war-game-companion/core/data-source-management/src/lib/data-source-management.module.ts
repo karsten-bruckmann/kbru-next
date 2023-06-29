@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
   GameDefinitionDataModule,
   gameDefinitionDataRefreshActionRegistry,
@@ -10,9 +10,12 @@ import { loadGameDefinitionFormSubmittedAction } from './actions/load-game-defin
   imports: [GameDefinitionDataModule],
 })
 export class DataSourceManagementModule {
-  constructor() {
+  public static import(): ModuleWithProviders<DataSourceManagementModule> {
     gameDefinitionDataRefreshActionRegistry.add(
       loadGameDefinitionFormSubmittedAction
     );
+    return {
+      ngModule: DataSourceManagementModule,
+    };
   }
 }
