@@ -22,7 +22,6 @@ export const repositoryOpenGuard: CanActivateFn = (
       return rosterEditingService.repositoryName$.pipe(
         filter((repositoryName) => repositoryName === routeRepositoryName),
         map(() => true),
-        tap(console.log),
         first()
       );
     })

@@ -6,7 +6,6 @@ import { NamedReference } from '../models/named-reference.model';
 export const availableCataloguesSelector = createSelector(
   cataloguesSelector,
   (catalogues): NamedReference[] => {
-    console.log(catalogues);
     return Object.values(catalogues ?? {}).map((c) => {
       return {
         id: c['@_id'],

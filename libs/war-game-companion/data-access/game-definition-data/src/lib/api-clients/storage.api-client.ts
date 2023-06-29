@@ -97,8 +97,6 @@ export class StorageApiClient {
   }
 
   public async set(data: GameDefinitionDataState): Promise<void> {
-    console.log(data);
-
     const gameSystemsKey = this.gameSystemKey(data.repositoryName);
     const cataloguesKey = this.cataloguesKey(data.repositoryName);
     const gameSystemsDb = await this.gameSystemsDb(data.repositoryName);

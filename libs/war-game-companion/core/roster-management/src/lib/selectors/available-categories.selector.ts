@@ -42,7 +42,6 @@ export const availableCategoriesSelector = (
       ]
         .map((fe) => fe.categoryLinks.categoryLink.flat())
         .flat();
-      console.log(categoryLinks);
 
       return categoryLinks.map((c) => ({
         id: c['@_id'],

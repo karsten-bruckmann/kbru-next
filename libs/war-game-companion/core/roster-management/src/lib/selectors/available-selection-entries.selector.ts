@@ -21,7 +21,6 @@ export const availableSelectionEntriesSelector = (
         ]
           // .filter((el) => el['@_targetId'] === categoryId)
           .map((el) => {
-            console.log({ name: el['@_name'], el, categoryId });
             return {
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',

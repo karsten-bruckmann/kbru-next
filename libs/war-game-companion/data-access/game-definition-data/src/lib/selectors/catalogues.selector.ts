@@ -6,7 +6,6 @@ import { gameDefinitionDataSelector } from './game-definition-data.selector';
 export const cataloguesSelector = createSelector(
   gameDefinitionDataSelector,
   (state): Record<string, CatalogueSchema['catalogue']> | undefined => {
-    console.log(state, state?.catalogues);
     return state?.catalogues;
   }
 );

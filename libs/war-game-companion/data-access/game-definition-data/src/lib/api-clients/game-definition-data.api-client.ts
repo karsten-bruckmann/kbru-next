@@ -101,7 +101,6 @@ export const loadGameSystem = async (
   });
 
   const data = parser.parse(xmlData);
-  console.log(data);
   return gameSystemSchema.parse(data);
 };
 
