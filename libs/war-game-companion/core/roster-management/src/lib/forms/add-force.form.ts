@@ -1,19 +1,22 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
+import { catalogueSelector } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { Store } from '@ngrx/store';
-import { map, of, ReplaySubject, startWith, switchMap } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 
-import { availableCataloguesSelector } from '../selectors/available-catalogues.selector';
+import { addForceFormSubmitted } from '../actions/add-force-form-submitted.action';
 import { availableForcesSelector } from '../selectors/available-forces.selector';
 
 export class AddForceForm extends FormGroup<{
-  catalogueId: CatalogueIdControl;
   forceId: ForceIdControl;
 }> {
-  constructor(store$: Store) {
+  constructor(
+    private readonly store$: Store,
+    public readonly catalogueId: string,
+    public readonly rosterId: string
+  ) {
     super(
       {
-        catalogueId: new CatalogueIdControl(store$),
         forceId: new ForceIdControl(store$),
       },
       {
@@ -23,20 +26,36 @@ export class AddForceForm extends FormGroup<{
               return { invalid: true };
             }
 
+            const catalogue = await firstValueFrom(
+              store$.select(catalogueSelector)
+            );
+            if (!catalogue || catalogue['@_id'] !== this.catalogueId) {
+              return { invalid: true };
+            }
+
             return null;
           },
         ],
       }
     );
   }
-}
 
-export class CatalogueIdControl extends FormControl<string | null> {
-  constructor(private store$: Store) {
-    super(null);
+  public async submit() {
+    const { forceId } = this.value;
+    if (!forceId) {
+      return;
+    }
+
+    this.store$.dispatch(
+      addForceFormSubmitted({
+        value: {
+          catalogueId: this.catalogueId,
+          forceId,
+          rosterId: this.rosterId,
+        },
+      })
+    );
   }
-
-  public readonly options$ = this.store$.select(availableCataloguesSelector);
 }
 
 export class ForceIdControl extends FormControl<string | null> {
@@ -44,24 +63,9 @@ export class ForceIdControl extends FormControl<string | null> {
     super(null);
   }
 
-  private readonly catalogueId$ = new ReplaySubject<string | null>(0);
-
-  public readonly options$ = this.catalogueId$.pipe(
-    switchMap((catalogueId) =>
-      !catalogueId
-        ? of([])
-        : this.store$.select(availableForcesSelector(catalogueId))
-    )
-  );
+  public readonly options$ = this.store$.select(availableForcesSelector);
 
   public readonly effects: FormEffect<AddForceForm>[] = [
-    (form) =>
-      form.controls.catalogueId.valueChanges.pipe(
-        startWith(form.controls.catalogueId.value),
-        map((catalogueId) => {
-          this.catalogueId$.next(catalogueId);
-        })
-      ),
     () =>
       this.options$.pipe(
         map((options) => {

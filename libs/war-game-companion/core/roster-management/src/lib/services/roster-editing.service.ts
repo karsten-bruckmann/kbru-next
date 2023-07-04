@@ -1,85 +1,67 @@
 import { Injectable } from '@angular/core';
 import { createEffectAwareForm } from '@kbru/shared/utils/effect-aware-forms';
+import { filterNullish } from '@kbru/shared/utils/rxjs-utils';
 import {
-  repositoryNameSelector,
-  repositoryOpenedAction,
+  catalogueOpenedAction,
+  catalogueSelector,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 
 import { addForceFormSubmitted } from '../actions/add-force-form-submitted.action';
 import { createRosterFormSubmittedAction } from '../actions/create-roster-form-submitted.action';
 import { AddForceForm } from '../forms/add-force.form';
 import { AddSelectionEntryForm } from '../forms/add-selection-entry.form';
 import { CreateRosterForm } from '../forms/create-roster.form';
+import { NamedReference } from '../models/named-reference.model';
+import { Roster } from '../models/roster.model';
+import { rosterListSelector } from '../selectors/roster-list.selector';
 
 @Injectable({ providedIn: 'root' })
 export class RosterEditingService {
   constructor(private readonly store$: Store) {}
 
-  public openRepository(repositoryName: string): void {
-    this.store$.dispatch(repositoryOpenedAction({ repositoryName }));
+  public openCatalogue(catalogueId: string): void {
+    this.store$.dispatch(catalogueOpenedAction({ catalogueId }));
   }
 
-  public get repositoryName$() {
-    return this.store$.select(repositoryNameSelector);
+  public get catalogueId$(): Observable<string | null> {
+    return this.store$
+      .select(catalogueSelector)
+      .pipe(map((cat) => cat?.['@_id'] ?? null));
+  }
+
+  public get rosterList$(): Observable<NamedReference[]> {
+    return this.store$.select(rosterListSelector);
   }
 
   public getCreateRosterForm$(): Observable<CreateRosterForm> {
-    return createEffectAwareForm(new CreateRosterForm(), []);
-  }
-
-  public submitCreateForm(
-    form: CreateRosterForm,
-    repositoryName: string
-  ): void {
-    const { name } = form.value;
-    if (!name) {
-      return;
-    }
-
-    this.store$.dispatch(
-      createRosterFormSubmittedAction({
-        repositoryName,
-        rosterName: name,
-      })
+    return this.store$.select(catalogueSelector).pipe(
+      filterNullish(),
+      switchMap((catalogue) =>
+        createEffectAwareForm(
+          new CreateRosterForm(this.store$, catalogue['@_id']),
+          []
+        )
+      )
     );
   }
 
-  public addForceForm$(): Observable<AddForceForm> {
-    const form = new AddForceForm(this.store$);
-    return createEffectAwareForm(form, [...form.controls.forceId.effects]);
-  }
-
-  public submitAddForceForm(
-    form: AddForceForm,
-    repositoryName: string,
-    rosterId: string
-  ): void {
-    const { catalogueId, forceId } = form.value;
-    if (!forceId || !catalogueId) {
-      return;
-    }
-
-    this.store$.dispatch(
-      addForceFormSubmitted({
-        repositoryName,
-        value: { catalogueId, forceId, rosterId: rosterId },
+  public addForceForm$(rosterId: string): Observable<AddForceForm> {
+    return this.store$.select(catalogueSelector).pipe(
+      filterNullish(),
+      switchMap((catalogue) => {
+        const form = new AddForceForm(this.store$, catalogue['@_id'], rosterId);
+        return createEffectAwareForm(form, [...form.controls.forceId.effects]);
       })
     );
   }
 
   public addSelectionEntryForm$(
-    rosterId: string,
-    repositoryName: string,
+    roster: Roster,
     forceIndex: number
   ): Observable<AddSelectionEntryForm> {
-    const form = new AddSelectionEntryForm(
-      this.store$,
-      repositoryName,
-      rosterId,
-      forceIndex
-    );
+    const form = new AddSelectionEntryForm(this.store$, roster, forceIndex);
     return createEffectAwareForm(form, [...form.controls.entryLinkId.effects]);
   }
 }

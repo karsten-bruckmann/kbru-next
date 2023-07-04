@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 
 import { BuildComponent } from './build.component';
-import { repositoryOpenGuard } from './guards/repository-open.guard';
+import { catalogueOpenGuard } from './guards/catalogue-open.guard';
 import { ForceComponent } from './pages/force/force.component';
-import { RepoComponent } from './pages/repo/repo.component';
-import { RootComponent } from './pages/root/root.component';
+import { RootComponent } from './pages/forces/forces.component';
+import { RostersComponent } from './pages/rosters/rosters.component';
 
 export const buildRoutes: Routes = [
   {
@@ -12,18 +12,18 @@ export const buildRoutes: Routes = [
     component: BuildComponent,
   },
   {
-    path: ':repositoryName',
-    canActivate: [repositoryOpenGuard],
-    component: RepoComponent,
+    path: ':catalogueId',
+    canActivate: [catalogueOpenGuard],
+    component: RostersComponent,
   },
   {
-    path: ':repositoryName/:rosterId',
-    canActivate: [repositoryOpenGuard],
+    path: ':catalogueId/:rosterId',
+    canActivate: [catalogueOpenGuard],
     component: RootComponent,
   },
   {
-    path: ':repositoryName/:rosterId/:forceIndex',
-    canActivate: [repositoryOpenGuard],
+    path: ':catalogueId/:rosterId/:forceIndex',
+    canActivate: [catalogueOpenGuard],
     component: ForceComponent,
   },
 ];

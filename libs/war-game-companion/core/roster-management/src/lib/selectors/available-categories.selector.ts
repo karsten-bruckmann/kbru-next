@@ -1,38 +1,22 @@
-import {
-  cataloguesSelector,
-  forceSelector,
-  gameSystemSelector,
-} from '@kbru/war-game-companion/data-access/game-definition-data';
+import { forceSelector } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { createSelector } from '@ngrx/store';
 
 import { NamedReference } from '../models/named-reference.model';
-import { rosterSelector } from './roster.selector';
+import { Roster } from '../models/roster.model';
+import { availableSelectionEntriesSelector } from './available-selection-entries.selector';
+import { definitionDataSelector } from './definition-data.selector';
 
-export const availableCategoriesSelector = (
-  repositoryName: string,
-  rosterId: string,
-  forceIndex: number
-) =>
+export const availableCategoriesSelector = (force: Roster['forces'][0]) =>
   createSelector(
-    rosterSelector(repositoryName, rosterId),
-    gameSystemSelector,
-    cataloguesSelector,
-    (
-      roster,
-      gameSystems,
-      catalogues
-    ): (NamedReference & { targetId: string })[] => {
-      const forceId = roster?.forces[forceIndex]?.id;
-      if (!forceId) {
-        return [];
-      }
-
-      const force = forceSelector(forceId).projector(gameSystems, catalogues);
+    forceSelector(force.id),
+    definitionDataSelector,
+    (force, definitionData): NamedReference[] => {
       if (!force) {
         return [];
       }
 
       const categoryLinks = [
+        force,
         ...(force.forceEntries?.forceEntry || []),
         ...(
           force.forceEntries?.forceEntry.map(
@@ -43,9 +27,22 @@ export const availableCategoriesSelector = (
         .map((fe) => fe.categoryLinks.categoryLink.flat())
         .flat();
 
-      return categoryLinks.map((c) => ({
-        id: c['@_id'],
-        targetId: c['@_targetId'],
+      const uniqueCategoryLinks = categoryLinks.filter(
+        (v, i, a) =>
+          a
+            .map((va) => va['@_targetId'])
+            .findIndex((tid) => tid === v['@_targetId']) === i
+      );
+
+      const filteredCategories = uniqueCategoryLinks.filter(
+        (cl) =>
+          availableSelectionEntriesSelector(cl['@_targetId']).projector(
+            definitionData
+          ).length > 0
+      );
+
+      return filteredCategories.map((c) => ({
+        id: c['@_targetId'],
         name: c['@_name'] || '__unknown__',
       }));
     }

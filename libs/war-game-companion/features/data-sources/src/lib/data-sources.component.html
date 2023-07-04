@@ -18,12 +18,12 @@
     </ion-item>
   </ion-list>
   <ion-list inset>
-    <ion-accordion-group *ngFor="let repo of repositories$ | async">
-      <ion-accordion>
-        <ion-item color="light" slot="header">
-          <ion-label>{{ repo }}</ion-label>
-        </ion-item>
-      </ion-accordion>
-    </ion-accordion-group>
+    <ion-item
+      color="light"
+      slot="header"
+      *ngFor="let data of dataIndex$ | async"
+    >
+      <ion-label>{{ data.gameSystemName }}</ion-label>
+    </ion-item>
   </ion-list>
 </ion-content>

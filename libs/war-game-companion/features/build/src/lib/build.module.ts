@@ -8,8 +8,8 @@ import { RosterManagementModule } from '@kbru/war-game-companion/core/roster-man
 import { BuildComponent } from './build.component';
 import { buildRoutes } from './build.routes';
 import { ForceComponent } from './pages/force/force.component';
-import { RepoComponent } from './pages/repo/repo.component';
-import { RootComponent } from './pages/root/root.component';
+import { RootComponent } from './pages/forces/forces.component';
+import { RostersComponent } from './pages/rosters/rosters.component';
 
 @NgModule({
   imports: [
@@ -20,6 +20,11 @@ import { RootComponent } from './pages/root/root.component';
     RosterManagementModule.import(),
     RouterModule.forChild(buildRoutes),
   ],
-  declarations: [BuildComponent, RepoComponent, RootComponent, ForceComponent],
+  declarations: [
+    BuildComponent,
+    RostersComponent,
+    RootComponent,
+    ForceComponent,
+  ],
 })
 export class BuildModule {}

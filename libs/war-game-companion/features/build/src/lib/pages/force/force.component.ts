@@ -7,7 +7,7 @@ import {
   rosterSelector,
 } from '@kbru/war-game-companion/core/roster-management';
 import { Store } from '@ngrx/store';
-import { combineLatest, map, switchMap } from 'rxjs';
+import { combineLatest, map, of, switchMap } from 'rxjs';
 
 @Component({
   templateUrl: './force.component.html',
@@ -20,11 +20,6 @@ export class ForceComponent {
     protected readonly rosterEditingService: RosterEditingService
   ) {}
 
-  protected readonly repositoryName$ = this.route.paramMap.pipe(
-    map((map) => map.get('repositoryName')),
-    filterNullish()
-  );
-
   protected readonly rosterId$ = this.route.paramMap.pipe(
     map((map) => map.get('rosterId')),
     filterNullish()
@@ -36,43 +31,31 @@ export class ForceComponent {
     map((i) => parseInt(i))
   );
 
-  protected readonly roster$ = combineLatest([
-    this.repositoryName$,
-    this.rosterId$,
-  ]).pipe(
-    switchMap(([repositoryName, rosterId]) =>
-      this.store$.select(rosterSelector(repositoryName, rosterId))
-    )
+  protected readonly roster$ = this.rosterId$.pipe(
+    switchMap((rosterId) => this.store$.select(rosterSelector(rosterId))),
+    filterNullish()
   );
 
   protected readonly force$ = combineLatest([
     this.roster$,
     this.forceIndex$,
-  ]).pipe(map(([roster, forceIndex]) => roster?.forces[forceIndex]));
-
-  protected readonly categories$ = combineLatest([
-    this.repositoryName$,
-    this.rosterId$,
-    this.forceIndex$,
   ]).pipe(
-    switchMap(([repositoryName, rosterId, forceIndex]) =>
-      this.store$.select(
-        availableCategoriesSelector(repositoryName, rosterId, forceIndex)
-      )
+    map(([roster, forceIndex]) => roster?.forces[forceIndex]),
+    filterNullish()
+  );
+
+  protected readonly categories$ = this.force$.pipe(
+    switchMap((force) =>
+      !force ? of([]) : this.store$.select(availableCategoriesSelector(force))
     )
   );
 
   protected readonly form$ = combineLatest([
-    this.repositoryName$,
-    this.rosterId$,
+    this.roster$,
     this.forceIndex$,
   ]).pipe(
-    switchMap(([repositoryName, rosterId, forceIndex]) =>
-      this.rosterEditingService.addSelectionEntryForm$(
-        repositoryName,
-        rosterId,
-        forceIndex
-      )
+    switchMap(([roster, forceIndex]) =>
+      this.rosterEditingService.addSelectionEntryForm$(roster, forceIndex)
     )
   );
 }

@@ -1,0 +1,43 @@
+<ion-content>
+  <ion-list inset *ngIf="createRosterForm$ | async as form" [formGroup]="form">
+    <ion-item color="light">
+      <ion-label [class.hidden]="form.value.name">New Roster:</ion-label>
+      <ion-input
+        [formControl]="control"
+        placeholder="Name..."
+        *ngIf="form.controls.name as control"
+      ></ion-input>
+      <ion-select
+        placeholder="Initial Force"
+        [formControl]="control"
+        *ngIf="form.controls.forceId as control"
+      >
+        <ion-select-option
+          *ngFor="let option of control.options$ | async"
+          [value]="option.id"
+          >{{ option.name }}</ion-select-option
+        >
+      </ion-select>
+      <ion-button
+        slot="end"
+        fill="clear"
+        [disabled]="form.invalid"
+        (click)="form.submit(); form.reset()"
+      >
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-container *ngIf="rosters$ | async as rosters">
+    <ion-list inset>
+      <ion-item
+        color="light"
+        *ngFor="let roster of rosters"
+        [routerLink]="[roster.id]"
+      >
+        <ion-label>{{ roster.name }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>

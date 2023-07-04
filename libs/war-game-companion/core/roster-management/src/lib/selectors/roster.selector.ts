@@ -1,5 +1,5 @@
 import {
-  cataloguesSelector,
+  catalogueSelector,
   forceSelector,
   gameSystemSelector,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
@@ -8,23 +8,23 @@ import { createSelector } from '@ngrx/store';
 
 import { Roster } from '../models/roster.model';
 
-export const rosterSelector = (repositoryName: string, rosterId: string) =>
+export const rosterSelector = (rosterId: string) =>
   createSelector(
-    rosterDataSelector(repositoryName, rosterId),
+    rosterDataSelector(rosterId),
     gameSystemSelector,
-    cataloguesSelector,
-    (roster, gameSystem, catalogues): Roster | null =>
-      !roster
+    catalogueSelector,
+    (roster, gameSystem, catalogue): Roster | null => {
+      return !roster
         ? null
         : {
-            repositoryName,
             id: roster.id,
             name: roster.name,
+            catalogueId: roster.catalogueId,
             forces: roster.forces
               .map((f): Roster['forces'][0] | null => {
                 const force = forceSelector(f.id).projector(
                   gameSystem,
-                  catalogues
+                  catalogue
                 );
                 if (!force) {
                   return null;
@@ -32,9 +32,9 @@ export const rosterSelector = (repositoryName: string, rosterId: string) =>
                 return {
                   id: f.id,
                   name: force?.['@_name'],
-                  catalogueId: f.catalogueId,
                 };
               })
               .filter((f): f is Roster['forces'][0] => !!f),
-          }
+          };
+    }
   );

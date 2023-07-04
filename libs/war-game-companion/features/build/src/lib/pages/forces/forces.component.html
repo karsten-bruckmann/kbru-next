@@ -1,0 +1,32 @@
+<ion-content *ngIf="rosterId$ | async as rosterId">
+  <ion-list inset *ngIf="addForceForm$ | async as form" [formGroup]="form">
+    <ion-item color="light" *ngIf="form.controls.forceId as control">
+      <ion-label [class.hidden]="form.value.forceId">Add Force...</ion-label>
+      <ion-select [formControl]="control">
+        <ion-select-option
+          *ngFor="let option of control.options$ | async"
+          [value]="option.id"
+          >{{ option.name }}</ion-select-option
+        >
+      </ion-select>
+      <ion-button
+        slot="end"
+        fill="clear"
+        [disabled]="form.invalid"
+        (click)="form.submit(); form.reset()"
+      >
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset *ngIf="forces$ | async as forces">
+    <ion-item
+      color="light"
+      [routerLink]="[i]"
+      *ngFor="let force of forces; let i = index"
+    >
+      <ion-label>{{ force.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

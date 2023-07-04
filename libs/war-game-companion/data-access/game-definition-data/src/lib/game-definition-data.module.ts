@@ -8,9 +8,10 @@ import { LoadFromStorageEffect } from './effects/load-from-storage.effect';
 import { PersistToStorageEffect } from './effects/persist-to-storage.effect';
 import { gameDefinitionDataCoreReducerRegistry } from './game-definition-data.core-reducer-registry';
 import { gameDefinitionDataSlice } from './game-definition-data.slice';
+import { DataIndex } from './models/data-index.model';
 import { GameDefinitionDataState } from './models/game-definition-data-state.model';
+import { dataIndexReducer } from './reducers/data-index.reducer';
 import { gameDefinitionDataReducer } from './reducers/game-definition-data.reducer';
-import { repositoriesReducer } from './reducers/repositories.reducer';
 
 @NgModule({
   imports: [
@@ -26,14 +27,12 @@ import { repositoriesReducer } from './reducers/repositories.reducer';
       PersistToStorageEffect,
       DownloadGameDefinitionDataEffect,
     ]),
-    StoreModule.forFeature<string[]>(
-      `${gameDefinitionDataSlice}/repositories`,
-      repositoriesReducer,
+    StoreModule.forFeature<DataIndex>(
+      `${gameDefinitionDataSlice}:data-index`,
+      dataIndexReducer,
       {
         metaReducers: [
-          createStorageSyncMetaReducer(
-            `${gameDefinitionDataSlice}/repositories`
-          ),
+          createStorageSyncMetaReducer(`${gameDefinitionDataSlice}:data-index`),
         ],
       }
     ),

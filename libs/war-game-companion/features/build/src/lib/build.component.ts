@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { repositoryListSelector } from '@kbru/war-game-companion/core/roster-management';
+import { dataIndexSelector } from '@kbru/war-game-companion/core/roster-management';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -10,7 +10,5 @@ import { Store } from '@ngrx/store';
 export class BuildComponent {
   constructor(protected store$: Store) {}
 
-  protected readonly repositoryList$ = this.store$.select(
-    repositoryListSelector
-  );
+  protected readonly dataIndex$ = this.store$.select(dataIndexSelector);
 }

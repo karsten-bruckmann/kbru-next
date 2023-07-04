@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+ion-label {
+  width: 100px;
+
+  transition: max-width 300ms ease-in-out;
+  &.hidden {
+    overflow: hidden;
+    max-width: 0;
+  }
+}

@@ -1,11 +1,9 @@
 import { createSelector } from '@ngrx/store';
 
 import { CatalogueSchema } from '../schemas/catalogue.schema';
-import { cataloguesSelector } from './catalogues.selector';
+import { gameDefinitionDataSelector } from './game-definition-data.selector';
 
-export const catalogueSelector = (id: string) =>
-  createSelector(
-    cataloguesSelector,
-    (catalogues): CatalogueSchema['catalogue'] | undefined =>
-      catalogues && catalogues[id]
-  );
+export const catalogueSelector = createSelector(
+  gameDefinitionDataSelector,
+  (state): CatalogueSchema['catalogue'] | undefined => state?.catalogue
+);

@@ -1,11 +1,11 @@
 import { createSelector } from '@ngrx/store';
 
 import { Roster } from '../models/roster.model';
-import { rostersSelector } from './rosters.selector';
+import { rostersFeatureSelector } from './rosters-feature.selector';
 
-export const rosterSelector = (repositoryName: string, id: string) =>
-  createSelector(
-    rostersSelector(repositoryName),
-    (rosters): Roster | null =>
-      rosters.find((roster) => roster.id === id) ?? null
+export const rosterSelector = (rosterId: string) =>
+  createSelector(rostersFeatureSelector, (state): Roster | undefined =>
+    Object.values(state)
+      .flat()
+      .find((ros) => ros.id === rosterId)
   );

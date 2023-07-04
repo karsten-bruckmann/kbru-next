@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {
+  dataIndexSelector,
   LoadGameDefinitionForm,
   LoadGameDefinitionService,
-  repositoriesSelector,
 } from '@kbru/war-game-companion/core/data-source-management';
 import { Store } from '@ngrx/store';
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js';
@@ -35,7 +35,7 @@ export class DataSourcesComponent {
 
   protected form$ = this.loadGameDefinitionService.form$;
 
-  protected repositories$ = this.store$.select(repositoriesSelector);
+  protected dataIndex$ = this.store$.select(dataIndexSelector);
 
   protected async submit(form: LoadGameDefinitionForm): Promise<void> {
     this.loadGameDefinitionService.submit(form);

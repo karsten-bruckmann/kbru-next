@@ -4,13 +4,11 @@
 
 ion-label {
   width: 100px;
-  min-width: 80px;
 
-  transition: all 300ms ease-in-out;
+  transition: max-width 300ms ease-in-out;
   &.hidden {
     overflow: hidden;
     max-width: 0;
-    min-width: 0;
     margin: 0;
   }
 }

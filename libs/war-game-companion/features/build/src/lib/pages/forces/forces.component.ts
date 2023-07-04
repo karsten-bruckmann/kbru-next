@@ -6,11 +6,11 @@ import {
   rosterSelector,
 } from '@kbru/war-game-companion/core/roster-management';
 import { Store } from '@ngrx/store';
-import { combineLatest, map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 
 @Component({
-  templateUrl: './root.component.html',
-  styleUrls: ['./root.component.scss'],
+  templateUrl: './forces.component.html',
+  styleUrls: ['./forces.component.scss'],
 })
 export class RootComponent {
   constructor(
@@ -19,28 +19,20 @@ export class RootComponent {
     protected readonly rosterEditingService: RosterEditingService
   ) {}
 
-  protected readonly repositoryName$ = this.route.paramMap.pipe(
-    map((map) => map.get('repositoryName')),
-    filterNullish()
-  );
-
   protected readonly rosterId$ = this.route.paramMap.pipe(
     map((map) => map.get('rosterId')),
     filterNullish()
   );
 
-  protected readonly roster$ = combineLatest([
-    this.repositoryName$,
-    this.rosterId$,
-  ]).pipe(
-    switchMap(([repositoryName, rosterId]) =>
-      this.store$.select(rosterSelector(repositoryName, rosterId))
-    )
+  protected readonly roster$ = this.rosterId$.pipe(
+    switchMap((rosterId) => this.store$.select(rosterSelector(rosterId)))
   );
 
   protected readonly forces$ = this.roster$.pipe(
     map((roster) => roster?.forces)
   );
 
-  protected readonly addForceForm$ = this.rosterEditingService.addForceForm$();
+  protected readonly addForceForm$ = this.rosterId$.pipe(
+    switchMap((rosterId) => this.rosterEditingService.addForceForm$(rosterId))
+  );
 }

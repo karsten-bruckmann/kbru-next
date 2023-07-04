@@ -1,15 +1,15 @@
 import { createSelector } from '@ngrx/store';
 
 import { ForceEntry } from '../schemas/force-entries.schema';
-import { cataloguesSelector } from './catalogues.selector';
+import { catalogueSelector } from './catalogue.selector';
 import { gameSystemSelector } from './game-system.selector';
 
 export const forceSelector = (id: string) =>
   createSelector(
     gameSystemSelector,
-    cataloguesSelector,
-    (gameSystem, catalogues): ForceEntry | undefined => {
-      return [gameSystem, ...Object.values(catalogues || {})]
+    catalogueSelector,
+    (gameSystem, catalogue): ForceEntry | undefined => {
+      return [gameSystem, catalogue]
         .map((gs) => gs?.forceEntries?.forceEntry)
         .flat()
         .filter((f): f is ForceEntry => !!f)

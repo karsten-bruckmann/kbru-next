@@ -70,13 +70,14 @@
   </ion-accordion-group>
 </ion-content> -->
 
-<ion-content>
+<ion-content *ngFor="let entry of dataIndex$ | async">
   <ion-list inset>
+    <ion-item color="primary">{{ entry.gameSystemName }}</ion-item>
     <ion-item
       color="light"
-      *ngFor="let repo of repositoryList$ | async"
-      [routerLink]="[repo]"
-      >{{ repo }}</ion-item
+      *ngFor="let catalogue of entry.catalogues"
+      [routerLink]="[catalogue.catalogueId]"
+      >{{ catalogue.catalogueName }}</ion-item
     >
   </ion-list>
 </ion-content>

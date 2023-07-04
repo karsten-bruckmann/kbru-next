@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs';
 
-import { gameDefinitionDataLoaded } from '../actions/game-definition-data-loaded.action';
+import { gameDefinitionDataImported } from '../actions/game-definition-data-imported.action';
 import { GameDefinitionDataApiClient } from '../api-clients/game-definition-data.api-client';
 import { gameDefinitionDataRefreshActionRegistry } from '../game-definition-data.refresh-action-registry';
 
@@ -18,7 +18,10 @@ export class DownloadGameDefinitionDataEffect {
       gameDefinitionDataRefreshActionRegistry.ofRefreshActions,
       switchMap((action) => this.apiClient.get(action.indexUrl)),
       map((response) =>
-        gameDefinitionDataLoaded({ gameDefinitionData: response })
+        gameDefinitionDataImported({
+          gameSystems: response.gameSystems,
+          catalogues: response.catalogues,
+        })
       )
     )
   );

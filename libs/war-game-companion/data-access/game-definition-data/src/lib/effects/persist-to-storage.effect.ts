@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { combineLatest, from, map, switchMap } from 'rxjs';
 
-import { gameDefinitionDataLoaded } from '../actions/game-definition-data-loaded.action';
+import { gameDefinitionDataImported } from '../actions/game-definition-data-imported.action';
+import { gameDefinitionDatapersisted } from '../actions/game-definition-data-persisted.action';
 import { StorageApiClient } from '../api-clients/storage.api-client';
 
 @Injectable()
@@ -17,8 +18,47 @@ export class PersistToStorageEffect {
   public effect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(gameDefinitionDataLoaded),
-        map((action) => this.apiClient.set(action.gameDefinitionData))
+        ofType(gameDefinitionDataImported),
+        switchMap((action) =>
+          combineLatest([
+            combineLatest(
+              action.gameSystems.map((gs) =>
+                from(this.apiClient.persistGameSystem(gs.gameSystem)).pipe(
+                  map(() => ({
+                    id: gs.gameSystem['@_id'],
+                    name: gs.gameSystem['@_name'],
+                  }))
+                )
+              )
+            ),
+            combineLatest(
+              action.catalogues.map((cat) =>
+                from(this.apiClient.persistCatalogue(cat.catalogue)).pipe(
+                  map(() => ({
+                    id: cat.catalogue['@_id'],
+                    name: cat.catalogue['@_name'],
+                    gameSystemId: cat.catalogue['@_gameSystemId'],
+                  }))
+                )
+              )
+            ),
+          ]).pipe(
+            map(([gameSystems, catalogues]) =>
+              gameDefinitionDatapersisted({
+                data: gameSystems.map((gs) => ({
+                  gameSystemId: gs.id,
+                  gameSystemName: gs.name,
+                  catalogues: catalogues
+                    .filter((cat) => cat.gameSystemId === gs.id)
+                    .map((cat) => ({
+                      catalogueId: cat.id,
+                      catalogueName: cat.name,
+                    })),
+                })),
+              })
+            )
+          )
+        )
       ),
     { dispatch: false }
   );

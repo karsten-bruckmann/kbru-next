@@ -8,11 +8,9 @@ import {
   from,
   map,
   Observable,
-  of,
   switchMap,
 } from 'rxjs';
 
-import { GameDefinitionDataState } from '../models/game-definition-data-state.model';
 import { CatalogueSchema, catalogueSchema } from '../schemas/catalogue.schema';
 import {
   CatalogueIndex,
@@ -129,7 +127,10 @@ export const loadCatalogue = async (
 export class GameDefinitionDataApiClient {
   constructor(private http: HttpClient) {}
 
-  public get(indexFileUrl: string): Observable<GameDefinitionDataState> {
+  public get(indexFileUrl: string): Observable<{
+    gameSystems: GameSystemSchema[];
+    catalogues: CatalogueSchema[];
+  }> {
     return from(
       loadDataSource(
         (url) =>
@@ -138,21 +139,21 @@ export class GameDefinitionDataApiClient {
       )
     ).pipe(
       switchMap((catalogueIndex) => {
-        const gameSystem =
-          catalogueIndex.dataIndex.dataIndexEntries.dataIndexEntry.find(
-            (entry) => entry['@_dataType'] === 'gamesystem'
-          );
-
         return combineLatest([
-          of(catalogueIndex.dataIndex['@_name']),
-          loadGameSystem(
-            (url) =>
-              firstValueFrom(
-                this.http.get(url, { responseType: 'arraybuffer' })
-              ),
-            `${indexFileUrl.replace(/\/[^/]+$/, '')}/${encodeURIComponent(
-              (gameSystem && gameSystem['@_filePath']) || '__unknwon__'
-            )}`
+          combineLatest(
+            catalogueIndex.dataIndex.dataIndexEntries.dataIndexEntry
+              .filter((entry) => entry['@_dataType'] === 'gamesystem')
+              .map((entry) =>
+                loadGameSystem(
+                  (url) =>
+                    firstValueFrom(
+                      this.http.get(url, { responseType: 'arraybuffer' })
+                    ),
+                  `${indexFileUrl.replace(/\/[^/]+$/, '')}/${encodeURIComponent(
+                    entry['@_filePath']
+                  )}`
+                )
+              )
           ),
           combineLatest(
             catalogueIndex.dataIndex.dataIndexEntries.dataIndexEntry
@@ -172,22 +173,12 @@ export class GameDefinitionDataApiClient {
         ]);
       }),
       map(
-        ([
-          repositoryName,
-          gameSystem,
-          catalogues,
-        ]): GameDefinitionDataState => ({
-          repositoryName: gameSystem.gameSystem['@_name'] ?? repositoryName,
-          gameSystem: gameSystem.gameSystem,
-          catalogues: catalogues.reduce<
-            Record<string, CatalogueSchema['catalogue']>
-          >(
-            (record, catalogue) => ({
-              ...record,
-              [catalogue.catalogue['@_id']]: catalogue.catalogue,
-            }),
-            {}
-          ),
+        ([gameSystems, catalogues]): {
+          gameSystems: GameSystemSchema[];
+          catalogues: CatalogueSchema[];
+        } => ({
+          gameSystems: gameSystems,
+          catalogues: catalogues,
         })
       )
     );

@@ -94,7 +94,8 @@
           "browserTarget": "war-game-companion:build:production"
         },
         "development": {
-          "browserTarget": "war-game-companion:build:development"
+          "browserTarget": "war-game-companion:build:development",
+          "host": "127.0.0.1"
         }
       },
       "defaultConfiguration": "development"
