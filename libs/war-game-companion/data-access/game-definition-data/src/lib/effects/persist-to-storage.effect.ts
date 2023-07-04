@@ -23,7 +23,7 @@ export class PersistToStorageEffect {
           combineLatest([
             combineLatest(
               action.gameSystems.map((gs) =>
-                from(this.apiClient.persistGameSystem(gs.gameSystem)).pipe(
+                from(this.apiClient.persistGameSystem(gs)).pipe(
                   map(() => ({
                     id: gs.gameSystem['@_id'],
                     name: gs.gameSystem['@_name'],
@@ -33,7 +33,7 @@ export class PersistToStorageEffect {
             ),
             combineLatest(
               action.catalogues.map((cat) =>
-                from(this.apiClient.persistCatalogue(cat.catalogue)).pipe(
+                from(this.apiClient.persistCatalogue(cat)).pipe(
                   map(() => ({
                     id: cat.catalogue['@_id'],
                     name: cat.catalogue['@_name'],

@@ -1,56 +1,50 @@
-import { SelectionReference } from '@kbru/war-game-companion/data-access/rosters';
 import { createSelector } from '@ngrx/store';
 
+import { HydratedSelectionReference } from '../models/hydrated-selection-reference.model';
 import { definitionDataSelector } from './definition-data.selector';
 
-export const availableSelectionEntriesSelector = (categoryId: string) =>
+export const availableSelectionEntriesSelector = (targetId: string) =>
   createSelector(
     definitionDataSelector,
-    (definitionData): SelectionReference[] => {
+    (definitionData): HydratedSelectionReference[] => {
       if (!definitionData) {
         return [];
       }
 
       return [
-        ...(definitionData.entryLinks?.entryLink
+        ...(definitionData.entryLinks
           .filter((el) =>
-            el.categoryLinks?.categoryLink
-              .map((cl) => cl['@_targetId'])
-              .includes(categoryId)
+            el.categoryLinks.map((cl) => cl.targetId).includes(targetId)
           )
-          .map((el): SelectionReference => {
+          .map((el): HydratedSelectionReference => {
             return {
-              id: el['@_id'],
-              name: el['@_name'] || '__unknown__',
-              type: el['@_type'],
+              id: el.id,
+              name: el.name || '__unknown__',
+              type: el.type,
               referenceType: 'entryLink',
             };
           }) || []),
-        ...(definitionData.selectionEntries?.selectionEntry
+        ...(definitionData.selectionEntries
           .filter((el) =>
-            el.categoryLinks?.categoryLink
-              .map((cl) => cl['@_targetId'])
-              .includes(categoryId)
+            el.categoryLinks.map((cl) => cl.targetId).includes(targetId)
           )
-          .map((el): SelectionReference => {
+          .map((el): HydratedSelectionReference => {
             return {
-              id: el['@_id'],
-              name: el['@_name'] || '__unknown__',
-              type: el['@_type'],
+              id: el.id,
+              name: el.name || '__unknown__',
+              type: el.type,
               referenceType: 'selectionEntry',
             };
           }) || []),
-        ...(definitionData.sharedSelectionEntries?.selectionEntry
+        ...(definitionData.sharedSelectionEntries
           .filter((el) =>
-            el.categoryLinks?.categoryLink
-              .map((cl) => cl['@_targetId'])
-              .includes(categoryId)
+            el.categoryLinks.map((cl) => cl.targetId).includes(targetId)
           )
-          .map((el): SelectionReference => {
+          .map((el): HydratedSelectionReference => {
             return {
-              id: el['@_id'],
-              name: el['@_name'] || '__unknown__',
-              type: el['@_type'],
+              id: el.id,
+              name: el.name || '__unknown__',
+              type: el.type,
               referenceType: 'sharedSelectionEntry',
             };
           }) || []),

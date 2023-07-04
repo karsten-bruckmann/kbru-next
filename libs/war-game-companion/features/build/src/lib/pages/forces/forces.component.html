@@ -1,11 +1,11 @@
 <ion-content *ngIf="rosterId$ | async as rosterId">
   <ion-list inset *ngIf="addForceForm$ | async as form" [formGroup]="form">
-    <ion-item color="light" *ngIf="form.controls.forceId as control">
-      <ion-label [class.hidden]="form.value.forceId">Add Force...</ion-label>
+    <ion-item color="light" *ngIf="form.controls.force as control">
+      <ion-label [class.hidden]="form.value.force">Add Force...</ion-label>
       <ion-select [formControl]="control">
         <ion-select-option
           *ngFor="let option of control.options$ | async"
-          [value]="option.id"
+          [value]="option"
           >{{ option.name }}</ion-select-option
         >
       </ion-select>

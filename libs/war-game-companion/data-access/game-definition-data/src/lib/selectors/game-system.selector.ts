@@ -1,10 +1,9 @@
 import { createSelector } from '@ngrx/store';
 
-import { GameSystemSchema } from '../schemas/game-system.schema';
+import { GameSystem } from '../models/game-system.model';
 import { gameDefinitionDataSelector } from './game-definition-data.selector';
 
 export const gameSystemSelector = createSelector(
   gameDefinitionDataSelector,
-  (state): GameSystemSchema['gameSystem'] | undefined =>
-    state && state.gameSystem
+  (state): GameSystem | undefined => state && state.gameSystem
 );

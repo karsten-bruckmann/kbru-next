@@ -11,6 +11,7 @@ import { buildRoutes } from './build.routes';
 import { ForceComponent } from './pages/force/force.component';
 import { RootComponent } from './pages/forces/forces.component';
 import { RostersComponent } from './pages/rosters/rosters.component';
+import { SelectionComponent } from './pages/selection/selection.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { RostersComponent } from './pages/rosters/rosters.component';
     RostersComponent,
     RootComponent,
     ForceComponent,
+    SelectionComponent,
   ],
 })
 export class BuildModule {}

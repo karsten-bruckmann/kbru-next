@@ -13,30 +13,26 @@ const CATALOGUES_STORE = 'catalogues';
 
 @Injectable({ providedIn: 'root' })
 export class StorageApiClient {
-  public async persistCatalogue(catalogue: CatalogueSchema['catalogue']) {
+  public async persistCatalogue(catalogue: CatalogueSchema) {
     const db = await this.db;
-    await db.put(CATALOGUES_STORE, catalogue, catalogue['@_id']);
+    await db.put(CATALOGUES_STORE, catalogue, catalogue.catalogue['@_id']);
   }
 
-  public async persistGameSystem(gameSystem: GameSystemSchema['gameSystem']) {
+  public async persistGameSystem(gameSystem: GameSystemSchema) {
     const db = await this.db;
-    await db.put(GAME_SYSTEMS_STORE, gameSystem, gameSystem['@_id']);
+    await db.put(GAME_SYSTEMS_STORE, gameSystem, gameSystem.gameSystem['@_id']);
   }
 
-  public async getCatalogue(
-    catalogueId: string
-  ): Promise<CatalogueSchema['catalogue']> {
+  public async getCatalogue(catalogueId: string): Promise<CatalogueSchema> {
     const db = await this.db;
     const data = await db.get(CATALOGUES_STORE, catalogueId);
-    return catalogueSchema.parse({ catalogue: data }).catalogue;
+    return catalogueSchema.parse(data);
   }
 
-  public async getGameSystem(
-    gameSystemId: string
-  ): Promise<GameSystemSchema['gameSystem']> {
+  public async getGameSystem(gameSystemId: string): Promise<GameSystemSchema> {
     const db = await this.db;
     const data = await db.get(GAME_SYSTEMS_STORE, gameSystemId);
-    return gameSystemSchema.parse({ gameSystem: data }).gameSystem;
+    return gameSystemSchema.parse(data);
   }
 
   private get db(): Promise<IDBPDatabase> {

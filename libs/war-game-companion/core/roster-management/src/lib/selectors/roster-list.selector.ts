@@ -12,7 +12,7 @@ export const rosterListSelector = createSelector(
       return [];
     }
 
-    const catalogueRosters = rosters[catalogue?.['@_id']];
+    const catalogueRosters = rosters[catalogue?.id];
     if (!catalogueRosters) {
       return [];
     }

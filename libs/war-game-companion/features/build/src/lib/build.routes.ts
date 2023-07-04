@@ -5,6 +5,7 @@ import { catalogueOpenGuard } from './guards/catalogue-open.guard';
 import { ForceComponent } from './pages/force/force.component';
 import { RootComponent } from './pages/forces/forces.component';
 import { RostersComponent } from './pages/rosters/rosters.component';
+import { SelectionComponent } from './pages/selection/selection.component';
 
 export const buildRoutes: Routes = [
   {
@@ -25,5 +26,10 @@ export const buildRoutes: Routes = [
     path: ':catalogueId/:rosterId/:forceIndex',
     canActivate: [catalogueOpenGuard],
     component: ForceComponent,
+  },
+  {
+    path: ':catalogueId/:rosterId/:forceIndex/:selectionIndex',
+    canActivate: [catalogueOpenGuard],
+    component: SelectionComponent,
   },
 ];

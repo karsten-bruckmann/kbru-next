@@ -2,6 +2,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { allValuesSet } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { catalogueSelector } from '@kbru/war-game-companion/data-access/game-definition-data';
+import { Force } from '@kbru/war-game-companion/data-access/rosters';
 import { Store } from '@ngrx/store';
 import { firstValueFrom, map } from 'rxjs';
 
@@ -9,7 +10,7 @@ import { addForceFormSubmitted } from '../actions/add-force-form-submitted.actio
 import { availableForcesSelector } from '../selectors/available-forces.selector';
 
 export class AddForceForm extends FormGroup<{
-  forceId: ForceIdControl;
+  force: ForceControl;
 }> {
   constructor(
     private readonly store$: Store,
@@ -18,21 +19,19 @@ export class AddForceForm extends FormGroup<{
   ) {
     super(
       {
-        forceId: new ForceIdControl(store$),
+        force: new ForceControl(store$),
       },
       {
         asyncValidators: [
           async (form) => {
-            if (
-              !allValuesSet((form as AddForceForm).value, { forceId: true })
-            ) {
+            if (!allValuesSet((form as AddForceForm).value, { force: true })) {
               return { invalid: true };
             }
 
             const catalogue = await firstValueFrom(
               store$.select(catalogueSelector)
             );
-            if (!catalogue || catalogue['@_id'] !== this.catalogueId) {
+            if (!catalogue || catalogue.id !== this.catalogueId) {
               return { invalid: true };
             }
 
@@ -45,7 +44,7 @@ export class AddForceForm extends FormGroup<{
 
   public async submit() {
     const value = this.value;
-    if (!allValuesSet(value, { forceId: true })) {
+    if (!allValuesSet(value, { force: true })) {
       return;
     }
 
@@ -59,7 +58,7 @@ export class AddForceForm extends FormGroup<{
   }
 }
 
-export class ForceIdControl extends FormControl<string | null> {
+export class ForceControl extends FormControl<Force | null> {
   constructor(private store$: Store) {
     super(null);
   }

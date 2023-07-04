@@ -1,20 +1,14 @@
-import {
-  catalogueSelector,
-  gameSystemSelector,
-} from '@kbru/war-game-companion/data-access/game-definition-data';
 import { createSelector } from '@ngrx/store';
 
-import { NamedReference } from '../models/named-reference.model';
+import { HydratedForce } from '../models/hydrated-force.model';
+import { definitionDataSelector } from './definition-data.selector';
 
 export const availableForcesSelector = createSelector(
-  gameSystemSelector,
-  catalogueSelector,
-  (gameSystem, catalogue): NamedReference[] =>
-    [
-      ...((gameSystem && gameSystem.forceEntries.forceEntry) ?? []),
-      ...((catalogue && catalogue.forceEntries?.forceEntry) ?? []),
-    ].map((force) => ({
-      id: force['@_id'],
-      name: force['@_name'],
+  definitionDataSelector,
+  (data): HydratedForce[] =>
+    (data?.forceEntries || []).map((force) => ({
+      id: force.id,
+      name: force.name,
+      selections: [],
     }))
 );

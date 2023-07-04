@@ -4,12 +4,14 @@ import {
   createEffectAwareForm,
   FormEffect,
 } from '@kbru/shared/utils/effect-aware-forms';
-import { SelectionReference } from '@kbru/war-game-companion/data-access/rosters';
+import {
+  Roster,
+  SelectionReference,
+} from '@kbru/war-game-companion/data-access/rosters';
 import { Store } from '@ngrx/store';
 import { map, Observable, of, ReplaySubject, startWith, switchMap } from 'rxjs';
 
 import { addSelectionEntryFormSubmitted } from '../actions/add-selection-entry-form-submitted.action';
-import { Roster } from '../models/roster.model';
 import { availableCategoriesSelector } from '../selectors/available-categories.selector';
 import { availableSelectionEntriesSelector } from '../selectors/available-selection-entries.selector';
 

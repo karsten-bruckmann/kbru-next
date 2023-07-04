@@ -1,9 +1,9 @@
 import { createSelector } from '@ngrx/store';
 
-import { CatalogueSchema } from '../schemas/catalogue.schema';
+import { Catalogue } from '../models/catalogue.model';
 import { gameDefinitionDataSelector } from './game-definition-data.selector';
 
 export const catalogueSelector = createSelector(
   gameDefinitionDataSelector,
-  (state): CatalogueSchema['catalogue'] | undefined => state?.catalogue
+  (state): Catalogue | undefined => state?.catalogue
 );

@@ -10,8 +10,8 @@ import { BooleanEnum, booleanSchema } from './scalar/boolean.schema';
 export interface RulesAware {
   rule: {
     '@_hidden'?: BooleanEnum;
-    '@_id'?: string;
-    '@_name'?: string;
+    '@_id': string;
+    '@_name': string;
     '@_publicationId'?: string;
     '@_page'?: string;
     comment?: string;
@@ -27,8 +27,8 @@ export const rulesSchema: ZodType<RulesAware> = z
       z
         .object({
           '@_hidden': booleanSchema.optional(),
-          '@_id': z.string().optional(),
-          '@_name': z.string().optional(),
+          '@_id': z.string(),
+          '@_name': z.string(),
           '@_publicationId': z.string().optional(),
           '@_page': z.string().optional(),
           comment: z.string().optional(),

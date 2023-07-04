@@ -18,12 +18,7 @@ export const rostersReducer = createCoreReducer<RostersState>(
           id: uuid(),
           name: action.value.name,
           catalogueId: action.catalogueId,
-          forces: [
-            {
-              id: action.value.forceId,
-              selections: [],
-            },
-          ],
+          forces: [action.value.force],
         },
       ],
     })
@@ -42,10 +37,7 @@ export const rostersReducer = createCoreReducer<RostersState>(
         ...(state[action.catalogueId] ?? []).filter((r) => r.id !== roster.id),
         {
           ...roster,
-          forces: [
-            ...roster.forces,
-            { id: action.value.forceId, selections: [] },
-          ],
+          forces: [...roster.forces, action.value.force],
         },
       ],
     };

@@ -1,55 +1,54 @@
 <ng-container *ngIf="force$ | async as force">
-  <ng-container *ngIf="rosterId$ | async as rosterId">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ force.name }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <ion-header>
+    <ion-toolbar>
+      <!-- <ion-title>{{ force.name }}</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
 
-    <ion-content *ngIf="categories$ | async as categories">
-      <ion-list inset *ngIf="form$ | async as form" [formGroup]="form">
-        <ion-item color="light">
-          <ion-label [class.hidden]="form.value.categoryId"
-            >Add Entry</ion-label
+  <ion-content *ngIf="categories$ | async as categories">
+    <ion-list inset *ngIf="form$ | async as form" [formGroup]="form">
+      <ion-item color="light">
+        <ion-label [class.hidden]="form.value.categoryId">Add Entry</ion-label>
+        <ion-select
+          placeholder="Category"
+          [formControl]="control"
+          *ngIf="form.controls.categoryId as control"
+        >
+          <ion-select-option
+            *ngFor="let option of control.options$ | async"
+            [value]="option.id"
+            >{{ option.name }}</ion-select-option
           >
-          <ion-select
-            placeholder="Category"
-            [formControl]="control"
-            *ngIf="form.controls.categoryId as control"
+        </ion-select>
+        <ion-select
+          placeholder="Entry"
+          [formControl]="control"
+          *ngIf="form.controls.selectionReference as control"
+        >
+          <ion-select-option
+            *ngFor="let option of control.options$ | async"
+            [value]="option"
+            >{{ option.name }}</ion-select-option
           >
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option.id"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-          <ion-select
-            placeholder="Entry"
-            [formControl]="control"
-            *ngIf="form.controls.selectionReference as control"
-          >
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-          <ion-button
-            slot="end"
-            fill="clear"
-            [disabled]="form.invalid"
-            (click)="form.submit(); form.reset()"
-          >
-            <ion-icon name="add"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
+        </ion-select>
+        <ion-button
+          slot="end"
+          fill="clear"
+          [disabled]="form.invalid"
+          (click)="form.submit(); form.reset()"
+        >
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
 
-      <ion-list>
-        <ion-item *ngFor="let category of categories">
-          {{ category.name }}
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ng-container>
+    <ion-list>
+      <ion-item
+        *ngFor="let selection of force.selections; let i = index"
+        [routerLink]="[i]"
+      >
+        {{ selection.name }}
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ng-container>

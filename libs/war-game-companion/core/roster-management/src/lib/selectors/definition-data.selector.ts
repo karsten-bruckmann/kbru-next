@@ -1,137 +1,54 @@
 import {
-  Catalogue,
   catalogueSelector,
-  GameSystem,
   gameSystemSelector,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { createSelector } from '@ngrx/store';
 
+import { DefinitionData } from '../models/definition-data.model';
+
 export const definitionDataSelector = createSelector(
   gameSystemSelector,
   catalogueSelector,
-  (
-    gameSystem,
-    catalogue
-  ): Omit<
-    GameSystem,
-    | '@_authorContact'
-    | '@_authorName'
-    | '@_authorUrl'
-    | '@_battleScribeVersion'
-    | '@_id'
-    | '@_name'
-    | '@_revision'
-    | '@_xmlns'
-    | 'readme'
-  > &
-    Omit<
-      Catalogue,
-      | '@_authorContact'
-      | '@_authorName'
-      | '@_authorUrl'
-      | '@_battleScribeVersion'
-      | '@_id'
-      | '@_name'
-      | '@_revision'
-      | '@_xmlns'
-      | '@_library'
-      | '@_gameSystemId'
-      | '@_gameSystemRevision'
-      | 'readme'
-      | 'comment'
-    > => ({
-    categoryEntries: {
-      categoryEntry: [
-        ...(gameSystem?.categoryEntries.categoryEntry || []),
-        ...(catalogue?.categoryEntries?.categoryEntry || []),
+  (gameSystem, catalogue): DefinitionData | null => {
+    if (!gameSystem || !catalogue) {
+      return null;
+    }
+
+    return {
+      categoryEntries: [
+        ...gameSystem.categoryEntries,
+        ...catalogue.categoryEntries,
       ],
-    },
-    costTypes: {
-      costType: [
-        ...(gameSystem?.costTypes.costType || []),
-        ...(catalogue?.costTypes?.costType || []),
+      costTypes: [...gameSystem.costTypes, ...catalogue.costTypes],
+      forceEntries: [...gameSystem.forceEntries, ...catalogue.forceEntries],
+      profileTypes: [...gameSystem.profileTypes, ...catalogue.profileTypes],
+      publications: [...gameSystem.publications, ...catalogue.publications],
+      sharedSelectionEntries: [
+        ...gameSystem.sharedSelectionEntries,
+        ...catalogue.sharedSelectionEntries,
       ],
-    },
-    forceEntries: {
-      forceEntry: [
-        ...(gameSystem?.forceEntries.forceEntry || []),
-        ...(catalogue?.forceEntries?.forceEntry || []),
+      catalogueLinks: [...catalogue.catalogueLinks],
+      entryLinks: [...gameSystem.entryLinks, ...catalogue.entryLinks],
+      infoLinks: [...gameSystem.infoLinks, ...catalogue.infoLinks],
+      profiles: [...gameSystem.profiles, ...catalogue.profiles],
+      rules: [...gameSystem.rules, ...catalogue.rules],
+      selectionEntries: [
+        ...gameSystem.selectionEntries,
+        ...catalogue.selectionEntries,
       ],
-    },
-    profileTypes: {
-      profileType: [
-        ...(gameSystem?.profileTypes.profileType || []),
-        ...(catalogue?.profileTypes?.profileType || []),
+      sharedInfoGroups: [
+        ...gameSystem.sharedInfoGroups,
+        ...catalogue.sharedInfoGroups,
       ],
-    },
-    publications: {
-      publication: [
-        ...(gameSystem?.publications.publication || []),
-        ...(catalogue?.publications?.publication || []),
+      sharedProfiles: [
+        ...gameSystem.sharedProfiles,
+        ...catalogue.sharedProfiles,
       ],
-    },
-    sharedSelectionEntries: {
-      selectionEntry: [
-        ...(gameSystem?.sharedSelectionEntries.selectionEntry || []),
-        ...(catalogue?.sharedSelectionEntries?.selectionEntry || []),
+      sharedRules: [...gameSystem.sharedRules, ...catalogue.sharedRules],
+      sharedSelectionEntryGroups: [
+        ...gameSystem.sharedSelectionEntryGroups,
+        ...catalogue.sharedSelectionEntryGroups,
       ],
-    },
-    catalogueLinks: {
-      catalogueLink: [...(catalogue?.catalogueLinks?.catalogueLink || [])],
-    },
-    entryLinks: {
-      entryLink: [
-        ...(gameSystem?.entryLinks?.entryLink || []),
-        ...(catalogue?.entryLinks?.entryLink || []),
-      ],
-    },
-    infoLinks: {
-      infoLink: [
-        ...(gameSystem?.infoLinks?.infoLink || []),
-        ...(catalogue?.infoLinks?.infoLink || []),
-      ],
-    },
-    profiles: {
-      profile: [
-        ...(gameSystem?.profiles?.profile || []),
-        ...(catalogue?.profiles?.profile || []),
-      ],
-    },
-    rules: {
-      rule: [
-        ...(gameSystem?.rules?.rule || []),
-        ...(catalogue?.rules?.rule || []),
-      ],
-    },
-    selectionEntries: {
-      selectionEntry: [
-        ...(gameSystem?.selectionEntries?.selectionEntry || []),
-        ...(catalogue?.selectionEntries?.selectionEntry || []),
-      ],
-    },
-    sharedInfoGroups: {
-      infoGroup: [
-        ...(gameSystem?.sharedInfoGroups?.infoGroup || []),
-        ...(catalogue?.sharedInfoGroups?.infoGroup || []),
-      ],
-    },
-    sharedProfiles: {
-      profile: [
-        ...(gameSystem?.sharedProfiles?.profile || []),
-        ...(catalogue?.sharedProfiles?.profile || []),
-      ],
-    },
-    sharedRules: {
-      rule: [
-        ...(gameSystem?.sharedRules?.rule || []),
-        ...(catalogue?.sharedRules?.rule || []),
-      ],
-    },
-    sharedSelectionEntryGroups: {
-      selectionEntryGroup: [
-        ...(gameSystem?.sharedSelectionEntryGroups?.selectionEntryGroup || []),
-        ...(catalogue?.sharedSelectionEntryGroups?.selectionEntryGroup || []),
-      ],
-    },
-  })
+    };
+  }
 );

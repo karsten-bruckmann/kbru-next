@@ -1,3 +1,4 @@
+import { Force } from '@kbru/war-game-companion/data-access/rosters';
 import { createAction, props } from '@ngrx/store';
 
 export const createRosterFormSubmittedAction = createAction(
@@ -6,7 +7,7 @@ export const createRosterFormSubmittedAction = createAction(
     catalogueId: string;
     value: {
       name: string;
-      forceId: string;
+      force: Force;
     };
   }>()
 );

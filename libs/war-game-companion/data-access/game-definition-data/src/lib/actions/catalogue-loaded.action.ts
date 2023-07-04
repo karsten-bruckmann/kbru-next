@@ -7,7 +7,7 @@ import { GameSystemSchema } from '../schemas/game-system.schema';
 export const catalogueLoadedAction = createAction(
   `${gameDefinitionDataSlice}/catalogue-loaded`,
   props<{
-    gameSystem: GameSystemSchema['gameSystem'];
-    catalogue: CatalogueSchema['catalogue'];
+    gameSystem: GameSystemSchema;
+    catalogue: CatalogueSchema;
   }>()
 );

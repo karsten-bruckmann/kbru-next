@@ -17,7 +17,9 @@ export class LoadFromStorageEffect {
         from(this.apiClient.getCatalogue(action.catalogueId)).pipe(
           switchMap((catalogue) =>
             from(
-              this.apiClient.getGameSystem(catalogue['@_gameSystemId'])
+              this.apiClient.getGameSystem(
+                catalogue.catalogue['@_gameSystemId']
+              )
             ).pipe(
               map((gameSystem) =>
                 catalogueLoadedAction({ gameSystem, catalogue })

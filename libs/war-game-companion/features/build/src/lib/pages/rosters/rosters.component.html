@@ -10,11 +10,11 @@
       <ion-select
         placeholder="Initial Force"
         [formControl]="control"
-        *ngIf="form.controls.forceId as control"
+        *ngIf="form.controls.force as control"
       >
         <ion-select-option
           *ngFor="let option of control.options$ | async"
-          [value]="option.id"
+          [value]="option"
           >{{ option.name }}</ion-select-option
         >
       </ion-select>

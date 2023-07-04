@@ -5,6 +5,7 @@ import {
   catalogueOpenedAction,
   catalogueSelector,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
+import { Roster } from '@kbru/war-game-companion/data-access/rosters';
 import { Store } from '@ngrx/store';
 import { map, Observable, switchMap } from 'rxjs';
 
@@ -12,7 +13,6 @@ import { AddForceForm } from '../forms/add-force.form';
 import { AddSelectionEntryForm } from '../forms/add-selection-entry.form';
 import { CreateRosterForm } from '../forms/create-roster.form';
 import { NamedReference } from '../models/named-reference.model';
-import { Roster } from '../models/roster.model';
 import { rosterListSelector } from '../selectors/roster-list.selector';
 
 @Injectable({ providedIn: 'root' })
@@ -26,7 +26,7 @@ export class RosterEditingService {
   public get catalogueId$(): Observable<string | null> {
     return this.store$
       .select(catalogueSelector)
-      .pipe(map((cat) => cat?.['@_id'] ?? null));
+      .pipe(map((cat) => cat?.id ?? null));
   }
 
   public get rosterList$(): Observable<NamedReference[]> {
@@ -38,7 +38,7 @@ export class RosterEditingService {
       filterNullish(),
       switchMap((catalogue) =>
         createEffectAwareForm(
-          new CreateRosterForm(this.store$, catalogue['@_id']),
+          new CreateRosterForm(this.store$, catalogue.id),
           []
         )
       )
@@ -49,8 +49,8 @@ export class RosterEditingService {
     return this.store$.select(catalogueSelector).pipe(
       filterNullish(),
       switchMap((catalogue) => {
-        const form = new AddForceForm(this.store$, catalogue['@_id'], rosterId);
-        return createEffectAwareForm(form, [...form.controls.forceId.effects]);
+        const form = new AddForceForm(this.store$, catalogue.id, rosterId);
+        return createEffectAwareForm(form, [...form.controls.force.effects]);
       })
     );
   }
