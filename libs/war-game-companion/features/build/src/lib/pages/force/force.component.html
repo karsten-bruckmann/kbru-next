@@ -26,11 +26,11 @@
           <ion-select
             placeholder="Entry"
             [formControl]="control"
-            *ngIf="form.controls.entryLinkId as control"
+            *ngIf="form.controls.selectionReference as control"
           >
             <ion-select-option
               *ngFor="let option of control.options$ | async"
-              [value]="option.id"
+              [value]="option"
               >{{ option.name }}</ion-select-option
             >
           </ion-select>
@@ -38,7 +38,7 @@
             slot="end"
             fill="clear"
             [disabled]="form.invalid"
-            (click)="form.reset()"
+            (click)="form.submit(); form.reset()"
           >
             <ion-icon name="add"></ion-icon>
           </ion-button>

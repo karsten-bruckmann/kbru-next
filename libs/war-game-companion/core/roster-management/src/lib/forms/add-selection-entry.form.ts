@@ -1,30 +1,56 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
+import { allValuesSet } from '@kbru/shared/utils/angular-utils';
+import {
+  createEffectAwareForm,
+  FormEffect,
+} from '@kbru/shared/utils/effect-aware-forms';
+import { SelectionReference } from '@kbru/war-game-companion/data-access/rosters';
 import { Store } from '@ngrx/store';
-import { map, of, ReplaySubject, startWith, switchMap } from 'rxjs';
+import { map, Observable, of, ReplaySubject, startWith, switchMap } from 'rxjs';
 
+import { addSelectionEntryFormSubmitted } from '../actions/add-selection-entry-form-submitted.action';
 import { Roster } from '../models/roster.model';
 import { availableCategoriesSelector } from '../selectors/available-categories.selector';
 import { availableSelectionEntriesSelector } from '../selectors/available-selection-entries.selector';
 
 export class AddSelectionEntryForm extends FormGroup<{
   categoryId: CategoryIdControl;
-  entryLinkId: EntryLinkIdControl;
+  selectionReference: SelectionReferenceControl;
 }> {
-  constructor(
+  public static effectAware(
     store$: Store,
+    roster: Roster,
+    forceIndex: number
+  ): Observable<AddSelectionEntryForm> {
+    const form = new AddSelectionEntryForm(store$, roster, forceIndex);
+    return createEffectAwareForm(form, [
+      ...form.controls.selectionReference.effects,
+    ]);
+  }
+
+  constructor(
+    private readonly store$: Store,
     public readonly roster: Roster,
     public readonly forceIndex: number
   ) {
     super(
       {
         categoryId: new CategoryIdControl(store$, roster, forceIndex),
-        entryLinkId: new EntryLinkIdControl(store$, roster, forceIndex),
+        selectionReference: new SelectionReferenceControl(
+          store$,
+          roster,
+          forceIndex
+        ),
       },
       {
         asyncValidators: [
           async (form) => {
-            if (!form.value.categoryId || !form.value.entryLinkId) {
+            if (
+              !allValuesSet((form as AddSelectionEntryForm).value, {
+                categoryId: true,
+                selectionReference: true,
+              })
+            ) {
               return { invalid: true };
             }
 
@@ -32,6 +58,21 @@ export class AddSelectionEntryForm extends FormGroup<{
           },
         ],
       }
+    );
+  }
+
+  public submit(): void {
+    const value = this.value;
+    if (!allValuesSet(value, { categoryId: true, selectionReference: true })) {
+      return;
+    }
+
+    this.store$.dispatch(
+      addSelectionEntryFormSubmitted({
+        forceIndex: this.forceIndex,
+        roster: this.roster,
+        value: value,
+      })
     );
   }
 }
@@ -50,7 +91,7 @@ export class CategoryIdControl extends FormControl<string | null> {
   );
 }
 
-export class EntryLinkIdControl extends FormControl<string | null> {
+export class SelectionReferenceControl extends FormControl<SelectionReference | null> {
   constructor(
     private store$: Store,
     public readonly roster: Roster,
@@ -73,6 +114,12 @@ export class EntryLinkIdControl extends FormControl<string | null> {
     (form) =>
       form.controls.categoryId.valueChanges.pipe(
         map((id) => this.categoryId$.next(id))
+      ),
+    () =>
+      this.categoryId$.pipe(
+        map(() => {
+          this.setValue(null);
+        })
       ),
     () =>
       this.options$.pipe(

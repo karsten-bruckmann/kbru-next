@@ -59,7 +59,6 @@ export class RosterEditingService {
     roster: Roster,
     forceIndex: number
   ): Observable<AddSelectionEntryForm> {
-    const form = new AddSelectionEntryForm(this.store$, roster, forceIndex);
-    return createEffectAwareForm(form, [...form.controls.entryLinkId.effects]);
+    return AddSelectionEntryForm.effectAware(this.store$, roster, forceIndex);
   }
 }

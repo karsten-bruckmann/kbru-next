@@ -5,5 +5,13 @@ export interface Roster {
   forces: {
     id: string;
     name: string;
+    categories: {
+      name: string;
+      id: string;
+      entries: {
+        id: string;
+        name: string;
+      }[];
+    }[];
   }[];
 }

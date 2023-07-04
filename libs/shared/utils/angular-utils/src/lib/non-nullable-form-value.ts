@@ -6,5 +6,5 @@ export const allValuesSet = <T extends Record<string, unknown>>(
   value: T,
   keys: { [K in keyof T]-?: true }
 ): value is NonNullableFormValue<T> => {
-  return Object.keys(keys).find((v) => !!value[v]) === undefined;
+  return Object.keys(keys).find((v) => !value[v]) === undefined;
 };

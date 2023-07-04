@@ -32,6 +32,7 @@ export const rosterSelector = (rosterId: string) =>
                 return {
                   id: f.id,
                   name: force?.['@_name'],
+                  categories: [],
                 };
               })
               .filter((f): f is Roster['forces'][0] => !!f),

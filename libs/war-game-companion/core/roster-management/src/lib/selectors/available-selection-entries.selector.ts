@@ -1,15 +1,7 @@
-import {
-  EntryLink,
-  SelectionEntry,
-} from '@kbru/war-game-companion/data-access/game-definition-data';
+import { SelectionReference } from '@kbru/war-game-companion/data-access/rosters';
 import { createSelector } from '@ngrx/store';
 
-import { NamedReference } from '../models/named-reference.model';
 import { definitionDataSelector } from './definition-data.selector';
-
-type SelectionReference = NamedReference & {
-  type: EntryLink['@_type'] | SelectionEntry['@_type'];
-};
 
 export const availableSelectionEntriesSelector = (categoryId: string) =>
   createSelector(
@@ -31,6 +23,7 @@ export const availableSelectionEntriesSelector = (categoryId: string) =>
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',
               type: el['@_type'],
+              referenceType: 'entryLink',
             };
           }) || []),
         ...(definitionData.selectionEntries?.selectionEntry
@@ -44,6 +37,7 @@ export const availableSelectionEntriesSelector = (categoryId: string) =>
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',
               type: el['@_type'],
+              referenceType: 'selectionEntry',
             };
           }) || []),
         ...(definitionData.sharedSelectionEntries?.selectionEntry
@@ -57,6 +51,7 @@ export const availableSelectionEntriesSelector = (categoryId: string) =>
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',
               type: el['@_type'],
+              referenceType: 'sharedSelectionEntry',
             };
           }) || []),
       ]
