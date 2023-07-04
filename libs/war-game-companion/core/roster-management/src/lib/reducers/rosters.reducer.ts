@@ -15,11 +15,11 @@ export const rostersReducer = createCoreReducer<RostersState>(
         ...(state[action.catalogueId] ?? []),
         {
           id: uuid(),
-          name: action.rosterName,
+          name: action.value.name,
           catalogueId: action.catalogueId,
           forces: [
             {
-              id: action.forceId,
+              id: action.value.forceId,
             },
           ],
         },
@@ -27,8 +27,8 @@ export const rostersReducer = createCoreReducer<RostersState>(
     })
   ),
   on(addForceFormSubmitted, (state, action): RostersState => {
-    const roster = state[action.value.catalogueId]?.find(
-      (r) => r.id === action.value.rosterId
+    const roster = state[action.catalogueId]?.find(
+      (r) => r.id === action.rosterId
     );
     if (!roster) {
       return state;
@@ -36,10 +36,8 @@ export const rostersReducer = createCoreReducer<RostersState>(
 
     return {
       ...state,
-      [action.value.catalogueId]: [
-        ...(state[action.value.catalogueId] ?? []).filter(
-          (r) => r.id !== roster.id
-        ),
+      [action.catalogueId]: [
+        ...(state[action.catalogueId] ?? []).filter((r) => r.id !== roster.id),
         {
           ...roster,
           forces: [...roster.forces, { id: action.value.forceId }],

@@ -1,4 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
+import { allValuesSet } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { catalogueSelector } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { Store } from '@ngrx/store';
@@ -24,7 +25,12 @@ export class CreateRosterForm extends FormGroup<{
       {
         asyncValidators: [
           async (form) => {
-            if (!form.value.name) {
+            if (
+              !allValuesSet((form as CreateRosterForm).value, {
+                forceId: true,
+                name: true,
+              })
+            ) {
               return { invalid: true };
             }
 
@@ -47,16 +53,15 @@ export class CreateRosterForm extends FormGroup<{
       return;
     }
 
-    const { name, forceId } = this.value;
-    if (!name || !forceId) {
+    const value = this.value;
+    if (!allValuesSet(value, { forceId: true, name: true })) {
       return;
     }
 
     this.store$.dispatch(
       createRosterFormSubmittedAction({
         catalogueId: this.catalogueId,
-        rosterName: name,
-        forceId,
+        value: value,
       })
     );
   }

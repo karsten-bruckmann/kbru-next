@@ -1,4 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
+import { allValuesSet } from '@kbru/shared/utils/angular-utils';
 import { FormEffect } from '@kbru/shared/utils/effect-aware-forms';
 import { catalogueSelector } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { Store } from '@ngrx/store';
@@ -22,7 +23,9 @@ export class AddForceForm extends FormGroup<{
       {
         asyncValidators: [
           async (form) => {
-            if (!form.value.forceId) {
+            if (
+              !allValuesSet((form as AddForceForm).value, { forceId: true })
+            ) {
               return { invalid: true };
             }
 
@@ -41,18 +44,16 @@ export class AddForceForm extends FormGroup<{
   }
 
   public async submit() {
-    const { forceId } = this.value;
-    if (!forceId) {
+    const value = this.value;
+    if (!allValuesSet(value, { forceId: true })) {
       return;
     }
 
     this.store$.dispatch(
       addForceFormSubmitted({
-        value: {
-          catalogueId: this.catalogueId,
-          forceId,
-          rosterId: this.rosterId,
-        },
+        catalogueId: this.catalogueId,
+        rosterId: this.rosterId,
+        value,
       })
     );
   }
