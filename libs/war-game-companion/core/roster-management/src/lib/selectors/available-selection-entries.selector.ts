@@ -1,10 +1,14 @@
+import {
+  EntryLink,
+  SelectionEntry,
+} from '@kbru/war-game-companion/data-access/game-definition-data';
 import { createSelector } from '@ngrx/store';
 
 import { NamedReference } from '../models/named-reference.model';
 import { definitionDataSelector } from './definition-data.selector';
 
 type SelectionReference = NamedReference & {
-  type: 'entryLink' | 'selectionEntry';
+  type: EntryLink['@_type'] | SelectionEntry['@_type'];
 };
 
 export const availableSelectionEntriesSelector = (categoryId: string) =>
@@ -26,7 +30,7 @@ export const availableSelectionEntriesSelector = (categoryId: string) =>
             return {
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',
-              type: 'entryLink',
+              type: el['@_type'],
             };
           }) || []),
         ...(definitionData.selectionEntries?.selectionEntry
@@ -39,7 +43,7 @@ export const availableSelectionEntriesSelector = (categoryId: string) =>
             return {
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',
-              type: 'entryLink',
+              type: el['@_type'],
             };
           }) || []),
         ...(definitionData.sharedSelectionEntries?.selectionEntry
@@ -52,9 +56,11 @@ export const availableSelectionEntriesSelector = (categoryId: string) =>
             return {
               id: el['@_id'],
               name: el['@_name'] || '__unknown__',
-              type: 'entryLink',
+              type: el['@_type'],
             };
           }) || []),
-      ];
+      ]
+        .filter((se) => ['selectionEntry', 'model', 'unit'].includes(se.type))
+        .sort((a, b) => a.name.localeCompare(b.name));
     }
   );

@@ -43,7 +43,7 @@ const selectionEntryBaseSchema = z.object({
   infoGroups: infoGroupsSchema.optional(),
 });
 
-type SelectionEntry = {
+export type SelectionEntry = {
   '@_id': string;
   '@_name': string;
   '@_hidden': BooleanEnum;

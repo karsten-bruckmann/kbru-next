@@ -70,8 +70,8 @@
   </ion-accordion-group>
 </ion-content> -->
 
-<ion-content *ngFor="let entry of dataIndex$ | async">
-  <ion-list inset>
+<ion-content>
+  <ion-list inset *ngFor="let entry of dataIndex$ | async">
     <ion-item color="primary">{{ entry.gameSystemName }}</ion-item>
     <ion-item
       color="light"

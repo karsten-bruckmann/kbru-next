@@ -29,7 +29,7 @@ export interface EntryLinksAware {
   entryLink: EntryLink[];
 }
 
-interface EntryLink {
+export interface EntryLink {
   '@_hidden': BooleanEnum;
   '@_id': string;
   '@_name'?: string;

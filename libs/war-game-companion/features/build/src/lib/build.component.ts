@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { dataIndexSelector } from '@kbru/war-game-companion/core/roster-management';
+import { dataIndexSelector } from '@kbru/war-game-companion/core/data-source-management';
 import { Store } from '@ngrx/store';
 
 @Component({

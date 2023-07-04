@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { DataSourceManagementModule } from '@kbru/war-game-companion/core/data-source-management';
 import { RosterManagementModule } from '@kbru/war-game-companion/core/roster-management';
 
 import { BuildComponent } from './build.component';
@@ -17,6 +18,7 @@ import { RostersComponent } from './pages/rosters/rosters.component';
     IonicModule,
     RouterModule,
     ReactiveFormsModule,
+    DataSourceManagementModule.import(),
     RosterManagementModule.import(),
     RouterModule.forChild(buildRoutes),
   ],

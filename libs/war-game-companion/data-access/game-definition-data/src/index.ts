@@ -10,3 +10,5 @@ export * from './lib/models/game-definition-data-state.model';
 export * from './lib/models/catalogue.model';
 export * from './lib/models/game-system.model';
 export { ForceEntry } from './lib/schemas/force-entries.schema';
+export { EntryLink } from './lib/schemas/entry-links.schema';
+export { SelectionEntry } from './lib/schemas/selection-entries.schema';
