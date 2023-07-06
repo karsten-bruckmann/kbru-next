@@ -42,12 +42,13 @@
       </ion-item>
     </ion-list>
 
-    <ion-list>
+    <ion-list inset>
       <ion-item-group *ngFor="let category of force.selections | keyvalue">
-        <ion-item-divider>
+        <ion-item-divider color="primary">
           {{ category.key | categoryName | async }}
         </ion-item-divider>
         <ion-item
+          color="light"
           *ngFor="let selection of category.value; let i = index"
           [routerLink]="[category.key, i]"
         >

@@ -142,8 +142,14 @@
       "@kbru/war-game-companion/features/build": [
         "libs/war-game-companion/features/build/src/index.ts"
       ],
-      "@kbru/war-game-companion/features/data-sources": [
-        "libs/war-game-companion/features/data-sources/src/index.ts"
+      "@kbru/war-game-companion/features/learn": [
+        "libs/war-game-companion/features/learn/src/index.ts"
+      ],
+      "@kbru/war-game-companion/features/play": [
+        "libs/war-game-companion/features/play/src/index.ts"
+      ],
+      "@kbru/war-game-companion/features/settings": [
+        "libs/war-game-companion/features/settings/src/index.ts"
       ],
       "stream": ["node_modules/stream-browserify"],
       "timers": ["node_modules/timers-browserify"]

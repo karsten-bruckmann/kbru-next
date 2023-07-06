@@ -6,8 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { FileInputComponent } from '@kbru/shared/ui/ionic-file-input';
 import { DataSourceManagementModule } from '@kbru/war-game-companion/core/data-source-management';
 
-import { DataSourcesComponent } from './data-sources.component';
-import { dataSourcesRoutes } from './data-sources.routes';
+import { SettingsComponent } from './settings.component';
+import { settingsRoutes } from './settings.routes';
 
 @NgModule({
   imports: [
@@ -16,8 +16,8 @@ import { dataSourcesRoutes } from './data-sources.routes';
     ReactiveFormsModule,
     FileInputComponent,
     DataSourceManagementModule.import(),
-    RouterModule.forChild(dataSourcesRoutes),
+    RouterModule.forChild(settingsRoutes),
   ],
-  declarations: [DataSourcesComponent],
+  declarations: [SettingsComponent],
 })
-export class DataSourcesModule {}
+export class SettingsModule {}

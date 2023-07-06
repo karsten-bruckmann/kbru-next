@@ -24,10 +24,10 @@ export const unzipSingleFileContainer = async (file: File): Promise<File> => {
 };
 
 @Component({
-  templateUrl: './data-sources.component.html',
-  styleUrls: ['./data-sources.component.scss'],
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss'],
 })
-export class DataSourcesComponent {
+export class SettingsComponent {
   constructor(
     private loadGameDefinitionService: LoadGameDefinitionService,
     private store$: Store

@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-  displayName: 'war-game-companion-features-data-sources',
+  displayName: 'war-game-companion-features-learn',
   preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory:
-    '../../../../coverage/libs/war-game-companion/features/data-sources',
+    '../../../../coverage/libs/war-game-companion/features/learn',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
