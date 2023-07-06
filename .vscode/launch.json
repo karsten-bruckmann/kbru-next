@@ -2,12 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "war-game-companion",
       "type": "chrome",
       "request": "launch",
-      "name": "Served App",
       "url": "http://127.0.0.1:4200",
       "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "canary"
+      "runtimeExecutable": "canary",
+      "preLaunchTask": "run: war-game-companion"
     }
   ]
 }
