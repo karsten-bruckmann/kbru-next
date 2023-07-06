@@ -13,6 +13,8 @@ import { AddForceForm } from '../forms/add-force.form';
 import { AddSelectionEntryForm } from '../forms/add-selection-entry.form';
 import { CreateRosterForm } from '../forms/create-roster.form';
 import { NamedReference } from '../models/named-reference.model';
+import { catalogueNameSelector } from '../selectors/catalogue-name.selector';
+import { gameSystemNameSelector } from '../selectors/game-system-name.selector';
 import { rosterListSelector } from '../selectors/roster-list.selector';
 
 @Injectable({ providedIn: 'root' })
@@ -21,6 +23,14 @@ export class RosterEditingService {
 
   public openCatalogue(catalogueId: string): void {
     this.store$.dispatch(catalogueOpenedAction({ catalogueId }));
+  }
+
+  public get gameSystemName$(): Observable<string | undefined> {
+    return this.store$.select(gameSystemNameSelector);
+  }
+
+  public get catalogueName$(): Observable<string | undefined> {
+    return this.store$.select(catalogueNameSelector);
   }
 
   public get catalogueId$(): Observable<string | null> {

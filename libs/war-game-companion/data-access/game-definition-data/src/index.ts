@@ -10,3 +10,7 @@ export * from './lib/models/game-definition-data-state.model';
 export * from './lib/models/catalogue.model';
 export * from './lib/models/game-system.model';
 export * from './lib/models/force-entry.model';
+export * from './lib/models/category-entry.model';
+export * from './lib/models/selection-entry.model';
+export * from './lib/models/data-element.model';
+export * from './lib/models/selection-entry-group.model';

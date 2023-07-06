@@ -4,7 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { DataSourceManagementModule } from '@kbru/war-game-companion/core/data-source-management';
-import { RosterManagementModule } from '@kbru/war-game-companion/core/roster-management';
+import {
+  CategoryNamePipe,
+  ForceNamePipe,
+  RosterManagementModule,
+  SelectionNamePipe,
+} from '@kbru/war-game-companion/core/roster-management';
 
 import { BuildComponent } from './build.component';
 import { buildRoutes } from './build.routes';
@@ -22,6 +27,9 @@ import { SelectionComponent } from './pages/selection/selection.component';
     DataSourceManagementModule.import(),
     RosterManagementModule.import(),
     RouterModule.forChild(buildRoutes),
+    CategoryNamePipe,
+    SelectionNamePipe,
+    ForceNamePipe,
   ],
   declarations: [
     BuildComponent,

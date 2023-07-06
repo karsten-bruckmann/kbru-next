@@ -13,7 +13,7 @@ import { map, Observable, of, ReplaySubject, startWith, switchMap } from 'rxjs';
 
 import { addSelectionEntryFormSubmitted } from '../actions/add-selection-entry-form-submitted.action';
 import { availableCategoriesSelector } from '../selectors/available-categories.selector';
-import { availableSelectionEntriesSelector } from '../selectors/available-selection-entries.selector';
+import { availableCategorySelectionsSelector } from '../selectors/available-category-selections.selector';
 
 export class AddSelectionEntryForm extends FormGroup<{
   categoryId: CategoryIdControl;
@@ -107,7 +107,7 @@ export class SelectionReferenceControl extends FormControl<SelectionReference | 
   public readonly options$ = this.categoryId$.pipe(
     switchMap((categoryId) =>
       categoryId
-        ? this.store$.select(availableSelectionEntriesSelector(categoryId))
+        ? this.store$.select(availableCategorySelectionsSelector(categoryId))
         : of([])
     )
   );

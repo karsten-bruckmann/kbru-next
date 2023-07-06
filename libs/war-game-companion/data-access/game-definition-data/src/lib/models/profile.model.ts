@@ -6,6 +6,7 @@ import { getModifiers, Modifier } from './modifier.model';
 import { getModifierGroups, ModifierGroup } from './modifier-group.model';
 
 export interface Profile {
+  __type: 'Profile';
   id: string;
   name: string;
   hidden: boolean;
@@ -24,6 +25,7 @@ export const getProfiles = (
   return !data
     ? []
     : data.profile.map((p) => ({
+        __type: 'Profile',
         id: p['@_id'],
         name: p['@_name'],
         hidden: p['@_hidden'] === 'true',

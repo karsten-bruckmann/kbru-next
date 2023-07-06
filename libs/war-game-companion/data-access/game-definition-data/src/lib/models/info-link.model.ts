@@ -5,6 +5,7 @@ import { getModifiers, Modifier } from './modifier.model';
 import { getModifierGroups, ModifierGroup } from './modifier-group.model';
 
 export interface InfoLink {
+  __type: 'InfoLink';
   hidden: boolean;
   id: string;
   name?: string;
@@ -23,6 +24,7 @@ export const getInfoLinks = (
   return !data
     ? []
     : data.infoLink.map((il) => ({
+        __type: 'InfoLink',
         hidden: il['@_hidden'] === 'true',
         id: il['@_id'],
         name: il['@_name'],

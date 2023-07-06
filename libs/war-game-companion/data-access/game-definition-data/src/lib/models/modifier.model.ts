@@ -6,6 +6,7 @@ import { ConditionGroup, getConditionGroups } from './condition-group.model';
 import { getRepeats, Repeat } from './repeat.model';
 
 export interface Modifier {
+  __type: 'Modifier';
   type:
     | 'set'
     | 'increment'
@@ -28,6 +29,7 @@ export const getModifiers = (
   return !data
     ? []
     : data.modifier.map((m) => ({
+        __type: 'Modifier',
         type: m['@_type'],
         field: m['@_field'],
         value: m['@_value'],

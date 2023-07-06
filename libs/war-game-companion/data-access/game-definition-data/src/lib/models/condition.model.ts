@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { conditionsSchema } from '../schemas/conditions-schema';
 
 export interface Condition {
+  __type: 'Condition';
   field: 'selections' | 'forces' | string;
   scope:
     | 'roster'
@@ -35,6 +36,7 @@ export const getConditions = (
   return !data
     ? []
     : data.condition.map((c) => ({
+        __type: 'Condition',
         field: c['@_field'],
         scope: c['@_scope'],
         value: c['@_value'],

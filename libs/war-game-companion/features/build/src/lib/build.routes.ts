@@ -28,7 +28,7 @@ export const buildRoutes: Routes = [
     component: ForceComponent,
   },
   {
-    path: ':catalogueId/:rosterId/:forceIndex/:selectionIndex',
+    path: ':catalogueId/:rosterId/:forceIndex/:categoryId/:selectionIndex',
     canActivate: [catalogueOpenGuard],
     component: SelectionComponent,
   },

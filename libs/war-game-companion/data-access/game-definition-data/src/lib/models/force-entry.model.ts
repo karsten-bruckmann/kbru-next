@@ -1,12 +1,13 @@
 import { z } from 'zod';
 
 import { forceEntriesSchema } from '../schemas/force-entries.schema';
-import { CategoryLink, getCategoryLinks } from './category-links.model';
+import { CategoryLink, getCategoryLinks } from './category-link.model';
 import { Constraint, getConstraints } from './constraint.model';
 import { getModifiers, Modifier } from './modifier.model';
 import { getRules, Rule } from './rule.model';
 
 export interface ForceEntry {
+  __type: 'ForceEntry';
   hidden: boolean;
   id: string;
   name: string;
@@ -23,6 +24,7 @@ export const getForceEntries = (
   return !data
     ? []
     : data.forceEntry.map((fe) => ({
+        __type: 'ForceEntry',
         hidden: fe['@_hidden'] === 'true',
         id: fe['@_id'],
         name: fe['@_name'],

@@ -4,6 +4,7 @@ import { conditionGroupsSchema } from '../schemas/condition-groups.schema';
 import { Condition, getConditions } from './condition.model';
 
 export interface ConditionGroup {
+  __type: 'ConditionGroup';
   type: 'or' | 'and';
   comment?: string;
   conditions: Condition[];
@@ -16,6 +17,7 @@ export const getConditionGroups = (
   return !data
     ? []
     : data.conditionGroup.map((cg) => ({
+        __type: 'ConditionGroup',
         type: cg['@_type'],
         comment: cg.comment,
         conditions: getConditions(cg.conditions),

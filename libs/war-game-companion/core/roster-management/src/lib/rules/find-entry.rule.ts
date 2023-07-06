@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export const findEntry = <T>(id: string, root: any): T | undefined => {
+import { DataElement } from '@kbru/war-game-companion/data-access/game-definition-data';
+
+export const findEntry = <T extends DataElement>(
+  id: string,
+  type: T['__type'],
+  root: any
+): T | undefined => {
   if (root['id'] === id) {
     return root as T;
   }
@@ -12,27 +18,35 @@ export const findEntry = <T>(id: string, root: any): T | undefined => {
     }
     switch (true) {
       case Array.isArray(slice):
-        found = findEntryInArray(id, slice as any[]);
+        found = findEntryInArray(id, type, slice as any[]);
         return;
       case typeof slice === 'object':
-        found = findEntry(id, slice);
+        found = findEntry(id, type, slice);
         return;
       default:
         return;
     }
   });
 
-  return found as T | undefined;
+  if (!found || found.__type !== type) {
+    return undefined;
+  }
+
+  return found;
 };
 
-const findEntryInArray = <T>(id: string, root: any[]): T | undefined => {
+const findEntryInArray = <T extends DataElement>(
+  id: string,
+  type: T['__type'],
+  root: any[]
+): T | undefined => {
   let found: any = undefined;
   root.forEach((slice) => {
     if (found) {
       return;
     }
 
-    found = findEntry(id, slice);
+    found = findEntry(id, type, slice);
   });
 
   return found as T | undefined;

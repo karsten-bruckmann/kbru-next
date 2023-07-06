@@ -3,7 +3,7 @@ import { RostersState } from '@kbru/war-game-companion/data-access/rosters';
 import { on } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 
-import { addForceFormSubmitted } from '../actions/add-force-form-submitted.action';
+import { addForceFormSubmittedAction } from '../actions/add-force-form-submitted.action';
 import { addSelectionEntryFormSubmitted } from '../actions/add-selection-entry-form-submitted.action';
 import { createRosterFormSubmittedAction } from '../actions/create-roster-form-submitted.action';
 
@@ -23,7 +23,7 @@ export const rostersReducer = createCoreReducer<RostersState>(
       ],
     })
   ),
-  on(addForceFormSubmitted, (state, action): RostersState => {
+  on(addForceFormSubmittedAction, (state, action): RostersState => {
     const roster = state[action.catalogueId]?.find(
       (r) => r.id === action.rosterId
     );
@@ -37,7 +37,10 @@ export const rostersReducer = createCoreReducer<RostersState>(
         ...(state[action.catalogueId] ?? []).filter((r) => r.id !== roster.id),
         {
           ...roster,
-          forces: [...roster.forces, action.value.force],
+          forces: [
+            ...roster.forces,
+            { id: action.value.force.id, selections: {} },
+          ],
         },
       ],
     };
@@ -63,7 +66,12 @@ export const rostersReducer = createCoreReducer<RostersState>(
 
             return {
               ...f,
-              selections: [...f.selections, action.value.selectionReference],
+              selections: {
+                ...f.selections,
+                [action.value.categoryId]: (
+                  f.selections[action.value.categoryId] || []
+                ).concat(action.value.selectionReference),
+              },
             };
           }),
         },

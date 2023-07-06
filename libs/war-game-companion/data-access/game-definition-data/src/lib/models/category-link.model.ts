@@ -5,6 +5,7 @@ import { Constraint, getConstraints } from './constraint.model';
 import { getModifiers, Modifier } from './modifier.model';
 
 export interface CategoryLink {
+  __type: 'CategoryLink';
   hidden: boolean;
   id: string;
   primary: boolean;
@@ -22,6 +23,7 @@ export const getCategoryLinks = (
   return !data
     ? []
     : data.categoryLink.map((cl) => ({
+        __type: 'CategoryLink',
         hidden: cl['@_hidden'] === 'true',
         id: cl['@_id'],
         primary: cl['@_primary'] === 'true',

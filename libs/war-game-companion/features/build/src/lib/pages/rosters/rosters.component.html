@@ -1,3 +1,9 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ catalogueName$ | async }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <ion-list inset *ngIf="createRosterForm$ | async as form" [formGroup]="form">
     <ion-item color="light">
@@ -15,7 +21,7 @@
         <ion-select-option
           *ngFor="let option of control.options$ | async"
           [value]="option"
-          >{{ option.name }}</ion-select-option
+          >{{ option.id | forceName | async }}</ion-select-option
         >
       </ion-select>
       <ion-button

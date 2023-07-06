@@ -6,6 +6,7 @@ import {
   RosterEditingService,
   rosterSelector,
 } from '@kbru/war-game-companion/core/roster-management';
+import { SelectionEntry } from '@kbru/war-game-companion/data-access/game-definition-data';
 import { Store } from '@ngrx/store';
 import { findEntry } from 'libs/war-game-companion/core/roster-management/src/lib/rules/find-entry.rule';
 import { definitionDataSelector } from 'libs/war-game-companion/core/roster-management/src/lib/selectors/definition-data.selector';
@@ -33,6 +34,11 @@ export class SelectionComponent {
     map((i) => parseInt(i))
   );
 
+  protected readonly categoryId$ = this.route.paramMap.pipe(
+    map((map) => map.get('categoryId')),
+    filterNullish()
+  );
+
   protected readonly selectionIndex$ = this.route.paramMap.pipe(
     map((map) => map.get('selectionIndex')),
     filterNullish(),
@@ -54,9 +60,13 @@ export class SelectionComponent {
 
   protected readonly selection$ = combineLatest([
     this.force$,
+    this.categoryId$,
     this.selectionIndex$,
   ]).pipe(
-    map(([force, selectionIndex]) => force.selections[selectionIndex]),
+    map(
+      ([force, categoryId, selectionIndex]) =>
+        force.selections[categoryId][selectionIndex]
+    ),
     filterNullish()
   );
 
@@ -64,7 +74,9 @@ export class SelectionComponent {
     this.selection$,
     this.store$.select(definitionDataSelector),
   ]).pipe(
-    map(([selection, data]) => findEntry(selection.id, data)),
+    map(([selection, data]) =>
+      findEntry<SelectionEntry>(selection.id, 'SelectionEntry', data)
+    ),
     filterNullish()
   );
 }

@@ -7,6 +7,7 @@ import { getModifiers, Modifier } from './modifier.model';
 import { getModifierGroups, ModifierGroup } from './modifier-group.model';
 
 export interface CategoryEntry {
+  __type: 'CategoryEntry';
   id: string;
   name: string;
   hidden: boolean;
@@ -25,6 +26,7 @@ export const getCategoryEntries = (
   return !data
     ? []
     : data.categoryEntry.map((ce) => ({
+        __type: 'CategoryEntry',
         id: ce['@_id'],
         name: ce['@_name'],
         hidden: ce['@_hidden'] === 'true',

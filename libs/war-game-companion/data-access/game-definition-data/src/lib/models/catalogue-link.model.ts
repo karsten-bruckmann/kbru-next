@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { catalogueLinksSchema } from '../schemas/catalogue-links.schema';
 
 export interface CatalogueLink {
+  __type: 'CatalogueLink';
   id: string;
   name: string;
   targetId: string;
@@ -16,6 +17,7 @@ export const getCatalogueLinks = (
   return !data
     ? []
     : data.catalogueLink.map((cl) => ({
+        __type: 'CatalogueLink',
         id: cl['@_id'],
         name: cl['@_name'],
         targetId: cl['@_targetId'],

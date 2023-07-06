@@ -7,6 +7,7 @@ import {
 } from './characteristic-type.model';
 
 export interface ProfileType {
+  __type: 'ProfileType';
   id: string;
   name: string;
   characteristicTypes: CharacteristicType[];
@@ -18,6 +19,7 @@ export const getProfileTypes = (
   return !data
     ? []
     : data.profileType.map((pt) => ({
+        __type: 'ProfileType',
         id: pt['@_id'],
         name: pt['@_name'],
         characteristicTypes: getCharacteristicTypes(pt.characteristicTypes),

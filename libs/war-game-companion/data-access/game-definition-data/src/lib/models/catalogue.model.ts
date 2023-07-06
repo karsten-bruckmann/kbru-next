@@ -18,7 +18,8 @@ import {
   SelectionEntryGroup,
 } from './selection-entry-group.model';
 
-export type Catalogue = {
+export interface Catalogue {
+  __type: 'Catalogue';
   battleScribeVersion: string;
   id: string;
   name: string;
@@ -47,13 +48,14 @@ export type Catalogue = {
   sharedInfoGroups: InfoGroup[];
   catalogueLinks: CatalogueLink[];
   profiles: Profile[];
-};
+}
 
 export const getCatalogue = (
   catalogue: z.infer<typeof catalogueSchema>
 ): Catalogue => {
   const c = catalogue.catalogue;
   return {
+    __type: 'Catalogue',
     battleScribeVersion: c['@_battleScribeVersion'],
     id: c['@_id'],
     name: c['@_name'],

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { repeatsSchema } from '../schemas/repeats.schema';
 
 export interface Repeat {
+  __type: 'Repeat';
   field: 'selections' | string;
   scope: 'force' | 'roster' | string;
   value: string;
@@ -19,6 +20,7 @@ export const getRepeats = (data?: z.infer<typeof repeatsSchema>): Repeat[] => {
   return !data
     ? []
     : data.repeat.map((r) => ({
+        __type: 'Repeat',
         field: r['@_field'],
         scope: r['@_scope'],
         value: r['@_value'],

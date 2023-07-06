@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { constraintsSchema } from '../schemas/constraints.schema';
 
 export interface Constraint {
+  __type: 'Constraint';
   id: string;
   field: 'selections' | 'forces' | string;
   scope: 'roster' | 'force' | 'parent' | string;
@@ -20,6 +21,7 @@ export const getConstraints = (
   return !data
     ? []
     : data.constraint.map((c) => ({
+        __type: 'Constraint',
         id: c['@_id'],
         field: c['@_field'],
         scope: c['@_scope'],

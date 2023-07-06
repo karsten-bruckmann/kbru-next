@@ -7,6 +7,7 @@ import { getProfiles, Profile } from './profile.model';
 import { getRules, Rule } from './rule.model';
 
 export interface InfoGroup {
+  __type: 'InfoGroup';
   id: string;
   name: string;
   publicationId?: string;
@@ -25,6 +26,7 @@ export const getInfoGroups = (
   return !data
     ? []
     : data.infoGroup.map((ig) => ({
+        __type: 'InfoGroup',
         id: ig['@_id'],
         name: ig['@_name'],
         publicationId: ig['@_publicationId'],

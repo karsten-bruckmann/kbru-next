@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { selectionEntryGroupsSchema } from '../schemas/selection-entry-groups.schema';
-import { CategoryLink, getCategoryLinks } from './category-links.model';
+import { CategoryLink, getCategoryLinks } from './category-link.model';
 import { Constraint, getConstraints } from './constraint.model';
 import { EntryLink, getEntryLinks } from './entry-link.model';
 import { getInfoLinks, InfoLink } from './info-link.model';
@@ -11,6 +11,7 @@ import { getProfiles, Profile } from './profile.model';
 import { getSelectionEntries, SelectionEntry } from './selection-entry.model';
 
 export interface SelectionEntryGroup {
+  __type: 'SelectionEntryGroup';
   id: string;
   name: string;
   hidden: boolean;
@@ -38,6 +39,7 @@ export const getSelectionEntriyGroups = (
     ? []
     : data.selectionEntryGroup.map(
         (seg): SelectionEntryGroup => ({
+          __type: 'SelectionEntryGroup',
           id: seg['@_id'],
           name: seg['@_name'],
           hidden: seg['@_hidden'] === 'true',

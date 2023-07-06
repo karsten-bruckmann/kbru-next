@@ -2,5 +2,7 @@ import { SelectionReference } from './selection-reference.model';
 
 export interface Force {
   id: string;
-  selections: SelectionReference[];
+  selections: {
+    [categoryId: string]: SelectionReference[];
+  };
 }

@@ -1,7 +1,7 @@
 <ng-container *ngIf="force$ | async as force">
   <ion-header>
-    <ion-toolbar>
-      <!-- <ion-title>{{ force.name }}</ion-title> -->
+    <ion-toolbar color="primary">
+      <ion-title>{{ force.id | forceName | async }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -28,7 +28,7 @@
           <ion-select-option
             *ngFor="let option of control.options$ | async"
             [value]="option"
-            >{{ option.name }}</ion-select-option
+            >{{ option | selectionName | async }}</ion-select-option
           >
         </ion-select>
         <ion-button
@@ -43,12 +43,17 @@
     </ion-list>
 
     <ion-list>
-      <ion-item
-        *ngFor="let selection of force.selections; let i = index"
-        [routerLink]="[i]"
-      >
-        {{ selection.name }}
-      </ion-item>
+      <ion-item-group *ngFor="let category of force.selections | keyvalue">
+        <ion-item-divider>
+          {{ category.key | categoryName | async }}
+        </ion-item-divider>
+        <ion-item
+          *ngFor="let selection of category.value; let i = index"
+          [routerLink]="[category.key, i]"
+        >
+          {{ selection | selectionName | async }}
+        </ion-item>
+      </ion-item-group>
     </ion-list>
   </ion-content>
 </ng-container>

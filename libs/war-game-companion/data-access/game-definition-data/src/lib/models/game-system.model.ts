@@ -18,6 +18,7 @@ import {
 } from './selection-entry-group.model';
 
 export interface GameSystem {
+  __type: 'GameSystem';
   authorContact: string;
   authorName: string;
   authorUrl?: string;
@@ -48,6 +49,7 @@ export const getGameSystem = (
 ): GameSystem => {
   const gs = gameSystem.gameSystem;
   return {
+    __type: 'GameSystem',
     battleScribeVersion: gs['@_battleScribeVersion'],
     id: gs['@_id'],
     name: gs['@_name'],

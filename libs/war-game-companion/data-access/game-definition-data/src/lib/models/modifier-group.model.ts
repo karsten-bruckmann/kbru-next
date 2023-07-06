@@ -7,6 +7,7 @@ import { getModifiers, Modifier } from './modifier.model';
 import { getRepeats, Repeat } from './repeat.model';
 
 export interface ModifierGroup {
+  __type: 'ModifierGroup';
   conditions: Condition[];
   modifiers: Modifier[];
   conditionGroups: ConditionGroup[];
@@ -21,6 +22,7 @@ export const getModifierGroups = (
   return !data
     ? []
     : data.modifierGroup.map((mg) => ({
+        __type: 'ModifierGroup',
         conditions: getConditions(mg.conditions),
         conditionGroups: getConditionGroups(mg.conditionGroups),
         modifiers: getModifiers(mg.modifiers),

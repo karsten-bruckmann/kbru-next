@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { publicationsSchema } from '../schemas/publications.schema';
 
 export interface Publication {
+  __type: 'Publication';
   id: string;
   name: string;
   shortName?: string;
@@ -18,6 +19,7 @@ export const getPublications = (
   return !data
     ? []
     : data.publication.map((p) => ({
+        __type: 'Publication',
         id: p['@_id'],
         name: p['@_name'],
         shortName: p['@_shortName'],

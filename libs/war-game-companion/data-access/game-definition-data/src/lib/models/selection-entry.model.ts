@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { selectionEntriesSchema } from '../schemas/selection-entries.schema';
-import { CategoryLink, getCategoryLinks } from './category-links.model';
+import { CategoryLink, getCategoryLinks } from './category-link.model';
 import { Constraint, getConstraints } from './constraint.model';
 import { Cost, getCosts } from './cost.model';
 import { EntryLink, getEntryLinks } from './entry-link.model';
@@ -17,6 +17,7 @@ import {
 } from './selection-entry-group.model';
 
 export interface SelectionEntry {
+  __type: 'SelectionEntry';
   id: string;
   name: string;
   hidden: boolean;
@@ -47,6 +48,7 @@ export const getSelectionEntries = (
     ? []
     : data.selectionEntry.map(
         (se): SelectionEntry => ({
+          __type: 'SelectionEntry',
           id: se['@_id'],
           name: se['@_name'],
           hidden: se['@_hidden'] === 'true',

@@ -15,6 +15,15 @@ export const definitionDataSelector = createSelector(
     }
 
     return {
+      gameSystem: {
+        id: gameSystem.id,
+        name: gameSystem.name,
+      },
+      catalogue: {
+        id: catalogue.id,
+        name: catalogue.name,
+      },
+
       categoryEntries: [
         ...gameSystem.categoryEntries,
         ...catalogue.categoryEntries,

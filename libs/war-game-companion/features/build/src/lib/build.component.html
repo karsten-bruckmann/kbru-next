@@ -1,74 +1,8 @@
-<!-- <ion-content>
-  <ion-accordion-group #ag>
-    <ion-list
-      inset
-      *ngIf="createRosterForm$ | async as form"
-      [formGroup]="form"
-    >
-      <ion-accordion value="form">
-        <ion-item color="light" slot="header">
-          <ion-label><h1>New Roster</h1></ion-label>
-        </ion-item>
-        <ion-item
-          color="light"
-          slot="content"
-          *ngIf="form.controls.name as control"
-        >
-          <ion-label position="floating">Name</ion-label>
-          <ion-input [formControl]="control"></ion-input>
-        </ion-item>
-        <ion-item
-          color="light"
-          slot="content"
-          *ngIf="form.controls.gameSystemId as control"
-        >
-          <ion-label position="floating">Game System</ion-label>
-          <ion-select [formControl]="control">
-            <ion-select-option
-              *ngFor="let option of control.options$ | async"
-              [value]="option.id"
-              >{{ option.name }}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
-        <ion-item color="light" slot="content">
-          <ion-button
-            slot="end"
-            fill="clear"
-            [disabled]="form.invalid"
-            (click)="
-              ag.value = 'none';
-              rosterFormsService.submitCreateForm(form);
-              form.reset()
-            "
-          >
-            <ion-icon name="checkmark"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-accordion>
-    </ion-list>
-
-    <ng-container *ngIf="rosters$ | async as systems">
-      <ion-list inset *ngIf="systems.length > 0">
-        <ion-accordion *ngFor="let system of systems">
-          <ion-item color="light" slot="header">
-            <ion-label>
-              <h1>{{ system.gameSystemName }}</h1>
-            </ion-label>
-          </ion-item>
-          <ion-item
-            color="light"
-            slot="content"
-            [routerLink]="[roster.id]"
-            *ngFor="let roster of system.rosters"
-          >
-            <ion-label>{{ roster.name }}</ion-label>
-          </ion-item>
-        </ion-accordion>
-      </ion-list>
-    </ng-container>
-  </ion-accordion-group>
-</ion-content> -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Build</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-list inset *ngFor="let entry of dataIndex$ | async">

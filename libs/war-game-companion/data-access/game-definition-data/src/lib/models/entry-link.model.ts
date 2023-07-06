@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { entryLinksSchema } from '../schemas/entry-links.schema';
-import { CategoryLink, getCategoryLinks } from './category-links.model';
+import { CategoryLink, getCategoryLinks } from './category-link.model';
 import { Constraint, getConstraints } from './constraint.model';
 import { Cost, getCosts } from './cost.model';
 import { getInfoGroups, InfoGroup } from './info-group.model';
@@ -17,6 +17,7 @@ import {
 } from './selection-entry-group.model';
 
 export interface EntryLink {
+  __type: 'EntryLink';
   hidden: boolean;
   id: string;
   name?: string;
@@ -47,6 +48,7 @@ export const getEntryLinks = (
   return !data
     ? []
     : data.entryLink.map((el) => ({
+        __type: 'EntryLink',
         hidden: el['@_hidden'] === 'true',
         id: el['@_id'],
         name: el['@_name'],

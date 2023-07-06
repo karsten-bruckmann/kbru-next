@@ -3,8 +3,18 @@ import {
   GameSystem,
 } from '@kbru/war-game-companion/data-access/game-definition-data';
 
-export type DefinitionData = Omit<
+export type DefinitionData = {
+  gameSystem: {
+    id: string;
+    name: string;
+  };
+  catalogue: {
+    id: string;
+    name: string;
+  };
+} & Omit<
   GameSystem,
+  | '__type'
   | 'authorContact'
   | 'authorName'
   | 'authorUrl'
@@ -16,6 +26,7 @@ export type DefinitionData = Omit<
 > &
   Omit<
     Catalogue,
+    | '__type'
     | 'authorContact'
     | 'authorName'
     | 'authorUrl'

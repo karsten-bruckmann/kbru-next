@@ -6,7 +6,7 @@ import { Force } from '@kbru/war-game-companion/data-access/rosters';
 import { Store } from '@ngrx/store';
 import { firstValueFrom, map } from 'rxjs';
 
-import { addForceFormSubmitted } from '../actions/add-force-form-submitted.action';
+import { addForceFormSubmittedAction } from '../actions/add-force-form-submitted.action';
 import { availableForcesSelector } from '../selectors/available-forces.selector';
 
 export class AddForceForm extends FormGroup<{
@@ -49,7 +49,7 @@ export class AddForceForm extends FormGroup<{
     }
 
     this.store$.dispatch(
-      addForceFormSubmitted({
+      addForceFormSubmittedAction({
         catalogueId: this.catalogueId,
         rosterId: this.rosterId,
         value,

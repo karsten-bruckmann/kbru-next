@@ -1,14 +1,13 @@
+import { Force } from '@kbru/war-game-companion/data-access/rosters';
 import { createSelector } from '@ngrx/store';
 
-import { HydratedForce } from '../models/hydrated-force.model';
 import { definitionDataSelector } from './definition-data.selector';
 
 export const availableForcesSelector = createSelector(
   definitionDataSelector,
-  (data): HydratedForce[] =>
+  (data): Force[] =>
     (data?.forceEntries || []).map((force) => ({
       id: force.id,
-      name: force.name,
-      selections: [],
+      selections: {},
     }))
 );
